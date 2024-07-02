@@ -1,0 +1,20 @@
+{
+    "School" : 
+    {
+        "sri":
+        {
+            "rightside":"sriboonya.png",
+            "leftside":"std_name"
+        },
+        "watdon":
+        {
+            "rightside":"watdon.png",
+            "leftside":"std_name"
+        },
+        "wsk_m123":
+        {
+            
+        }
+        
+    }
+}

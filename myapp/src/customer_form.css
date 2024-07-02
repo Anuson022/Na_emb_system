@@ -1,0 +1,28 @@
+.input_container{
+    margin: 20px;
+}
+.input_container form
+{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    margin: 0 auto;
+    max-width: 100rem;
+    p{font-size: 5vw; text-align: center;}
+}
+.form_input div
+{
+    margin-bottom: 1rem;
+}
+.form_input div
+{    
+    display: flex;
+    flex-direction: column;
+    label{font-size: 4vw;margin-bottom: 0.5rem; }
+    textarea{font-size: 4vw; box-sizing: border-box;height: 20vw; padding: 1vw;}
+    textarea::placeholder{font-size: 3vw;}
+    input{font-size: 4vw; padding: 1vw;}
+    button{font-size: 4vw; padding: 1vw;}
+}

@@ -1,0 +1,30 @@
+body{background-color: antiquewhite;}
+
+.container {
+    position: relative;
+    display: inline-block; /* Keep the image and overlay in an inline-block context */
+}
+.container img {
+    display: block; /* Prevent extra space below the image */
+}
+.grid-overlay {
+    position: absolute;
+    
+    top: 10%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Adjust number of columns */
+    grid-template-rows: repeat(5, 1fr); /* Adjust number of rows */
+    pointer-events: none; /* Allow clicks to pass through the grid */
+}
+.grid-overlay div {
+    border: 1px solid rgba(0, 0, 0, 0.5); /* Grid line color and transparency */
+    
+}
+.item1
+{
+    transform: translate(00%, 0%);
+    rotate: 30deg;
+}
