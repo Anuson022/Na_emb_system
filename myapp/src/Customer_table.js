@@ -60,8 +60,6 @@ const Customer_table = () => {
       navigate('/test-com', { state: { cus_data } });
     };
 
-
-  
     return (
       
 <div class="container_customer_table">

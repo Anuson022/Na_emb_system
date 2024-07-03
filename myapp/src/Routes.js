@@ -7,6 +7,7 @@ import Custom_input from './Custom_input';
 import Student_form from './Student_form';
 import TextareaToParagraphs from './TextareaToParagraphs';
 import Image_input from './Image_input';
+import Test from './Test';
 
 const Router = createBrowserRouter([
   {
@@ -22,13 +23,18 @@ const Router = createBrowserRouter([
             path: "Customer_table",
             element: <Customer_table />,
         },
+        {
+          path: "custom_input",
+          element: <Custom_input />,
+        },
+        {
+          path: "Test1",
+          element: <Test />,
+        },
     ],
   },
 
-  {
-    path: "custom_input",
-    element: <Custom_input />,
-  },
+
   {
     path: "idk",
     element: <Student_form />,
