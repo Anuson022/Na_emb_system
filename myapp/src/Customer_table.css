@@ -1,18 +1,18 @@
 
 .container_customer_table {
-
+    margin: auto 0;
 }
 
 .container_customer_table table {
     margin: 10px 10px;
-	width: 80%;
+	width: 80vw;
     border: 1px solid black;
     table-layout: fixed;
 	border-collapse: collapse;
 	overflow: hidden;
 	box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    border-radius: 1rem;
-    font-size: 1vmax;
+    border-radius: 5px;
+    font-size: 1vw;
 }
 
 .table_head tr th,
@@ -20,6 +20,8 @@
 	padding: 1vmax ;
 	background-color: rgba(255, 255, 255, 0.2);
 	color: #000000;
+    button
+    {padding: auto; font-size: 1vw;}
 }
 
 .table_head tr th {

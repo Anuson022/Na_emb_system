@@ -4,10 +4,10 @@ import App from './App';
 import Admin_dashboard from './Admin_dashboard';
 import Customer_table from './Customer_table';
 import Custom_input from './Custom_input';
-import Student_form from './Student_form';
 import TextareaToParagraphs from './TextareaToParagraphs';
 import Image_input from './Image_input';
 import Test from './Test';
+import DynamicForm from './DynamicForm';
 
 const Router = createBrowserRouter([
   {
@@ -37,7 +37,7 @@ const Router = createBrowserRouter([
 
   {
     path: "idk",
-    element: <Student_form />,
+    element: <DynamicForm />,
   },
   {
     path: "test-com",

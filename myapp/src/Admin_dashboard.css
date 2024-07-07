@@ -4,51 +4,92 @@
   justify-content: space-between;
   align-items: center;
   background-color: #a3ffa1;
-  padding: 16px;
+  padding: 1rem;
   top: 0px;
-  position: sticky;
   width: 100%;
-  height: 10rem;
+  height: 10vw;
   box-sizing: border-box;
 }
 
 .navbar-logo {
   color: rgb(0, 0, 0);
-  font-size: 1.5rem;
+  font-size: calc(1vw);
+  
 }
 .profile
 {
   display: flex;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
-  img{border-radius: 50%; width: 10rem; height: 10rem;; margin: 10px;}
+  img{border-radius: 50%; width: 5.5vw; height: auto;; margin: 1rem;}
+  button
+  {padding: auto; font-size: 1vw;}
 }
 
-.sidebar {
-  padding: 1rem;
-  width: 25rem;
-  height: min-content;
-  top: 0;
-  left: 0;
-  padding-top: 20px;
-  list-style-type: none;
-  ul{list-style-type: none;}
-  background-color:azure;
-  border: black 1px ridge;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
+
 .main_dash
 { 
   display: flex;
-
-  .select_function
+  justify-content: center;
+  align-self: center;
+  .sidebar_button
   {
+    border: #111 1px solid;
   }
+  .sidebar_button p
+  {
+    border: #111 1px solid;
+  }
+  .sidebar {
+    width: 15vw;
+    height: 40rem;
+    background-color: #a3ffa1;
+    overflow-x: hidden;
+    transition: 0.5s;
+    a{color: rgb(0, 0, 0);}
+    ul {
+      padding: 1rem;
+      text-decoration: none;
+      font-size: 1vw;
+      display: block;
+      transition: 0.3s;
+      height: 30vh;
+      list-style-type:none;
+    }
+    ul li:hover {
+      background-color: #f1f1f1;
+      color: #000000;
+  }
+
+  }
+  .sidebar_close {
+    width: 0vw;
+    background-color: #a3ffa1;
+    overflow-x: hidden;
+    transition: 0.5s;
+    a{color: rgb(0, 0, 0);}
+    ul {
+      padding: 1rem;
+      text-decoration: none;
+      font-size: 1vw;
+      display: block;
+      transition: 0.3s;
+      height: 30vh;
+      list-style-type:none;
+    }
+  }
+
+  
+
+  
   .display_function
-  {        
+  { 
+    padding: 1rem;
     border: 1px saddlebrown solid;
-    padding: auto;
     margin: 0 auto;
+    justify-content: center; /* Centers children vertically */
+    align-items: center; /* Centers children horizontally */
+    transition: max-height .5s ease-in-out;
   }
 }
 
@@ -57,26 +98,69 @@
   { 
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centers children vertically */
-    align-items: center; /* Centers children horizontally */
-
-    .display_function
-    {   
-        border: 1px saddlebrown solid;
-        width: 100%; /* Adjust as needed, for full width of parent */
-        max-width: 100%; /* Ensures it doesn't exceed the parent's width */
-        box-sizing: border-box; /* Includes border in width calculation */
-        
+    justify-content: center;
+    align-self: center;
+    .sidebar_button
+    {
+      border: #111 1px solid;
+    }
+    .sidebar_button p
+    {
+      border: #111 1px solid;
+    }
+    .sidebar {
+      width: 100%;
+      height: 15vw;
+      background-color: #a3ffa1;
+      overflow-x: hidden;
+      transition: 0.5s;
+      a{color: rgb(0, 0, 0);}
+      ul {
+        padding: 1rem;
+        text-decoration: none;
+        font-size: 1vw;
+        display: block;
+        transition: 0.3s;
+        height: 30vh;
+        list-style-type:none;
       }
+      ul li:hover {
+        background-color: #f1f1f1;
+        color: #000000;
+    }
+  
+    }
+    .sidebar_close {
+      width: 100%;
+      height: 0vw;
+      background-color: #a3ffa1;
+      overflow-x: hidden;
+      transition: 0.5s;
+      a{color: rgb(0, 0, 0);}
+      ul {
+        padding: 1rem;
+        text-decoration: none;
+        font-size: 1vw;
+        display: block;
+        transition: 0.3s;
+        height: 30vh;
+        list-style-type:none;
+      }
+    }
+    
+    .display_function
+    { 
+      padding: 1rem;
+      border: 1px saddlebrown solid;
+      margin: 0 auto;
+      justify-content: center; /* Centers children vertically */
+      align-items: center; /* Centers children horizontally */
+      flex-grow: 1;
+      transition: opacity 0.5s ease-in-out;
+      opacity: 1;
+    }
+    .display_function.fade-out {
+      opacity: 0;
+    }
   }
-  .container_customer_table table {
-    margin: 10px auto;
-    border: 1px solid black;
-    /*table-layout: fixed;*/
-	border-collapse: collapse;
-	overflow: hidden;
-	box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    border-radius: 10px;
-
-}
 }

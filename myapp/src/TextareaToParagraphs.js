@@ -71,7 +71,7 @@ const TextareaToParagraphs = () => {
     info:cus_data.info,
     parent_name:cus_data.parent_name,
     phone_number:cus_data.phone_number,
-    status:cus_data.status
+    status:"ตรวจสอบแล้ว"
   });
   const [formdata, setformdata] = useState({
     
@@ -93,6 +93,8 @@ const TextareaToParagraphs = () => {
       color_dot:""
     },
   });
+  const [orders, setOrders] = useState([{ id: 1, value1: '', value2: '', value3: '',value4: '' }]);
+
   const handle_cuschange = (e) => {
     const { name, value } = e.target;
     setformdata_cus({
@@ -151,8 +153,30 @@ const TextareaToParagraphs = () => {
         [name]: checked,
       }));
     };
+//order varible
 
+  const addInput = () => {
+    setOrders([...orders, { id: orders.length + 1, value1: '', value2: '', value3: '',value4: '' }]);
+  };
 
+  const removeInput = (id) => {
+    setOrders(orders.filter(input => input.id !== id));
+  };
+
+  const handleDynamicInputGrid = (id, name, value) => {
+    setOrders(orders.map(input => {
+      if (input.id === id) {
+        const updatedInput = { ...input, [name]: value };
+        if (name === 'value2' || name === 'value3') {
+          const sum = (parseFloat(updatedInput.value2) || 0) * (parseFloat(updatedInput.value3) || 0);
+          updatedInput.value4 = sum.toString();
+        }
+        return updatedInput;
+      }
+      return input;
+    }));
+  };
+//order varible
     const handle_text = (e) => {
       const { name, value } = e.target;
       setformdata((prevData) => ({
@@ -229,7 +253,7 @@ const TextareaToParagraphs = () => {
       {
         e.preventDefault();
       try {
-        axios.post("http://localhost:5000/send_customdata",formdata)
+        axios.post("http://localhost:5000/update_customdata",{formdata_cus,formdata,orders})
       } catch (error) {
         console.log(error)
       }
@@ -313,12 +337,11 @@ useEffect(() => {
       </div>
       <div className="grid_cus_item">
         <label htmlFor="status">สถานะ</label>
-        <input
-          type="text"
-          name="status"
-          value={formdata_cus.status}
-          readOnly
-        />
+        <select name="status" value={formdata_cus.status} onChange={handle_cuschange}>
+        <option value={cus_data.status}>{cus_data.status}</option>
+        <option value='ตรวจสอบแล้ว'>ตรวจสอบแล้ว</option>
+
+        </select>
       </div>
     </div>
 
@@ -444,11 +467,6 @@ useEffect(() => {
             </div>
             </div>:''}
             </div>
-            
-            <div>
-              <h2>จำนวนเสื้อ</h2>
-              <input type="text" name="" id="" className=''/>
-            </div>
 
             <button type="submit">TEST</button>
             </form>
@@ -486,6 +504,57 @@ useEffect(() => {
     </div>
     </fieldset>
       </form>
+      <br />
+      <form>
+      <fieldset className='order_sum'>
+        <legend><h1>สรุปรายการ</h1></legend>
+        <table>
+      <tr>
+        <th style={{textAlign:'left'}}>รายการ</th>
+        <th style={{textAlign:'center'}}>จำนวน</th>
+        <th style={{textAlign:'center'}}>ราคา/หน่วย</th>
+        <th style={{textAlign:'center'}}>จำวนเงิน</th>
+      </tr>
+
+      {orders.map((input, index) => (
+        <tr key={input.id} className='grid_order'>
+          <td className='order_info'>
+          <textarea style={{width:'100%'}}
+            type="text"
+            value={input.value1}
+            onChange={(e) => handleDynamicInputGrid(input.id, 'value1', e.target.value)}
+          /></td>
+          <td className='quantity'>
+          <input style={{textAlign:'center'}}
+            type="text"
+            value={input.value2}
+            onChange={(e) => handleDynamicInputGrid(input.id, 'value2', e.target.value)}
+          /></td>
+          <td className='price'>
+          <input style={{textAlign:'center'}}
+            type="text"
+            value={input.value3}
+            onChange={(e) => handleDynamicInputGrid(input.id, 'value3', e.target.value)}
+          /></td>
+          <td className='price_sum'>
+          <input style={{textAlign:'center'}}
+            type="text"
+            value={input.value4}
+            onChange={(e) => handleDynamicInputGrid(input.id, 'value4', e.target.value)}
+          /></td>
+          <td>
+            <button onClick={() => removeInput(input.id)}>ลบรายการ</button>
+            </td>
+        </tr>
+      ))}
+    </table>
+
+      </fieldset>
+      </form>
+    <button onClick={addInput}>Add Input</button>
+    <button onClick={handle_submit}>Test_submit</button>
+
+
     </div>
     
   );

@@ -56,22 +56,59 @@ app1.post('/upload', (req, res) => {
     });
   });
 
-pool_insert = (pool_con)=>
+adm_update = (cus_input,formdata,order)=>
     {
-        const json_text = [JSON.stringify(pool_con)];
-        const insert_sql = "INSERT INTO customer_data (shirt) VALUES (?);"
-        pool.query(insert_sql, [json_text], 
-            (error, result, fields) => {
+      const json_form = [JSON.stringify(formdata)];
+      const json_order = [JSON.stringify(formdata)];
+      const update_cus =
+        "UPDATE customer_data SET info=?,parent_name=?,phone_number=?,status=? WHERE cus_id = ?";
+      const update_form = "UPDATE customer_data SET shirt=? WHERE cus_id = ?";
+      const update_order = "UPDATE customer_data SET cus_order=? WHERE cus_id = ?";
+      // First update query
+      pool.query(
+        update_cus,
+        [
+          cus_input.info,
+          cus_input.parent_name,
+          cus_input.phone_number,
+          cus_input.status,
+          cus_input.cus_id,
+        ],
+        (error, result) => {
           if (error) {
             return console.log(error);
           }
-          console.log("Success");
-        })
+
+          // Second update query within the callback of the first query
+          pool.query(
+            update_form,
+            [json_form, cus_input.cus_id],
+            (error, result) => {
+              if (error) {
+                return console.log(error);
+              }
+
+              // Third update query within the callback of the second query
+              pool.query(
+                update_order,
+                [json_order, cus_input.cus_id],
+                (error, result) => {
+                  if (error) {
+                    return console.log(error);
+                  }
+
+                  console.log("Success");
+                }
+              );
+            }
+          );
+        }
+      );
     }
 cus_insert = (obj)=>
     {
         const cus_array = Object.values(obj);
-        const insert_sql = "INSERT INTO customer_data (`info`, `parent_name`, `phone_number`) VALUES (?);"
+        const insert_sql = "INSERT INTO customer_data (`info`, `parent_name`, `phone_number`,`status`) VALUES (?);"
         pool.query(insert_sql, [cus_array], 
             (error, result, fields) => {
           if (error) {
@@ -100,17 +137,19 @@ app1.post('/cus_input',async(req,res)=>
     {
         await console.log(req.body)
         //await console.log(typeof(req.body))
-        await cus_insert(req.body.shirt_data)
+        await cus_insert(req.body)
         await data_queing();
         res.json()
         //customer input
     })
 
-app1.post('/send_customdata',async(req,res)=>
+app1.post('/update_customdata',async(req,res)=>
     {
-        await console.log(req.body)
-        await pool_insert(req.body)
-        //await data_queing();
+        await console.log()
+        const cus_data = req.body.formdata_cus
+        const shirt = req.body.formdata
+        const orders = req.body.orders
+        await adm_update(cus_data,shirt,orders);
         res.json()
         //storefront input
     })
@@ -144,6 +183,10 @@ app1.post('/data_table1', (req, res) => {
       res.json(results);
     }
   });
+});
+
+app1.post('/data_tester', (req, res) => {
+  console.log(req.body)
 });
 app1.listen(5000,()=>
     {
