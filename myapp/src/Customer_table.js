@@ -1,19 +1,49 @@
 import axios from "axios";
 import { Link,useNavigate } from "react-router-dom";
 import { useState,useEffect } from "react";
-
+import yes_no_Popup from "./yes_no_Popup";
 import './Customer_table.css'
 
 const ITEMS_PER_PAGE = 5;
 const Customer_table = () => {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-  
+
+  const [popup_delete, setpopup_delete] = useState(null);
+  const [popup_view, setpopup_view] = useState({});
+
+  const [showpopup_delete, setshowpopup_delete] = useState(false);
+  const [showpopup_view, setshowpopup_view] = useState(false);
+
+  const handleShowPopup_delete = (cus_id) => {
+    setpopup_delete(cus_id);
+    setshowpopup_delete(true);
+  };
+  const handleShowPopup_view = (cus_id,info,parent_name,phone_number,status) => {
+    setpopup_view([cus_id,info,parent_name,phone_number,status]);
+    console.log(data[0])
+
+    setshowpopup_view(true);
+  };
+  const handleYes_delete = async() => {
+    try {
+      const response = await axios.post('http://localhost:5000/delete_cusdata', {popup_delete});
+      setpopup_delete(response.data)
+      alert(popup_delete)
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
+    setshowpopup_delete(false);
+  };
+  const handleNo = () => {
+    setshowpopup_delete(false);
+    setshowpopup_view(false);
+  };
+
   const Check_verify = (verify) => {return verify ? 'ยืนยันแล้ว' : 'ยังไม่ยืนยัน';}
   useEffect(() => {
     fetching_data(currentPage)
@@ -35,7 +65,7 @@ const Customer_table = () => {
       .finally
       {
       };
-    }
+}
   const handleSearch = async (e) => {
     setSearchTerm(e.target.value)
     const search_value = e.target.value
@@ -93,16 +123,41 @@ const Customer_table = () => {
               <td className="td_nowarp">{item.parent_name}</td>
               <td className="td_nowarp">{item.phone_number}</td>
               <td className="info_text">{item.status}</td>
-              <td className="td_nowarp"><button class="fa fa-info" aria-hidden="true"></button></td>
-              <td className="td_nowarp" onClick={() => handleClick(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}><button>Edit</button></td>
-              <td className="td_nowarp"><button>Delete</button></td>
+              <td className="td_nowarp"><button class="fa fa-info" aria-hidden="true" 
+             onClick={() => handleShowPopup_view(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}></button></td>
+              <td className="td_nowarp"><button onClick={() => handleClick(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}>Edit</button></td>
+              <td className="td_nowarp"><button onClick={() => handleShowPopup_delete(item.cus_id)} >Delete</button></td>
             </tr>
           ))}
 		</tbody>
 	</table>
   <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
   <button onClick={handleNextPage} disabled={indexOfLastItem >= data.length}>Next</button>
+      {showpopup_delete && (
+        <div className="popup">
+          <div className="popup-inner">
+            <p>Do you want to proceed? {popup_delete}</p>
+            <button onClick={handleYes_delete}>Yes</button>
+            <button onClick={handleNo}>No</button>
+          </div>
+        </div>
+      )}
+      {showpopup_view && (
+        <div className="popup">
+          <div className="popup-inner">
+            {popup_view.map((item) => (
+              <div key={item}>
+                <p>
+                  {item}
+                </p>
+              </div>
 
+          ))}
+
+            <button onClick={handleNo}>No</button>
+          </div>
+        </div>
+      )}
 </div>
     );
 }

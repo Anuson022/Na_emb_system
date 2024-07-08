@@ -8,7 +8,7 @@ function Student_form() {
         info_data:"",
         parent_name:"",
         phone_number:"",
-        status:"รอการยืนยันหลังตรวจข้อมูล",
+        status:"ยังไม่ตรวจสอบ",
       });
     const handleChange = (event) =>
         {

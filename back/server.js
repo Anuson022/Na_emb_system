@@ -4,6 +4,7 @@ const mysql1 = require('mysql');
 const bodyParser = require('body-parser');
 const path = require('path');
 const multer = require('multer');
+const { error } = require('console');
 const app1 = express();
 
 app1.use(cors())
@@ -126,7 +127,17 @@ ALTER TABLE customer_data AUTO_INCREMENT = 1;
 
 SET @row_number = 0;
 UPDATE customer_data SET cus_id = @row_number:=@row_number+1;;"`,(error,result,fields)=>{}) }
-
+const adm_delete = async(cus_id) =>
+  {
+    const delete_sql = "DELETE FROM customer_data WHERE cus_id = ?"
+    pool.query(delete_sql,[cus_id],(error,result,fields)=>
+      {
+      if (error) {
+        return console.log(error);
+      }
+      console.log("Success");
+      })
+  }
 app1.get('/',(req,res)=>
     {
         res.write("<body style='background-color: black'></body>")
@@ -153,10 +164,10 @@ app1.post('/update_customdata',async(req,res)=>
         res.json()
         //storefront input
     })
-app1.delete('/delete_cusdata',async(req,res)=>
+app1.post('/delete_cusdata',async(req,res)=>
     {
-        await console.log(req.body)
-        await pool_insert(req.body)
+        //await console.log(req.body.popupData)
+        adm_delete(req.body.popup_delete)
         //await data_queing();
         res.json()
         //storefront delete
