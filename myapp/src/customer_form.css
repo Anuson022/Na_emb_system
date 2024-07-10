@@ -1,6 +1,5 @@
 :root {
     --input_font: 5vw;
-    --white: #ffffff; 
   }
 .input_container{
     margin: 20px;
@@ -13,7 +12,7 @@
     border: 1px solid #ccc;
     border-radius: 1em;
     margin: 0 auto;
-    max-width: 100rem;
+    width: 80%;
     p{font-size: var(--input_font); text-align: center;}
 }
 .form_input div
@@ -24,33 +23,50 @@
 {    
     display: flex;
     flex-direction: column;
-    label{font-size: 4vw;margin-bottom: 0.5rem; }
-    textarea{font-size: 4vw; box-sizing: border-box;height: 20vw; padding: 1vw;}
+    label{font-size: var(--input_font);margin-bottom: 0.5rem; }
+    textarea{font-size: var(--input_font); box-sizing: border-box;height: calc(40vw / var(--input_font)); padding: 1vw;}
     textarea::placeholder{font-size: 3vw;}
-    input{font-size: 4vw; padding: 1vw;}
-    button{font-size: 4vw; padding: 1vw;}
+    input{font-size: var(--input_font); padding: 1vw;}
+    button{font-size: var(--input_font); padding: 1vw;}
 }
 @media only screen and (max-width: 640px) 
 {
     *{background-color: rgb(0, 0, 0);}
+    :root {
+        --input_font: 6vw;
+        --white: #ffffff; 
+      }
 }
+
 /* Small devices such as large phones (640px and up) */
 @media only screen and (min-width: 640px) 
 {
     *{background-color: aqua;}
+    :root {
+        --input_font: 5vw;
+        --white: #ffffff; 
+      }
+
 }
 
 /* Medium devices such as tablets (768px and up) */
 @media only screen and (min-width: 768px) 
 {
     *{background-color: rgb(255, 0, 0);}
+    :root {
+        --input_font: 4vw;
+        --white: #ffffff; 
+      }
 }
 
 /* Large devices such as laptops (1024px and up) */
 @media only screen and (min-width: 1024px) 
 {
     *{background-color: rgb(0, 255, 13);}
-
+    :root {
+        --input_font: 2vw;
+        --white: #ffffff; 
+      }
 }
 
 /* Largest devices such as desktops (1280px and up) */

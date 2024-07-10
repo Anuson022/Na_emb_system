@@ -1,6 +1,7 @@
 import React, { useEffect, useState,useNavigate } from 'react';
 import './customer_form.css'
 import Shirt_graphic from './Shirt_graphic';
+import Shirt_graphic_cus_const from './Shirt_graphic_cus_const';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 
@@ -61,13 +62,16 @@ function Student_form() {
 
                         <div>
                         </div>
-
+                        
                         <div>
                             <button type="submit">Submit</button>
                         </div>
                         </div>
                     </form>
+                    <Shirt_graphic_cus_const/>
+
                 </div>
+
             </div>
         </div>
   )
