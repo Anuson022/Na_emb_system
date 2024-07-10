@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useNavigate } from 'react';
 import './customer_form.css'
+import Shirt_graphic from './Shirt_graphic';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 
@@ -10,6 +11,7 @@ function Student_form() {
         phone_number:"",
         status:"ยังไม่ตรวจสอบ",
       });
+    
     const handleChange = (event) =>
         {
             const { name, value } = event.target;
@@ -55,6 +57,9 @@ function Student_form() {
                         <label htmlFor="">เบอร์โทร</label>
                         <input type="text" name="phone_number" id="" 
                         value={formdata.phone_number} onChange={handleChange}/>
+                        </div>
+
+                        <div>
                         </div>
 
                         <div>

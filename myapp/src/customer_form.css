@@ -1,3 +1,7 @@
+:root {
+    --input_font: 5vw;
+    --white: #ffffff; 
+  }
 .input_container{
     margin: 20px;
 }
@@ -10,7 +14,7 @@
     border-radius: 1em;
     margin: 0 auto;
     max-width: 100rem;
-    p{font-size: 5vw; text-align: center;}
+    p{font-size: var(--input_font); text-align: center;}
 }
 .form_input div
 {
@@ -26,3 +30,27 @@
     input{font-size: 4vw; padding: 1vw;}
     button{font-size: 4vw; padding: 1vw;}
 }
+@media only screen and (max-width: 640px) 
+{
+    *{background-color: rgb(0, 0, 0);}
+}
+/* Small devices such as large phones (640px and up) */
+@media only screen and (min-width: 640px) 
+{
+    *{background-color: aqua;}
+}
+
+/* Medium devices such as tablets (768px and up) */
+@media only screen and (min-width: 768px) 
+{
+    *{background-color: rgb(255, 0, 0);}
+}
+
+/* Large devices such as laptops (1024px and up) */
+@media only screen and (min-width: 1024px) 
+{
+    *{background-color: rgb(0, 255, 13);}
+
+}
+
+/* Largest devices such as desktops (1280px and up) */
