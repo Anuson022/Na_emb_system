@@ -41,15 +41,14 @@ function Admin_dashboard() {
         <nav className="navbar_header">
             <div className="navbar-logo"><h3>ระบบร้าน Na การปัก ยินดีต้อนรับ{' user... '}</h3></div>
             <div className='profile'>
-                <img src="/image_folder/shirt.png" alt="" />
-                <a href="#home"><button>Logout</button></a>
+                <img src="/image_folder/shirt.png1" alt="" />
                 
             </div>
         </nav>
         <br />
         <nav className='main_dash'>
         <div className='sidebar_button'>
-        <p style={{ fontSize: 20, cursor: 'pointer' }} onClick={toggleNav}>
+        <p className='close-open' onClick={toggleNav}>
           {sideNavOpen ? '\u2715 close' : '\u2630 open'}
         </p>
         <div className={sideNavOpen ? 'sidebar' : 'sidebar_close'}>
@@ -68,14 +67,10 @@ function Admin_dashboard() {
             <li><p>อื่นๆ</p></li>
             <li><Link to="/Admin_dashboard/custom_input">ข้อมูลรายได้</Link></li>
 
-            <li><Link to="/Admin_dashboard/custom_input">อัพโหลดรูปภาพโลโก้</Link></li>
+            <li><Link to="/Admin_dashboard/Image_edit">อัพโหลดรูปภาพโลโก้</Link></li>
             </ul>
         </div>
         </div>
-
-
-
-
 
         <div className='display_function'>
         <Outlet/>

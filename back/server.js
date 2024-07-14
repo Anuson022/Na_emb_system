@@ -3,12 +3,22 @@ const cors = require('cors')
 const mysql1 = require('mysql');
 const bodyParser = require('body-parser');
 const path = require('path');
-const multer = require('multer');
+const fileUpload = require('express-fileupload');
 const { error } = require('console');
+const fs = require('fs');
+
 const app1 = express();
 
 app1.use(cors())
 app1.use(bodyParser.json())
+// Enable files upload
+app1.use(fileUpload({
+  createParentPath: true
+}));
+// Add other middleware if needed
+app1.use(express.json());
+app1.use(express.urlencoded({ extended: true }));
+// Serve static files
 app1.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 var pool =mysql1.createPool({
@@ -19,43 +29,78 @@ var pool =mysql1.createPool({
     database : 'na_database'
 });
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-      cb(null, Date.now() + '-' + file.originalname);
-    },
-  });
-const upload = multer({ storage }).single('image');
-
+// Upload endpoint
 app1.post('/upload', (req, res) => {
-    upload(req, res, (err) => {
+  if (!req.files || !req.body.name) {
+      return res.status(400).send('No files or name were uploaded.');
+  }
+  let file = req.files.file;
+  let fileName = req.body.name;
+  let uploadPath = './uploads/' + file.name;
+
+  // Use the mv() method to place the file somewhere on your server
+  file.mv(uploadPath, err => {
       if (err) {
-        return res.status(500).json({ error: err.message });
+          return res.status(500).send(err);
       }
-  
-      const imagePath = `/uploads/${req.file.filename}`;
-      const name = req.body.image_name;
-      const sql = 'INSERT INTO images (School_name,path) VALUES (?,?)';
-      pool.query(sql, [name,imagePath], (err, result) => {
-        if (err) {
-          return res.status(500).json({ error: err.message });
-        }
-        res.status(200).json({ message: 'Image uploaded successfully', path: imagePath });
+
+      let sql = "INSERT INTO files (name, path) VALUES (?, ?)";
+      let values = [fileName, uploadPath];
+      pool.query(sql, values, (err, result) => {
+          if (err) throw err;
+          res.send('File uploaded and saved to database!');
       });
-    });
   });
-  app1.get('/images', (req, res) => {
-    const sql = 'SELECT * FROM images';
-    pool.query(sql, (err, results) => {
-      if (err) {
-        return res.status(500).json({ error: err.message });
+});
+
+// Fetch files endpoint
+app1.post('/files', (req, res) => {
+  const searchTerm = (req.body.search_name)
+  console.log(searchTerm)
+  if(searchTerm == null)
+    {
+      const query = `SELECT * FROM files`;
+      try {
+        pool.query(query, (err, results) => {
+          if (err) throw err;
+          res.json(results);
+        });
+      } catch (error) {}
+    }
+  else
+  {
+    const query = `SELECT * FROM files WHERE name LIKE ?`;
+    try {
+      pool.query(query, [`%${searchTerm}%`], (err, results) => {
+        if (err) throw err;
+        res.json(results);
+      });
+    } catch (error) {}
+  }
+
+});
+
+// Delete file endpoint
+app1.delete('/files/:id', (req, res) => {
+  let id = req.params.id;
+  let sql = "SELECT * FROM files WHERE id = ?";
+  pool.query(sql, [id], (err, results) => {
+      if (err) throw err;
+      if (results.length > 0) {
+          let filePath = results[0].path;
+          let sql = "DELETE FROM files WHERE id = ?";
+          pool.query(sql, [id], (err, result) => {
+              if (err) throw err;
+              fs.unlink(filePath, err => {
+                  if (err) throw err;
+                  res.send('File deleted!');
+              });
+          });
+      } else {
+          res.status(404).send('File not found');
       }
-      res.status(200).json(results);
-      console.log(results)
-    });
   });
+});
 
 adm_update = (cus_input,formdata,order)=>
     {

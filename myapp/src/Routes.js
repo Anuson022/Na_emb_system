@@ -8,6 +8,7 @@ import TextareaToParagraphs from './TextareaToParagraphs';
 import Image_input from './Image_input';
 import Test from './Test';
 import DynamicForm from './DynamicForm';
+import Image_AD from './Image_AD';
 
 const Router = createBrowserRouter([
   {
@@ -24,8 +25,8 @@ const Router = createBrowserRouter([
             element: <Customer_table />,
         },
         {
-          path: "custom_input",
-          element: <Custom_input />,
+          path: "Image_edit",
+          element: <Image_AD />,
         },
         {
           path: "Test1",

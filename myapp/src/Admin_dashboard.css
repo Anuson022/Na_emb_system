@@ -4,7 +4,6 @@
   justify-content: space-between;
   align-items: center;
   background-color: #a3ffa1;
-  padding: 1rem;
   top: 0px;
   width: 100%;
   height: 10vw;
@@ -13,8 +12,8 @@
 
 .navbar-logo {
   color: rgb(0, 0, 0);
-  font-size: calc(1vw);
-  
+  padding: 1rem;
+  font-size: 3vw;
 }
 .profile
 {
@@ -31,18 +30,19 @@
 { 
   display: flex;
   justify-content: center;
-  align-self: center;
+  align-content: center;
   .sidebar_button
-  {
-    border: #111 1px solid;
+  {      
+    .close-open{font-size: 1.5vw}
+    cursor: pointer;
   }
   .sidebar_button p
   {
-    border: #111 1px solid;
+    
   }
   .sidebar {
-    width: 15vw;
-    height: 40rem;
+    width: 100%;
+    height: 100%;
     background-color: #a3ffa1;
     overflow-x: hidden;
     transition: 0.5s;
@@ -53,7 +53,6 @@
       font-size: 1vw;
       display: block;
       transition: 0.3s;
-      height: 30vh;
       list-style-type:none;
     }
     ul li:hover {
@@ -84,6 +83,7 @@
   
   .display_function
   { 
+    width: 80%;
     padding: 1rem;
     border: 1px saddlebrown solid;
     margin: 0 auto;
@@ -98,11 +98,12 @@
   { 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-self: center;
     .sidebar_button
     {
-      border: #111 1px solid;
+      margin: 0 auto;
+      width: 100%;
+      border: #11ff00 1px solid;
+      .close-open{font-size: 3vw}
     }
     .sidebar_button p
     {
@@ -110,18 +111,17 @@
     }
     .sidebar {
       width: 100%;
-      height: 15vw;
+      height: 50vw;
       background-color: #a3ffa1;
       overflow-x: hidden;
       transition: 0.5s;
-      a{color: rgb(0, 0, 0);}
+      a{ color: rgb(0, 0, 0);}
       ul {
         padding: 1rem;
         text-decoration: none;
-        font-size: 1vw;
+        font-size: 2vw;
         display: block;
         transition: 0.3s;
-        height: 30vh;
         list-style-type:none;
       }
       ul li:hover {

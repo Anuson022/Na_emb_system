@@ -94,13 +94,8 @@ const Customer_table = () => {
       
 <div class="container_customer_table">
   <div>
-  <button >Go to Test Component</button>
 
-  <input
-        type="text"
-        value={searchTerm}
-        onChange={handleSearch}
-      />
+
   </div>
 	<table>
 		<thead className="table_head">

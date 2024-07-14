@@ -1,0 +1,23 @@
+.AD_container
+{
+    width: 100%;
+}
+.Image_show
+{
+    margin: 1.5rem auto;    border: 1px black solid;
+    
+
+}
+.Image_grid
+{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+    gap: 1rem;
+}
+.Image_item
+{
+    padding: 1rem;
+    border: 1px black solid;
+    text-align: center;
+    img{width: 7rem; height: 7rem;}
+}

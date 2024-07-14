@@ -5,7 +5,7 @@
 
 .container_customer_table table {
     margin: 10px 10px;
-	width: 80vw;
+    width: 100%;
     border: 1px solid black;
     table-layout: fixed;
 	border-collapse: collapse;

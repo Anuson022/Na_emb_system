@@ -6,34 +6,32 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 function Student_form() {
-    const [formdata, setformdata] = useState({
-        info_data:"",
-        parent_name:"",
-        phone_number:"",
-        status:"ยังไม่ตรวจสอบ",
-      });
-    
-    const handleChange = (event) =>
-        {
-            const { name, value } = event.target;
-            setformdata((prevFormData) => ({
-              ...prevFormData,
-              [name]: value
-            }));
-          };
+
     const handle_submit = (event) =>
         {
             try {
-                axios.post("http://localhost:5000/cus_input",formdata)
+                axios.post("http://localhost:5000/cus_input",/*formdata_info*/)
             } catch (error) {
                 console.log(error)
             }
         }
     return (
-        <div>
+      <>
+      <h2 style={{ fontSize: "3vh" }}>กรุณากรอกข้อมูล</h2>
+      <div >
+        <Shirt_graphic_cus_const />
+
+      </div>
+      </>
+    );
+}
+
+export default Student_form
+
+/*                    
             <div className='form_container'>
                 <div className='input_container'>
-                    <form onSubmit={handle_submit} >
+<form onSubmit={handle_submit} >
                         <div className='form_input'>
                         <p>กรุณากรอกข้อมูล</p>
                         <br />
@@ -68,13 +66,6 @@ function Student_form() {
                         </div>
                         </div>
                     </form>
-                    <Shirt_graphic_cus_const/>
+                                    </div>
 
-                </div>
-
-            </div>
-        </div>
-  )
-}
-
-export default Student_form
+            </div>*/

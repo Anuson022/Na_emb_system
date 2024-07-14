@@ -1,6 +1,7 @@
 import React, { useEffect, useState,Component } from 'react';
 import { useLocation } from 'react-router-dom';
 import './css1.css'
+import Shirt_graphic_cus_const from './Shirt_graphic_cus_const';
 import axios from 'axios';
 
 const render_h1 = (text) => {
@@ -384,124 +385,11 @@ useEffect(() => {
       </form>
       <br />
       <form className='cus_insert'>
-  <fieldset>
+  <fieldset className=''>
   <legend style={{}}><h1>ข้อมูลสำหรับแสดงกราฟิค</h1></legend>
-
-    <div className='container_form'>
-
-      <div className='grid_input'>
-
-        <h1>กรุณากรอกรายละเอียด</h1>
-
-        <div className='input_right'>
-            <form onSubmit={handle_submit}>
-            <h2>สิ่งที่ต้องการปักปักด้านขวา</h2>
-
-            <div className='input_right_container'>
-        
-              <div className='textarea_input_right'>
-                <textarea 
-                value={formdata.text_right.textright_input} name='textright_input' onChange={handle_text} placeholder="สิ่งที่ต้องการปัก"
-                />
-              </div>
-              <div className='color_container_right'>
-                <input className='color_input_right' type="color" 
-                value={formdata.text_right.color_right} name='color_right' onChange={handle_text}
-                />
-              </div>
-            </div>
-            <h2>สิ่งที่ต้องการปักปักด้านซ้าย</h2>
-            <div className='input_left_container'>
-        
-              <div className='textarea_input_left'>
-              <textarea 
-                value={formdata.text_left.textleft_input} name='textleft_input' onChange={handle_text} placeholder="สิ่งที่ต้องการปัก"
-                />
-              </div>
-              <div className='color_container_left'>
-                <input className='color_input_left' type="color" 
-                value={formdata.text_left.color_left} name='color_left' onChange={handle_text}
-                />
-              </div>
-            </div>
-
-            <div>
-            <h2>จุด</h2>
-            <input
-            type="checkbox"
-            checked={checbox_dot}
-            onChange={handlecheckbox_dot}
-            />
-
-            {checbox_dot ? <div>
-            <div className='dot_type'>
-              {<p>{formdata.dot.type + formdata.dot.position+formdata.dot.amount_dot+formdata.dot.color_dot}</p>}
-            <select name="type" onChange={handledot}>
-            <option value="no_dot">จุดหรือดาว</option>
-            <option value="dot">จุด</option>
-            <option value="star">ดาว</option>
-            </select>
-            </div>
-
-            <div className='dot_position'>
-            <select name="position" onChange={handledot_position}>
-            <option value="no_dot">ตำแหน่งของจุด</option>
-            <option value="onschool_shirt">บนชื่อโรงเรียน</option>
-            <option value="onname_shirt">บนชื่อนักเรียน</option>
-            <option value="right_collar">บนปกขวา</option>
-            <option value="left_collar">บนปกซ้าย</option>
-            </select>
-            </div>
-            
-            <div className='dot_amount'>
-            <select name="amount_dot" onChange={handledot}>
-            <option value="0">จำนวนจุด</option>
-            <option value="1">1 จุด</option>
-            <option value="2">2 จุด</option>
-            <option value="3">3 จุด</option>
-            </select>
-            </div>
-
-            <div className='dot_color' onChange={handledot}>
-            <input type="color" name="color_dot" id="" />
-            </div>
-            </div>:''}
-            </div>
-
-            <button type="submit">TEST</button>
-            </form>
-          </div>
-            <p>Selected Color: {formdata.text_right.color_right}</p>
-          </div>
-
-      <div className='body_shirt'>
-        <h1>รูปแบบกราฟิค</h1>
-        <div className='shirt_design' >
-            <img src="image_folder/shirt.png" alt="" />
-            <div className='grid_dot'>
-                <div className={dot_position_class.dot_left}>
-                {render_dot1(formdata.dot.type,formdata.dot.amount_dot)}
-                  </div>
-                <div className={dot_position_class.dot_right} style={{color:formdata.dot.color_dot}}>
-                {render_dot1(formdata.dot.type,formdata.dot.amount_dot)}
-                </div>
-            </div>
-            <div className='grid_name'>
-                <div className="on_right">
-                <div className={dot_position_class.onschool} style={{color:formdata.dot.color_dot}}>{render_dot_school(formdata.dot.type,formdata.dot.amount_dot)}</div>
-                <div style={{color:formdata.text_right.color_right}}>{render_h1(formdata.text_right.textright_input)}</div>
-                </div>
-                
-                <div className="on_left">
-                <div className={dot_position_class.onname} style={{color:formdata.dot.color_dot}}>{render_dot_name(formdata.dot.type,formdata.dot.amount_dot)}</div>
-                <div style={{color:formdata.text_left.color_left}}>{render_h1(formdata.text_left.textleft_input)}</div>
-                  </div>
-            </div>
-            </div>
-        </div>
-        <div>
-        </div>
-    </div>
+  <div className='Shirt_com'>
+  <Shirt_graphic_cus_const/>
+  </div>
     </fieldset>
       </form>
       <br />

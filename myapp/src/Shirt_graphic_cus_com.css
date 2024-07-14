@@ -1,0 +1,460 @@
+/* src/fonts.css */
+*{box-sizing: border-box;}
+:root
+{
+    --image_width:40rem;
+    --image_height:30rem;
+    --gap1:0.833vh;
+}
+.test1{width: 100%;}
+@font-face {
+    font-family: 'JS_Chanok';
+    src: url('./JS_Chanok.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  } 
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+.container_form
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    /*grid-template-columns: repeat(auto-fit,minmax(75rem,1fr)); /* Two equal-width columns */
+    grid-gap: 0.8vh; /* Optional: space between items */
+
+}
+.container_form .grid_input
+{
+    background-color: #ddd;
+    margin: 0 auto;
+    padding: 1.6vh;
+    width: 95%;
+}
+.input_right_container
+{display: grid;grid-template-columns:auto 25%;  align-items: center; gap:3vh; margin: 0 auto;}
+.textarea_input_right textarea
+{
+    font-size: 2.5vh;
+    width:100%;
+    height: 12.5vh;
+    padding: 0.8vh;
+}
+.color_container_right
+{
+    /*margin: 0.4vh;
+    width: 4.1vh;
+    height: 4.1vh;
+    border: 0.1em white solid;
+    border-radius: 50%;
+    overflow: hidden;*/
+    
+}
+.color_input_right {
+    min-width:50%;
+    height: 12.5vh;
+    padding: 1px;
+    border-radius: 5px;
+    
+}
+
+.input_left_container
+{display: grid;grid-template-columns:auto 25%;  align-items: center; gap:3vh;}
+.textarea_input_left textarea
+{
+    font-size: 2.5vh;
+    width:100%;
+    height: 12.5vh;
+    padding: 0.8vh;
+}
+.color_container_left
+{
+    
+    /*margin: 0.4vh;
+    width: 4.1vh;
+    height: 4.1vh;
+    /*border: 0.1em white solid;
+    border-radius: 50%;
+    overflow: hidden;*/
+}
+.color_input_left {
+    min-width:50%;
+    height: 12.5vh;
+    padding: 1px;
+    border-radius: 5px;
+    /*transform: scale(2);*/
+}
+
+.body_shirt
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 1.6vh;
+    width: 100%;
+    background-color: #ddd;
+    text-align: center;
+    font-size: 1vh;
+    box-sizing: border-box;    overflow: hidden;
+
+}
+.shirt_design
+{
+
+    border: 1px solid #ff0000;
+    display: flex;
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 1vh; /* Distance from the top of the viewport */
+    display: inline-block;
+}
+.shirt_design img{
+    margin: 0 auto;
+    width: var(--image_width);
+    height: var(--image_height);
+    }
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+.dot_checkbox
+{
+    [type=checkbox]
+    {
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  transform: scale(2);
+  margin: 1rem;
+    }
+    .dot_type
+    {
+        font-size: 2.5vh;;display: grid;
+        grid-template-columns: 25% 40%;
+        select
+        { margin: 1rem;font-size: 2vh ;min-width:6rem;}
+    }
+    .dot_position
+    {
+        font-size: 2.5vh;;display: grid;
+        grid-template-columns: 25% 40%;
+        select
+        { margin: 1rem;font-size: 2vh ;min-width:6rem;}
+    }
+    .dot_amount
+    {
+        font-size: 2.5vh;;display: grid;
+        grid-template-columns: 25% 40%;
+        select
+        { margin: 1rem;font-size: 2vh ;min-width:6rem;}
+    }
+    .dot_color
+    {        
+        font-size: 2.5vh;;display: grid;
+        grid-template-columns: 25% 40%;
+        input
+        { margin: 1rem;font-size: 2vh ;width: 90%;min-width:6rem;}
+    }
+}
+.grid_dot
+{
+    display: grid;
+    grid-template-columns: 6.25rem 6.25rem; /* Static width for each column */
+    gap: 0rem;
+}
+.grid_dot div
+{
+    border: 1px solid #000;
+    text-align: center;
+    color: blue;
+}
+
+.dot_right
+{       
+    font-family: "Noto Serif Thai", serif;
+    position: relative;
+    bottom: 18rem;
+    left: 8rem;
+    font-size: 0.5rem;
+    rotate: z 80deg;
+}
+.dot_right h1 {
+    margin: -1.875rem;
+}
+.dot_right .dot3 {
+    margin-left: 0rem;
+}
+.dot_right .dot2 {
+    margin-left: 1.25rem;
+}
+.dot_right .dot1 {
+    margin-left: 2.5rem;
+}
+
+.dot_left
+{   
+    font-family: "Noto Serif Thai", serif;
+    position: relative;
+    bottom: 18rem;
+    left: 15.9rem;
+    font-size: 0.5rem;
+    rotate: z -80deg;
+}
+.dot_left h1 {
+    margin: -1.875rem;
+}
+.dot_left .dot3 {
+    margin-right: 0rem;
+}
+.dot_left .dot2 {
+    margin-right: 1.25rem;
+}
+.dot_left .dot1 {
+    margin-right: 2.5rem;
+}
+
+.grid_name
+{    
+    display: grid;
+    grid-template-columns: 6.25rem 6.25rem; /* Static width for each column */
+    align-items: center;
+    text-align: center;
+    place-items: center;
+    justify-content: center;
+    text-wrap: nowrap;
+    position: relative;
+    bottom: 15rem;
+    font-family: 'JS_Chanok';
+    gap: 1rem;
+}
+.grid_name div
+{
+    font-size: 0.5rem;
+}
+.dot_school{font-size: 0.9rem;}
+.on_right
+{border: 1px solid #000;}
+.on_right h1
+{margin: 0rem;}
+
+.dot_name{font-size: 0.9rem;}
+.on_left
+{border: 1px solid #000;}
+.on_left h1
+{margin: 0rem;}
+.Logo_
+{
+    img{width: 3rem; height:3rem;}
+}
+
+@media only screen and (max-width: 640px) 
+{
+    :root {
+        --image_width:30rem;
+        --image_height:20rem;
+      }
+    .container_form
+    {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 0.8vh; /* Optional: space between items */
+    
+    }
+    .dot_right {
+        bottom: 18rem;
+        left: 8rem;
+        font-size: 0.5rem;
+        rotate: z 80deg;
+    }
+    .dot_right h1 {
+        margin: -1.875rem;
+    }
+    .dot_right .dot3 {
+        margin-left: 0rem;
+    }
+    .dot_right .dot2 {
+        margin-left: 1.25rem;
+    }
+    .dot_right .dot1 {
+        margin-left: 2.5rem;
+    }
+    .dot_left {
+        bottom: 18rem;
+        left: 15.9rem;
+        font-size: 0.5rem;
+        rotate: z -80deg;
+    }
+    .dot_left h1 {
+        margin: -1.875rem;
+    }
+    .dot_left .dot3 {
+        margin-right: 0rem;
+    }
+    .dot_left .dot2 {
+        margin-right: 1.25rem;
+    }
+    .dot_left .dot1 {
+        margin-right: 2.5rem;
+    }
+        .Logo_ {
+            img {width: 3rem;height: 3rem;}
+        }
+}
+
+/* Small devices such as large phones (640px and up) */
+@media only screen and (min-width: 640px) 
+{
+    :root {
+        --image_width:30rem;
+        --image_height:20rem;
+      }
+    .container_form
+    {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 0.8vh; /* Optional: space between items */
+    }
+
+}
+
+/* Medium devices such as tablets (768px and up) */
+@media only screen and (min-width: 768px) 
+{        :root {
+    --image_width: 50rem;
+    --image_height: 40rem;
+}
+.container_form {
+    display: grid;
+    grid-template-columns: 50% auto;
+}
+.grid_name {
+    bottom: 30.5rem;
+    gap: 6rem;
+    font-family: 'JS_Chanok';
+
+    div {
+        font-size: 0.9rem;
+    }
+}
+.dot_right {
+    bottom: 33rem;
+    left: 17rem;
+    font-size: 0.8rem;
+    rotate: z 20deg;
+
+}
+.dot_right h1 {
+    margin: -1.875rem;
+}
+.dot_right .dot3 {
+    margin-left: 0rem;
+}
+.dot_right .dot2 {
+    margin-left: 1.25rem;
+}
+.dot_right .dot1 {
+    margin-left: 2.5rem;
+}
+.dot_left {
+    bottom: 33rem;
+    left: 27rem;
+    font-size: 0.8rem;
+    rotate: z -20deg;
+}
+.dot_left h1 {
+    margin: -1.875rem;
+}
+.dot_left .dot3 {
+    margin-right: 0rem;
+}
+.dot_left .dot2 {
+    margin-right: 1.25rem;
+}
+.dot_left .dot1 {
+    margin-right: 2.5rem;
+}
+.dot_name{font-size: 1.5rem;}
+.dot_school{font-size: 1.5rem;}
+.Logo_
+{
+    img{width: 5rem; height:5rem;}
+}
+
+}
+
+/* Large devices such as laptops (1024px and up) */
+@media only screen and (min-width: 1024px) {
+    :root {
+        --image_width: 50rem;
+        --image_height: 40rem;
+    }
+    .container_form {
+        display: grid;
+        grid-template-columns: 50% auto;
+    }
+    .grid_name {
+        bottom: 30.5rem;
+        gap: 6rem;
+        font-family: 'JS_Chanok';
+
+        div {
+            font-size: 0.9rem;
+        }
+    }
+    .dot_right {
+        bottom: 33rem;
+        left: 17rem;
+        font-size: 0.8rem;
+        rotate: z 20deg;
+
+    }
+    .dot_right h1 {
+        margin: -1.875rem;
+    }
+    .dot_right .dot3 {
+        margin-left: 0rem;
+    }
+    .dot_right .dot2 {
+        margin-left: 1.25rem;
+    }
+    .dot_right .dot1 {
+        margin-left: 2.5rem;
+    }
+    .dot_left {
+        bottom: 33rem;
+        left: 27rem;
+        font-size: 0.8rem;
+        rotate: z -20deg;
+    }
+    .dot_left h1 {
+        margin: -1.875rem;
+    }
+    .dot_left .dot3 {
+        margin-right: 0rem;
+    }
+    .dot_left .dot2 {
+        margin-right: 1.25rem;
+    }
+    .dot_left .dot1 {
+        margin-right: 2.5rem;
+    }
+    .dot_name{font-size: 1.5rem;}
+    .dot_school{font-size: 1.5rem;}
+    .Logo_
+    {
+        img{width: 5rem; height:5rem;}
+    }
+}
+
+/* Largest devices such as desktops (1280px and up) */
