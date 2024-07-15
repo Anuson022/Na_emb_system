@@ -33,7 +33,8 @@ const Customer_table = () => {
     try {
       const response = await axios.post('http://localhost:5000/delete_cusdata', {popup_delete});
       setpopup_delete(response.data)
-      alert(popup_delete)
+      fetching_data();
+      //alert(popup_delete)
     } catch (error) {
       console.error('Error fetching search results:', error);
     }

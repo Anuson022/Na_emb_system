@@ -7,14 +7,7 @@ import axios from 'axios';
 
 function Student_form() {
 
-    const handle_submit = (event) =>
-        {
-            try {
-                axios.post("http://localhost:5000/cus_input",/*formdata_info*/)
-            } catch (error) {
-                console.log(error)
-            }
-        }
+
     return (
       <>
       <h2 style={{ fontSize: "3vh" }}>กรุณากรอกข้อมูล</h2>

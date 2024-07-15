@@ -44,14 +44,6 @@ function Shirt_graphic_cus() {
     status:"ยังไม่ตรวจสอบ",
   });
 
-const handleChange_info = (event) =>
-    {
-        const { name, value } = event.target;
-        setformdata_info((prevFormData) => ({
-          ...prevFormData,
-          [name]: value
-        }));
-      };
   const fetch_image = async () => {
     const res = await axios.post('http://localhost:5000/files');
     Setimage(res.data);
@@ -95,6 +87,20 @@ const handleChange_info = (event) =>
   useEffect(() => {
     fetch_image();
   }, []);
+  const HandleSubmit = async(event) =>
+    {
+      const Combine_shirt = 
+      {
+        ...formdata,
+        ...Logo
+      }
+      try {
+        const responses = await axios.post("http://localhost:5000/cus_input",{Combine_shirt,formdata_info})
+        console.log(responses.data)
+      } catch (error) {
+        alert(error)
+      }
+    }
   return (
     <>
     <Shirt_graphic_cus_com setcheck_dot={setcheck_dot} checbox_dot={checbox_dot} 
@@ -103,8 +109,11 @@ const handleChange_info = (event) =>
     Logo = {Logo} Setlogo = {Setlogo}
     Image = {Image} Setimage = {Setimage}
     formdata_info = {formdata_info}
-    setformdata_info ={setformdata_info} 
+    setformdata_info ={setformdata_info}
     />
+    <br />
+    <div style={{textAlign:'center'}} onClick={HandleSubmit}><button >Submit</button></div>
+
     </>
   )
 }

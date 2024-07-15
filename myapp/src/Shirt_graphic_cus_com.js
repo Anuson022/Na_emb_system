@@ -113,7 +113,8 @@ function Shirt_graphic_cus_com({
   dot_position_class,
   Logo,Setlogo,
   Image,Setimage,
-  formdata_info,setformdata_info
+  formdata_info,setformdata_info,
+  HandleSubmit
 }) 
 {
   
@@ -502,8 +503,7 @@ function Shirt_graphic_cus_com({
             </div>
           </div>
         </div>
-      </div><br />
-      <div style={{textAlign:'center'}}><button >Submit</button></div>
+      </div>
 
     </>
   );

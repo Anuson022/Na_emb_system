@@ -1,68 +1,8 @@
 import React, { useEffect, useState,Component } from 'react';
 import { useLocation } from 'react-router-dom';
 import './css1.css'
-import Shirt_graphic_cus_const from './Shirt_graphic_cus_const';
+import Shirt_graphic_cus_com from './Shirt_graphic_cus_com';
 import axios from 'axios';
-
-const render_h1 = (text) => {
-  return (
-    text.split('\n').map((line, index) => (<h1 key={index}>{line}</h1>))
-  );
-};
-const render_dot1 = (dot_type,dot_amount) => {
-  var dot_star =''
-  let dot_array =[]
-  var font_size ={}
-  if(dot_type === 'dot')
-    {dot_star = '•';font_size = {fontSize: "1.875rem",}}
-  if(dot_type === 'star')
-    {dot_star = '★';font_size = {fontSize: "1.7rem",}}
-  if(dot_amount === '1')
-    {dot_array = ['\u00A0', '\u00A0', dot_star];}
-  if(dot_amount === '2')
-    {dot_array = ['\u00A0', dot_star, dot_star];}
-  if(dot_amount === '3')
-    {dot_array = [dot_star, dot_star, dot_star];}
-  return(<>
-    {dot_array.map((item,index)=>
-    { const re_index = dot_array.length - index;
-      return <h1 key={index} className={'dot'+re_index} style={font_size}>{item}</h1>
-    })}
-    </>
-    )
-};
-const render_dot_school = (dot_type,dot_amount) => {
-  var dot_star =''
-  let dot_array =[]
-  var font_size ={}
-  if(dot_type === 'dot')
-    {dot_star = '•';font_size = {fontSize: "1.7rem",marginTop:-20,marginBottom:-5,textAlign: 'center'}}
-  if(dot_type === 'star')
-    {dot_star = '★';font_size = {fontSize: "1.2rem",marginTop:-15}}
-  if(dot_amount === '1')
-    {dot_array = ['\u00A0', dot_star, '\u00A0'];}
-  if(dot_amount === '2')
-    {dot_array = ['\u00A0', dot_star, dot_star];}
-  if(dot_amount === '3')
-    {dot_array = [dot_star, dot_star, dot_star];}
-  return(<h1 className={'dot_school'} style={font_size}>{dot_array}</h1>)
-};
-const render_dot_name = (dot_type,dot_amount) => {
-  var dot_star =''
-  let dot_array =[]
-  var font_size ={}
-  if(dot_type === 'dot')
-    {dot_star = '•';font_size = {fontSize: "1.7rem",marginTop:-20,marginBottom:-5,textAlign: 'center'}}
-  if(dot_type === 'star')
-    {dot_star = '★';font_size = {fontSize: "1.2rem",marginTop:-15}}
-  if(dot_amount === '1')
-    {dot_array = ['\u00A0', dot_star, '\u00A0'];}
-  if(dot_amount === '2')
-    {dot_array = ['\u00A0', dot_star, dot_star];}
-  if(dot_amount === '3')
-    {dot_array = [dot_star, dot_star, dot_star];}
-  return(<h1 className={'dot_name'} style={font_size}>{dot_array}</h1>)
-};
 
 const TextareaToParagraphs = () => {
   const location = useLocation();
@@ -74,26 +14,109 @@ const TextareaToParagraphs = () => {
     phone_number:cus_data.phone_number,
     status:"ตรวจสอบแล้ว"
   });
-  const [formdata, setformdata] = useState({
-    
-    text_right: 
-      {
-        textright_input: '',
-        color_right: '#0000FF'
-      },
-    text_left:
-      {
-        textleft_input: '',
-        color_left: '#0000FF'
-      },
-    dot:
+  const [FetchData,SetFetchData] = useState("test")
+  const Fetch_graphic = async() => 
     {
-      type:"",
-      position:"",
-      amount_dot:"",
-      color_dot:""
+      try {
+        const response = await axios.get('http://localhost:5000/get_cusID', {
+          params: {
+            key1: 'value1',
+            key2: 'value2'
+          }
+        });
+        SetFetchData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    useEffect(() => {
+      Fetch_graphic();
+    }, []);
+  const [formdata, setformdata] = useState({
+    text_right: {
+      textright_input: "",
+      color_right: "#0000FF",
+    },
+    text_left: {
+      textleft_input: "",
+      color_left: "#0000FF",
+    },
+    dot: {
+      type: "",
+      position: "",
+      amount_dot: "",
+      color_dot: "",
     },
   });
+
+  const [checbox_dot,setcheck_dot] = useState(false)
+
+  const [dot_position_class, set_dot_position] = useState({
+    onschool: "hidden",
+    onname: "hidden",
+    dot_left: "hidden",
+    dot_right: "hidden",
+  });
+
+  const [Logo,Setlogo] = useState(
+    {
+      Logo_right:
+      {school_name:"",image_path:""},
+      Logo_left:
+      {school_name:"",image_path:""}
+    })
+  const [Image,Setimage] = useState([])
+
+  const [formdata_info, setformdata_info] = useState({
+    info_data:"",
+    parent_name:"",
+    phone_number:"",
+    status:"ยังไม่ตรวจสอบ",
+  });
+
+  const fetch_image = async () => {
+    const res = await axios.post('http://localhost:5000/files');
+    Setimage(res.data);
+};
+  useEffect(() => {
+    var dot_star = ''
+    var position = ''
+    var amount = ''
+    if (checbox_dot === true) {
+      if(formdata.dot.type === 'จุด')
+        {dot_star = '•';}
+      if(formdata.dot.type ==='ดาว')
+        {dot_star = '★';}
+      if(formdata.dot.position === 'บนชื่อโรงเรียน')
+        {
+          set_dot_position(data_position =>(
+            {...data_position,
+              onschool:"onschool",
+              onname:"hidden",
+              dot_left:"hidden",
+              dot_right:"hidden"}))
+        }
+      if(formdata.dot.position === 'onname_shirt')
+        {
+    
+        }
+      if(formdata.dot.position === 'right_collar')
+        {
+    
+        }
+      if(formdata.dot.position === 'left_collar')
+        {
+    
+        }
+    }
+    document.body.classList.add('body_of_edit');
+    return () => {
+      document.body.classList.remove('body_of_edit');
+    };}, [formdata.dot, checbox_dot]);
+
+  useEffect(() => {
+    fetch_image();
+  }, []);
   const [orders, setOrders] = useState([{ id: 1, value1: '', value2: '', value3: '',value4: '' }]);
 
   const handle_cuschange = (e) => {
@@ -103,57 +126,7 @@ const TextareaToParagraphs = () => {
       [name]: value,
     });
   };
-    const [checkbox_logo, setLogo] = useState(
-      {
-        logo_right: false,
-        logo_left: false
-      });
-    const [checbox_dot,setcheck_dot] = useState(false)
-    const [dot_position_class,set_dot_position] = useState(
-      {
-        onschool:"hidden",
-        onname:"hidden",
-        dot_left:"hidden",
-        dot_right:"hidden"
-      })
-    const handlecheckbox_dot = (event) => {
-      setcheck_dot(event.target.checked);
-      if(event.target.checked === true)
-        {
-          setformdata((prevFormdata) => ({
-            ...prevFormdata,
-            dot: {
-              ...prevFormdata.dot,
-              type: 'dot',
-              position:'onschool_shirt',
-              amount_dot:'1',
-              color_dot:'#0000FF'
-            }
-          }));
-        }//auto input dot1
-      else if(event.target.checked === false)
-      {
-        console.log(event.target.checked)
-        setformdata((prevFormdata) => ({
-          ...prevFormdata,
-          dot: {
-            ...prevFormdata.dot,
-            type: '',
-            position:'',
-            amount_dot:'',
-            color_dot:''
-          }
-        }));
-      }//remove input dot1
 
-    };
-    const handle_logo = (event) => {
-      const { name, checked } = event.target;
-      setLogo((goto) => ({
-        ...goto,
-        [name]: checked,
-      }));
-    };
 //order varible
 
   const addInput = () => {
@@ -178,78 +151,7 @@ const TextareaToParagraphs = () => {
     }));
   };
 //order varible
-    const handle_text = (e) => {
-      const { name, value } = e.target;
-      setformdata((prevData) => ({
-        ...prevData,
-        text_right: {
-          ...prevData.text_right,
-          [name]: value,
-        },
-        text_left: {
-          ...prevData.text_left,
-          [name]: value,
-        },
-      }));
-    };
-    const handledot = (event) =>
-      {
-        const { name, value } = event.target;
-        setformdata((prevFormdata) => ({
-          ...prevFormdata,
-          dot: {
-            ...prevFormdata.dot,
-            [name]: value,
-          }
-        }));
-      }
-      const handledot_position = (event) =>
-        {
-          const { name, value } = event.target;
-          setformdata((prevFormdata) => ({
-            ...prevFormdata,
-            dot: {
-              ...prevFormdata.dot,
-              [name]: value,
-            }
-          }));
-          if(event.target.value === 'onschool_shirt')
-            {
-              set_dot_position(data_position =>(
-                {...data_position,
-                  onschool:"onschool",
-                  onname:"hidden",
-                  dot_left:"hidden",
-                  dot_right:"hidden"}))
-            }
-          if(event.target.value === 'onname_shirt')
-            {
-              set_dot_position(data_position =>(
-                {...data_position,
-                  onschool:"hidden",
-                  onname:"onname",
-                  dot_left:"hidden",
-                  dot_right:"hidden"}))
-            }
-          if(event.target.value === 'right_collar')
-            {
-              set_dot_position(data_position =>(
-                {...data_position,
-                  onschool:"hidden",
-                  onname:"hidden",
-                  dot_left:"hidden",
-                  dot_right:"dot_right"}))
-            }
-          if(event.target.value === 'left_collar')
-            {
-              set_dot_position(data_position =>(
-                {...data_position,
-                  onschool:"hidden",
-                  onname:"hidden",
-                  dot_left:"dot_left",
-                  dot_right:"hidden"}))
-            }
-        }
+
     const handle_submit = (e) =>
       {
         e.preventDefault();
@@ -282,43 +184,33 @@ Price: int*/
 
 
 useEffect(() => {
-  var dot_star = ''
-  var position = ''
-  var amount = ''
-  if (checbox_dot === true) {
-    if(formdata.dot.type === 'dot')
-      {dot_star = '•';}
-    if(formdata.dot.type ==='star')
-      {dot_star = '★';}
-    if(formdata.dot.position === 'onschool_shirt')
-      {
-        set_dot_position(data_position =>(
-          {...data_position,
-            onschool:"onschool",
-            onname:"hidden",
-            dot_left:"hidden",
-            dot_right:"hidden"}))
-      }
-    if(formdata.dot.position === 'onname_shirt')
-      {
-  
-      }
-    if(formdata.dot.position === 'right_collar')
-      {
-  
-      }
-    if(formdata.dot.position === 'left_collar')
-      {
-  
-      }
-  }
   document.body.classList.add('body_of_edit');
   return () => {
     document.body.classList.remove('body_of_edit');
-  };}, [formdata.dot, checbox_dot]);
+  };}, []);
 
   return (
     <div className=''>
+
+      <br />
+      <form className='cus_insert'>
+  <fieldset className=''>
+  <legend style={{}}><h1>ข้อมูลสำหรับแสดงกราฟิค</h1></legend>
+  <div className='Shirt_com'>
+  <>
+    <Shirt_graphic_cus_com setcheck_dot={setcheck_dot} checbox_dot={checbox_dot} 
+    formdata={formdata} setformdata={setformdata} set_dot_position={set_dot_position} 
+    dot_position_class={dot_position_class}
+    Logo = {Logo} Setlogo = {Setlogo}
+    Image = {Image} Setimage = {Setimage}
+    formdata_info = {formdata_info}
+    setformdata_info ={setformdata_info}
+    />
+    </>
+  </div>
+    </fieldset>
+      </form>
+
       <form className='cus_edit'>
       <fieldset>
       <legend style={{}}><h1>ข้อมูลลูกค้า</h1></legend>
@@ -381,17 +273,8 @@ useEffect(() => {
     
 </div>
 </fieldset>
+      </form>
 
-      </form>
-      <br />
-      <form className='cus_insert'>
-  <fieldset className=''>
-  <legend style={{}}><h1>ข้อมูลสำหรับแสดงกราฟิค</h1></legend>
-  <div className='Shirt_com'>
-  <Shirt_graphic_cus_const/>
-  </div>
-    </fieldset>
-      </form>
       <br />
       <form>
       <fieldset className='order_sum'>
@@ -441,8 +324,6 @@ useEffect(() => {
       </form>
     <button onClick={addInput}>Add Input</button>
     <button onClick={handle_submit}>Test_submit</button>
-
-
     </div>
     
   );

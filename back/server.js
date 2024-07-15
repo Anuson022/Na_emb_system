@@ -151,27 +151,31 @@ adm_update = (cus_input,formdata,order)=>
         }
       );
     }
-cus_insert = (obj)=>
+cus_insert = (shirt_data,obj)=>
     {
+        return new Promise((resolve, reject) => {
+        const json_data = [JSON.stringify(shirt_data)];
         const cus_array = Object.values(obj);
-        const insert_sql = "INSERT INTO customer_data (`info`, `parent_name`, `phone_number`,`status`) VALUES (?);"
-        pool.query(insert_sql, [cus_array], 
+        const insert_value = [...cus_array,json_data]
+        const insert_sql = "INSERT INTO customer_data (`info`, `parent_name`, `phone_number`,`status`,`shirt`) VALUES (?);"
+        pool.query(insert_sql, [insert_value],
             (error, result, fields) => {
           if (error) {
             return console.log(error);
+            reject(error);
           }
           console.log("Success");
-        })
+          resolve(result);
+        });
+      });
     }
 const data_queing = async() =>
-    {pool.query(`"ALTER TABLE customer_data AUTO_INCREMENT = 1;
-
-SET @row_number = 0;
-UPDATE customer_data SET cus_id = @row_number:=@row_number+1;
-ALTER TABLE customer_data AUTO_INCREMENT = 1;
-
-SET @row_number = 0;
-UPDATE customer_data SET cus_id = @row_number:=@row_number+1;;"`,(error,result,fields)=>{}) }
+{
+await pool.query("SET  @num := 0;")
+await pool.query("UPDATE customer_data SET cus_id = @num := (@num+1);")
+await pool.query(`ALTER TABLE customer_data AUTO_INCREMENT =1;`)
+console.log('asf')
+}
 const adm_delete = async(cus_id) =>
   {
     const delete_sql = "DELETE FROM customer_data WHERE cus_id = ?"
@@ -191,11 +195,16 @@ app1.get('/',(req,res)=>
     })
 app1.post('/cus_input',async(req,res)=>
     {
+      await data_queing();
+
+      const Shirt_data = req.body.Combine_shirt
+      const Cus_info = req.body.formdata_info
         await console.log(req.body)
         //await console.log(typeof(req.body))
-        await cus_insert(req.body)
-        await data_queing();
+        await cus_insert(Shirt_data,Cus_info)
         res.json()
+        await data_queing();
+
         //customer input
     })
 
@@ -217,7 +226,7 @@ app1.post('/delete_cusdata',async(req,res)=>
         res.json()
         //storefront delete
     })
-app1.post('/search_cus1', (req, res) => {
+app1.post('/search_cus1', async(req, res) => {
   const searchTerm = (req.body.search_value);
   console.log(searchTerm)
   const query = `SELECT * FROM customer_data WHERE cus_id LIKE ?`;
@@ -230,8 +239,8 @@ app1.post('/search_cus1', (req, res) => {
     
   }
 
-});
-app1.post('/data_table1', (req, res) => {
+    });
+app1.post('/data_table1', async(req, res) => {
   pool.query('SELECT * FROM customer_data', (err, results) => {
     if (err) {
       res.status(500).send(err);
@@ -239,8 +248,21 @@ app1.post('/data_table1', (req, res) => {
       res.json(results);
     }
   });
-});
-
+    });
+app1.get("/get_cusID", async(req,res)=>
+  {
+    const key1 = req.query.key1;
+    const key2 = req.query.key2;
+    console.log(req.query)
+    // Process the data as needed
+    const responseData = {
+      receivedKey1: key1,
+      receivedKey2: key2,
+      message: 'Data received successfully!'
+    };
+  
+    res.json(responseData);
+  })
 app1.post('/data_tester', (req, res) => {
   console.log(req.body)
 });

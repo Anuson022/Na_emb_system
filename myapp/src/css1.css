@@ -8,18 +8,20 @@ body
 
 .body_of_edit
 {
-    /*padding: 1rem;
-    max-width: fit-content;
-    margin-inline: auto;*/
+    padding: 1rem;
+    /*max-width: fit-content;*/
+    margin-inline: auto;
     margin: 0 auto;
+    fieldset{width: 100%; min-width: 45rem;}
 }
 .Shirt_com
 {
-  width: 100%;
+  min-width: 40rem;
 }
 .cus_edit
 {
-  width: 100%;
+  min-width: 40rem;
+  margin: 0 auto;
 }
 .customer_edit_content
 {
@@ -71,6 +73,7 @@ body
 
 .order_sum
 {
+  min-width: 40rem;
     table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
