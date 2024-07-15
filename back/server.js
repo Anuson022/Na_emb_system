@@ -56,7 +56,6 @@ app1.post('/upload', (req, res) => {
 // Fetch files endpoint
 app1.post('/files', (req, res) => {
   const searchTerm = (req.body.search_name)
-  console.log(searchTerm)
   if(searchTerm == null)
     {
       const query = `SELECT * FROM files`;
@@ -251,17 +250,17 @@ app1.post('/data_table1', async(req, res) => {
     });
 app1.get("/get_cusID", async(req,res)=>
   {
-    const key1 = req.query.key1;
-    const key2 = req.query.key2;
     console.log(req.query)
-    // Process the data as needed
-    const responseData = {
-      receivedKey1: key1,
-      receivedKey2: key2,
-      message: 'Data received successfully!'
-    };
-  
-    res.json(responseData);
+    const query = `SELECT * FROM customer_data WHERE cus_id = ?`;
+    try {
+      pool.query(query, [req.query.id], (err, results) => {
+        if (err) throw err;
+        res.json(results);
+        console.log(results)
+      });
+    } catch (error) {
+      
+    }
   })
 app1.post('/data_tester', (req, res) => {
   console.log(req.body)

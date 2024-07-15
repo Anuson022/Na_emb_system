@@ -14,17 +14,19 @@ const TextareaToParagraphs = () => {
     phone_number:cus_data.phone_number,
     status:"ตรวจสอบแล้ว"
   });
-  const [FetchData,SetFetchData] = useState("test")
+  const [FetchData,SetFetchData] = useState({})
   const Fetch_graphic = async() => 
     {
       try {
         const response = await axios.get('http://localhost:5000/get_cusID', {
           params: {
-            key1: 'value1',
-            key2: 'value2'
+            id: formdata_cus.cus_id
           }
         });
-        SetFetchData(response.data);
+        SetFetchData(response.data[0]);
+        //console.log(response.data[0])
+        const textrightInput = JSON.parse(response.data[0].shirt);
+        console.log(textrightInput.text_right); // Output: "a"
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -191,7 +193,6 @@ useEffect(() => {
 
   return (
     <div className=''>
-
       <br />
       <form className='cus_insert'>
   <fieldset className=''>
