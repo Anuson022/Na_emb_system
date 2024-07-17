@@ -114,7 +114,8 @@ function Shirt_graphic_cus_com({
   Logo,Setlogo,
   Image,Setimage,
   formdata_info,setformdata_info,
-  HandleSubmit
+  selectedRightLogo,setSelectedRightLogo,
+  selectedLeftLogo,setSelectedLeftLogo
 }) 
 {
   
@@ -219,12 +220,10 @@ function Shirt_graphic_cus_com({
 
   const Option_select = [
     {
-      value: "",
       label: "ไม่มี",
       image: "",
     },
     ...Image.map((item) => ({
-      value: item.id,
       label: item.name,
       image: `http://localhost:5000/uploads/${item.path.split("/").pop()}`,
     })),
@@ -246,32 +245,46 @@ function Shirt_graphic_cus_com({
       </>
     );
   };
-  const handlechange_logo_right = (e) =>
-    {
-      const selectedOption = e
 
-      Setlogo((prevData) => ({
-        ...prevData,
-        Logo_right: {
-          ...prevData.Logo_right,
-          school_name: selectedOption.label,
-          image_path: selectedOption.image
-        },
-      }));
+  const handlechange_logo = (selectedOption,position) =>
+    {
+      console.log(selectedOption)
+      Setlogo((prevData) => {
+        if (position === 'left') {
+          setSelectedLeftLogo(selectedOption);
+          setSelectedRightLogo(null);  // Clear the right logo selection
+          return {
+            ...prevData,
+            Logo_left: {
+              ...prevData.Logo_left,
+              school_name: selectedOption.label,
+              image_path: selectedOption.image
+            },
+            Logo_right: {
+              ...prevData.Logo_right,
+              school_name: "ไม่มี",
+              image_path: null
+            }
+          };
+        } else if (position === 'right') {
+          setSelectedRightLogo(selectedOption);
+          setSelectedLeftLogo(null);  // Clear the left logo selection
+          return {
+            ...prevData,
+            Logo_right: {
+              ...prevData.Logo_right,
+              school_name: selectedOption.label,
+              image_path: selectedOption.image
+            },
+            Logo_left: {
+              ...prevData.Logo_left,
+              school_name: "ไม่มี",
+              image_path: null
+            }
+          };
+        }
+      });
     }
-    const handlechange_logo_left = (e) =>
-      {
-        const selectedOption = e
-  
-        Setlogo((prevData) => ({
-          ...prevData,
-          Logo_left: {
-            ...prevData.Logo_left,
-            school_name: selectedOption.label,
-            image_path: selectedOption.image
-          },
-        }));
-      }
       const handleChange_info = (event) =>
         {
             const { name, value } = event.target;
@@ -309,10 +322,11 @@ function Shirt_graphic_cus_com({
                 </div>
                 <div style={{}}>
                   <Select
+                    value={selectedRightLogo}
                     options={Option_select}
                     components={{ Option: Custom_option }}
                     placeholder="โปรดเลือกโลโก้(หากมี)"
-                    onChange={handlechange_logo_right}
+                    onChange={(selectedOption)=>handlechange_logo(selectedOption,"right")}
                   />
                 </div>
               </div>
@@ -335,12 +349,13 @@ function Shirt_graphic_cus_com({
                     onChange={handle_text}
                   />
                 </div>
-                <div className="test1">
+                <div>
                   <Select
+                    value={selectedLeftLogo}
                     options={Option_select}
                     components={{ Option: Custom_option }}
                     placeholder="โปรดเลือกโลโก้(หากมี)"
-                    onChange={handlechange_logo_left}
+                    onChange={(selectedOption)=>handlechange_logo(selectedOption,"left")}
                   />
                 </div>
               </div>
@@ -366,7 +381,7 @@ function Shirt_graphic_cus_com({
                             formdata.dot.color_dot}
                         </p>*/}
                       <p>จุดหรือดาว</p>
-                      <select name="type" onChange={handledot}>
+                      <select name="type" value={formdata.dot.type} onChange={handledot}>
                         {/*<option value="no_dot">จุดหรือดาว</option>*/}
                         <option value="จุด">จุด</option>
                         <option value="ดาว">ดาว</option>
@@ -375,7 +390,7 @@ function Shirt_graphic_cus_com({
 
                     <div className="dot_position">
                       <p>ตำแหน่งของจุด</p>
-                      <select name="position" onChange={handledot_position}>
+                      <select name="position" value={formdata.dot.position} onChange={handledot_position}>
                         {/*<option value="no_dot">ตำแหน่งของจุด</option>*/}
                         <option value="บนชื่อโรงเรียน">บนชื่อโรงเรียน</option>
                         <option value="บนชื่อนักเรียน">บนชื่อนักเรียน</option>
@@ -386,8 +401,7 @@ function Shirt_graphic_cus_com({
 
                     <div className="dot_amount">
                       <p>จำนวนจุด</p>
-                      <select name="amount_dot" onChange={handledot}>
-                        <option value="0">จำนวนจุด</option>
+                      <select name="amount_dot" value={formdata.dot.amount_dot} onChange={handledot}>
                         <option value="1">1 จุด</option>
                         <option value="2">2 จุด</option>
                         <option value="3">3 จุด</option>
@@ -447,7 +461,10 @@ function Shirt_graphic_cus_com({
           <div className="shirt_design">
             <img src="image_folder/S_Shirt.png" alt="" />
             <div className="grid_dot">
-              <div className={dot_position_class.dot_left}>
+              <div 
+              className={dot_position_class.dot_left}
+              style={{ color: formdata.dot.color_dot }}
+              >
                 {render_dot1(formdata.dot.type, formdata.dot.amount_dot)}
               </div>
               <div

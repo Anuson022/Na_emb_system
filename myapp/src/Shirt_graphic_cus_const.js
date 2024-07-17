@@ -27,7 +27,8 @@ function Shirt_graphic_cus() {
     dot_left: "hidden",
     dot_right: "hidden",
   });
-
+  const [selectedRightLogo, setSelectedRightLogo] = useState(null);
+  const [selectedLeftLogo, setSelectedLeftLogo] = useState(null);
   const [Logo,Setlogo] = useState(
     {
       Logo_right:
@@ -68,15 +69,30 @@ function Shirt_graphic_cus() {
         }
       if(formdata.dot.position === 'onname_shirt')
         {
-    
+          set_dot_position(data_position =>(
+            {...data_position,
+              onschool:"hidden",
+              onname:"onname",
+              dot_left:"hidden",
+              dot_right:"hidden"}))
         }
       if(formdata.dot.position === 'right_collar')
         {
-    
+          set_dot_position(data_position =>(
+            {...data_position,
+              onschool:"hidden",
+              onname:"hidden",
+              dot_left:"hidden",
+              dot_right:"dot_right"}))
         }
       if(formdata.dot.position === 'left_collar')
         {
-    
+          set_dot_position(data_position =>(
+            {...data_position,
+              onschool:"hidden",
+              onname:"hidden",
+              dot_left:"dot_left",
+              dot_right:"hidden"}))
         }
     }
     document.body.classList.add('body_of_edit');
@@ -110,6 +126,8 @@ function Shirt_graphic_cus() {
     Image = {Image} Setimage = {Setimage}
     formdata_info = {formdata_info}
     setformdata_info ={setformdata_info}
+    selectedRightLogo = {selectedRightLogo} setSelectedRightLogo = {setSelectedRightLogo}
+    selectedLeftLogo = {selectedLeftLogo} setSelectedLeftLogo ={setSelectedLeftLogo}
     />
     <br />
     <div style={{textAlign:'center'}} onClick={HandleSubmit}><button >Submit</button></div>

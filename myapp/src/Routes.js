@@ -9,6 +9,7 @@ import Image_input from './Image_input';
 import Test from './Test';
 import DynamicForm from './DynamicForm';
 import Image_AD from './Image_AD';
+import Login from './Login';
 
 const Router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const Router = createBrowserRouter([
   {
     path: "test-image",
     element: <Image_input />,
+  },
+  {
+    path: "Login",
+    element: <Login/>,
   },
 ]);
 

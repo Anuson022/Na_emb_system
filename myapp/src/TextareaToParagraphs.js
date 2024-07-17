@@ -23,10 +23,10 @@ const TextareaToParagraphs = () => {
             id: formdata_cus.cus_id
           }
         });
-        SetFetchData(response.data[0]);
         //console.log(response.data[0])
-        const textrightInput = JSON.parse(response.data[0].shirt);
-        console.log(textrightInput.text_right); // Output: "a"
+        const object = JSON.parse(response.data[0].shirt);
+        await SetFetchData(object);
+        console.log(object.Logo_right)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -34,6 +34,54 @@ const TextareaToParagraphs = () => {
     useEffect(() => {
       Fetch_graphic();
     }, []);
+    useEffect(() => {
+      if (FetchData.text_left) {
+        setformdata(prevFormData => ({
+          ...prevFormData,
+          text_right: {
+            ...prevFormData.text_right,
+            textright_input: FetchData.text_right.textright_input,
+          },
+          text_left: {
+            ...prevFormData.text_left,
+            textleft_input: FetchData.text_left.textleft_input,
+          },
+          dot: {
+            ...prevFormData.dot,
+            type: FetchData.dot.type || "",
+            position: FetchData.dot?.position || "",
+            amount_dot: FetchData.dot?.amount_dot || "",
+            color_dot: FetchData.dot?.color_dot || "",
+          },
+        }));
+      }
+      if (FetchData.Logo_left || FetchData.Logo_right) {
+        Setlogo(prevFormData =>(
+          {
+            ...prevFormData,
+            Logo_right:
+            {...prevFormData.Logo_right,
+              school_name:FetchData.Logo_right.school_name,
+              image_path:FetchData.Logo_right.image_path},
+            Logo_left:
+            {...prevFormData.Logo_left,
+              school_name:FetchData.Logo_left.school_name,
+              image_path:FetchData.Logo_left.image_path},
+          }))
+      }
+      
+      if(FetchData.dot?.type)
+        {
+          setcheck_dot(true)
+        }
+        console.log(Logo)
+      if(Logo.Logo_right !== "")
+        {setSelectedRightLogo({label:Logo.Logo_right.school_name,
+          image:Logo.Logo_right.image_path})}
+      if(Logo.Logo_left !== "")
+        {setSelectedLeftLogo({label:Logo.Logo_left.school_name,
+          image:Logo.Logo_left.image_path})}
+    }, [FetchData]);
   const [formdata, setformdata] = useState({
     text_right: {
       textright_input: "",
@@ -69,17 +117,32 @@ const TextareaToParagraphs = () => {
     })
   const [Image,Setimage] = useState([])
 
+  const [selectedRightLogo, setSelectedRightLogo] = useState(null);
+  const [selectedLeftLogo, setSelectedLeftLogo] = useState(null);
   const [formdata_info, setformdata_info] = useState({
     info_data:"",
     parent_name:"",
     phone_number:"",
     status:"ยังไม่ตรวจสอบ",
   });
-
   const fetch_image = async () => {
     const res = await axios.post('http://localhost:5000/files');
     Setimage(res.data);
 };
+  // Auto-select option by value and label
+  useEffect(() => {
+    const Option_select = [
+      {
+        label: "ไม่มี",
+        image: "",
+      },
+      ...Image.map((item) => ({
+        label: item.name,
+        image: `http://localhost:5000/uploads/${item.path.split("/").pop()}`,
+      })),
+    ];
+  }, [Logo]);
+
   useEffect(() => {
     var dot_star = ''
     var position = ''
@@ -98,17 +161,32 @@ const TextareaToParagraphs = () => {
               dot_left:"hidden",
               dot_right:"hidden"}))
         }
-      if(formdata.dot.position === 'onname_shirt')
+      if(formdata.dot.position === 'บนชื่อนักเรียน')
         {
-    
+          set_dot_position(data_position =>(
+            {...data_position,
+              onschool:"hidden",
+              onname:"onname",
+              dot_left:"hidden",
+              dot_right:"hidden"}))
         }
-      if(formdata.dot.position === 'right_collar')
+      if(formdata.dot.position === 'บนปกขวา')
         {
-    
+          set_dot_position(data_position =>(
+            {...data_position,
+              onschool:"hidden",
+              onname:"hidden",
+              dot_left:"hidden",
+              dot_right:"dot_right"}))
         }
-      if(formdata.dot.position === 'left_collar')
+      if(formdata.dot.position === 'บนปกซ้าย')
         {
-    
+          set_dot_position(data_position =>(
+            {...data_position,
+              onschool:"hidden",
+              onname:"hidden",
+              dot_left:"dot_left",
+              dot_right:"hidden"}))
         }
     }
     document.body.classList.add('body_of_edit');
@@ -190,9 +268,14 @@ useEffect(() => {
   return () => {
     document.body.classList.remove('body_of_edit');
   };}, []);
-
+const test_js = () =>
+  {
+    console.log(FetchData)
+    console.log(formdata)
+  }
   return (
     <div className=''>
+      <button onClick={test_js}></button>
       <br />
       <form className='cus_insert'>
   <fieldset className=''>
@@ -205,7 +288,9 @@ useEffect(() => {
     Logo = {Logo} Setlogo = {Setlogo}
     Image = {Image} Setimage = {Setimage}
     formdata_info = {formdata_info}
-    setformdata_info ={setformdata_info}
+    setformdata_info = {setformdata_info}
+    selectedRightLogo = {selectedRightLogo} setSelectedRightLogo = {setSelectedRightLogo}
+    selectedLeftLogo = {selectedLeftLogo} setSelectedLeftLogo ={setSelectedLeftLogo}
     />
     </>
   </div>
