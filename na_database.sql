@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2024 at 05:51 PM
+-- Generation Time: Jul 22, 2024 at 07:58 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -42,7 +42,7 @@ CREATE TABLE `customer_data` (
 --
 
 INSERT INTO `customer_data` (`cus_id`, `info`, `parent_name`, `phone_number`, `shirt`, `cus_order`, `status`) VALUES
-(0, 'test', 'test', 'test', '{\"text_right\":{\"textright_input\":\"\",\"color_right\":\"#0000FF\",\"textleft_input\":\"test\"},\"text_left\":{\"textleft_input\":\"test\",\"color_left\":\"#0000FF\",\"textright_input\":\"\"},\"dot\":{\"type\":\"\",\"position\":\"\",\"amount_dot\":\"\",\"color_dot\":\"\"},\"Logo_right\":{\"school_name\":\"โรงเรียนศรี\",\"image_path\":\"http://localhost:5000/uploads/Sriboonya.jpg\"},\"Logo_left\":{\"school_name\":\"ไม่มี\",\"image_path\":null}}', NULL, 'ยังไม่ตรวจสอบ');
+(1, '', '', '', '{\"text_right\":{\"textright_input\":\"saf\",\"color_right\":\"#0000FF\",\"textleft_input\":\"asf\"},\"text_left\":{\"textleft_input\":\"asf\",\"color_left\":\"#0000FF\",\"textright_input\":\"saf\"},\"dot\":{\"type\":\"\",\"position\":\"\",\"amount_dot\":\"\",\"color_dot\":\"\"},\"Logo_right\":{\"school_name\":\"โรงเรียนศรี\",\"image_path\":\"/uploads/Sriboonya.jpg\"},\"Logo_left\":{\"school_name\":\"ไม่มี\",\"image_path\":null}}', NULL, 'ยังไม่ตรวจสอบ');
 
 -- --------------------------------------------------------
 
@@ -98,6 +98,29 @@ CREATE TABLE `images` (
   `path` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `role` enum('manager','employee') NOT NULL,
+  `profile` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `role`, `profile`) VALUES
+(1, 'Admin', '123', 'manager', './uploads/Sriboonya.jpg'),
+(2, 'user', '321', 'employee', './uploads/watdon.png'),
+(3, 'user2', '123', 'employee', 'idk');
+
 --
 -- Indexes for dumped tables
 --
@@ -127,6 +150,12 @@ ALTER TABLE `images`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -134,7 +163,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `customer_data`
 --
 ALTER TABLE `customer_data`
-  MODIFY `cus_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `cus_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `custom_input`
@@ -146,13 +175,19 @@ ALTER TABLE `custom_input`
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
