@@ -1,4 +1,4 @@
-@media screen and (max-width: 1280px) {
+/*@media screen and (max-width: 1280px) {
     .main_dash
     { 
       display: flex;
@@ -60,7 +60,7 @@
         border: 1px saddlebrown solid;
         margin: 0 auto;
         justify-content: center; /* Centers children vertically */
-        align-items: center; /* Centers children horizontally */
+        align-items: center; /* Centers children horizontally 
         flex-grow: 1;
         transition: opacity 0.5s ease-in-out;
         opacity: 1;
@@ -69,5 +69,5 @@
         opacity: 0;
       }
     }
-  }
+  }*/
   

@@ -28,7 +28,7 @@ const DynamicInputGrid = () => {
   };
 
   const handleSubmit = () => {
-    axios.post('http://localhost:5000/data_tester', inputs)
+    axios.post('/data_tester', inputs)
       .then(response => {
         console.log('Data sent successfully:', response.data);
       })

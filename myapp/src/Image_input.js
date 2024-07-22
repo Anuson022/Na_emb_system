@@ -9,7 +9,7 @@ const Image_input = () => {
     const [testImage, setTestImage] = useState(null);
 
     const fetchFiles = async () => {
-        const res = await axios.get('http://localhost:5000/files');
+        const res = await axios.get('/files');
         setFiles(res.data);
     };
 
@@ -30,12 +30,12 @@ const Image_input = () => {
         formData.append('file', file);
         formData.append('name', fileName);
 
-        await axios.post('http://localhost:5000/upload', formData);
+        await axios.post('/upload', formData);
         fetchFiles();
     };
 
     const onDeleteFile = async (id) => {
-        await axios.delete(`http://localhost:5000/files/${id}`);
+        await axios.delete(`/files/${id}`);
         fetchFiles();
     };
 
@@ -49,7 +49,7 @@ const Image_input = () => {
         {
           value: item.id,
           label: item.name,
-          image: `http://localhost:5000/uploads/${item.path.split('/').pop()}`,
+          image: `/uploads/${item.path.split('/').pop()}`,
         }
       ))
     ];
@@ -84,7 +84,7 @@ const Image_input = () => {
                 {files.map((file) => (
                     <li key={file.id}>
                         <img 
-                            src={`http://localhost:5000/uploads/${file.path.split('/').pop()}`} 
+                            src={`/uploads/${file.path.split('/').pop()}`} 
                             alt={file.name} 
                             width="100" 
                         />

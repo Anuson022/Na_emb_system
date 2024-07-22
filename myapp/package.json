@@ -9,6 +9,8 @@
     "axios": "^1.7.2",
     "express": "^4.19.2",
     "express-fileupload": "^1.5.0",
+    "http-proxy-middleware": "^3.0.0",
+    "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1",
@@ -19,6 +21,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start_plus": "concurrently \"npm run server\" \"react-scripts start\"",
+    "server": "node ../back/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -40,5 +44,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },  
+  "proxy": "http://localhost:3001"
 }

@@ -46,7 +46,7 @@ function Shirt_graphic_cus() {
   });
 
   const fetch_image = async () => {
-    const res = await axios.post('http://localhost:5000/files');
+    const res = await axios.post('/api/files');
     Setimage(res.data);
 };
   useEffect(() => {
@@ -111,7 +111,7 @@ function Shirt_graphic_cus() {
         ...Logo
       }
       try {
-        const responses = await axios.post("http://localhost:5000/cus_input",{Combine_shirt,formdata_info})
+        const responses = await axios.post("/cus_input",{Combine_shirt,formdata_info})
         console.log(responses.data)
       } catch (error) {
         alert(error)

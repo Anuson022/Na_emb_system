@@ -18,7 +18,7 @@ const TextareaToParagraphs = () => {
   const Fetch_graphic = async() => 
     {
       try {
-        const response = await axios.get('http://localhost:5000/get_cusID', {
+        const response = await axios.get('/get_cusID', {
           params: {
             id: formdata_cus.cus_id
           }
@@ -74,7 +74,7 @@ const TextareaToParagraphs = () => {
         {
           setcheck_dot(true)
         }
-        console.log(Logo)
+        //console.log(Logo)
       if(Logo.Logo_right !== "")
         {setSelectedRightLogo({label:Logo.Logo_right.school_name,
           image:Logo.Logo_right.image_path})}
@@ -126,7 +126,8 @@ const TextareaToParagraphs = () => {
     status:"ยังไม่ตรวจสอบ",
   });
   const fetch_image = async () => {
-    const res = await axios.post('http://localhost:5000/files');
+    const res = await axios.post('/api/files');
+    console.log(res.data)
     Setimage(res.data);
 };
   // Auto-select option by value and label
@@ -138,7 +139,7 @@ const TextareaToParagraphs = () => {
       },
       ...Image.map((item) => ({
         label: item.name,
-        image: `http://localhost:5000/uploads/${item.path.split("/").pop()}`,
+        image: `/uploads/${item.path.split("/").pop()}`,
       })),
     ];
   }, [Logo]);
@@ -235,13 +236,19 @@ const TextareaToParagraphs = () => {
     const handle_submit = (e) =>
       {
         e.preventDefault();
+        const Combine_shirt = 
+        {
+          ...formdata,
+          ...Logo
+        }
+
       try {
-        axios.post("http://localhost:5000/update_customdata",{formdata_cus,formdata,orders})
+        axios.post("/update_customdata",{formdata_cus,Combine_shirt,orders})
       } catch (error) {
         console.log(error)
       }
 
-//console.log(result);
+//console.log(result);*/
         
       }
 /*

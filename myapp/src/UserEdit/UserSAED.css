@@ -1,0 +1,87 @@
+.User-form
+{
+
+}
+.User-grid
+{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(15rem , 20vw ,30rem), 1fr));
+    gap: 1rem;
+    justify-items: center;
+    align-items: center;
+}
+.User-item
+{
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #90eeee;
+    width: clamp(11rem, 20vw, 30rem);
+    height: auto;
+    .User-profile
+    {
+        border-bottom: 1px solid black;
+        border-radius: 0px;
+        justify-content: center;
+    }
+    .User-button
+    {
+        display: flex;
+        border: 1px solid black;
+        justify-content: center;
+        gap: 20px;
+        button
+        {
+            width: clamp(4em , 5vw, 10em);
+            height: clamp(2.5em, 3vw, 7em);
+            font-size: clamp(10px,1vw,2rem);        
+        }
+        background-color: #90eeee;
+    }
+    div
+    {   
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        img
+        {
+            width: clamp(5rem, 10vw, 10rem);
+            min-width: 1rem;
+        }
+        .p-static
+        {
+            text-align: right; font-size: clamp(10px,1vw,2rem); 
+            width: clamp(60px,6vw,20rem);
+            min-width: 70px;
+        }
+        .p-value
+        {
+            text-align: left; font-size: clamp(10px,1vw,2rem); 
+            width: clamp(60px,6vw,20rem);
+        }
+    }
+}
+.User-add
+{
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #90eeee;
+    width: clamp(10rem, 20vw, 30rem);
+    height: clamp(10rem, 22vw, 30rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img
+    {    
+        border: 1px solid black;
+        width: clamp(5rem, 15vw, 20rem);
+        min-width: 1rem;
+        height: auto;
+    }
+    
+}
+
+/*UserAdd*/
+.UserAdd-form
+{
+    
+}

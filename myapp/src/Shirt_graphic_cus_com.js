@@ -225,7 +225,7 @@ function Shirt_graphic_cus_com({
     },
     ...Image.map((item) => ({
       label: item.name,
-      image: `http://localhost:5000/uploads/${item.path.split("/").pop()}`,
+      image: `/uploads/${item.path.split("/").pop()}`,
     })),
   ];
   const Custom_option = (props) => {

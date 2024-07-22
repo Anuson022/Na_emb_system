@@ -38,7 +38,7 @@ const Custom_input = () => {
         {
             try
             {
-                await axios.post("http://localhost:5000/send_customdata",input_data);
+                await axios.post("/send_customdata",input_data);
                 await setinput(
                     {
                         school_name: "",

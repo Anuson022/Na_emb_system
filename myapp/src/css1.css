@@ -12,11 +12,10 @@ body
     /*max-width: fit-content;*/
     margin-inline: auto;
     margin: 0 auto;
-    fieldset{width: 100%; min-width: 45rem;}
+    fieldset{width: 100%; min-width: 120rem;}
 }
 .Shirt_com
 {
-  min-width: 40rem;
 }
 .cus_edit
 {
@@ -110,10 +109,3 @@ body
     
 }
 
-@media screen and (max-width: 680px) 
-{
-  .body_of_edit
-  {
-
-  }
-}

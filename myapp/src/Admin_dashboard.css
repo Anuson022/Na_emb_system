@@ -1,41 +1,44 @@
 /* Basic styling for the navbar */
 .navbar_header {
+  img{border-radius: 50%; background-color: #ffffff; width: clamp(30px, 5vw, 50em); height: auto;; margin: 1rem;}
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background-color: #a3ffa1;
   top: 0px;
   width: 100%;
-  height: 10vw;
+  min-width: 20rem;
+  height: clamp(60px, 7vw, 15rem);
   box-sizing: border-box;
 }
 
 .navbar-logo {
   color: rgb(0, 0, 0);
   padding: 1rem;
-  font-size: 3vw;
+  font-size: clamp(10px, 2vw, 2em);
 }
 .profile
 {
   display: flex;
-  justify-content: right;
+  background-color: lightgreen;
+  flex-direction: column;
   align-items: center;
-  img{border-radius: 50%; width: 5.5vw; height: auto;; margin: 1rem;}
+  img{border-radius: 50%; width: clamp(10px, 3vw, 50em); height: auto;; margin: 1rem;}
   button
   {padding: auto; font-size: 1vw;}
 }
 
-
 .main_dash
 { 
-  display: flex;
-  justify-content: center;
-  align-content: center;
+  display: grid;
+  grid-template-columns: 15% auto;
   .sidebar_button
   { 
-    background-color: #ddd; padding: 1rem;border: 1px rgb(0, 255, 110) solid;
-    transition: width 2s, height 4s;
-    .close-open{font-size: 1.5vw;color: rgb(0, 0, 0);}
+    background-color: lightpink; padding: 1rem;
+    min-width: 10rem;
+    border: 1px rgb(0, 255, 110) solid;
+    .close-open{
+      display: none;
+      font-size: clamp(15px, 2vw, 2em);color: rgb(0, 0, 0);}
     cursor: pointer;
   }
   .sidebar_button p
@@ -43,51 +46,132 @@
     
   }
   .sidebar {
-    width: 100%;
-    height: 100%;
+    padding: 1rem;
     background-color: #a3ffa1;
-    transition: 0.5s;
-    a{color: rgb(0, 0, 0);}
-    ul {
-      padding: 1rem;
-      text-decoration: none;
-      font-size: 1vw;
-      display: block;
-      transition: 0.3s;
-      list-style-type:none;
-    }
-    ul li:hover {
-      background-color: #f1f1f1;
-      color: #000000;
   }
-
   }
   .sidebar_close {
     width: 0vw;
+    height: 0;
     background-color: #a3ffa1;
     overflow-x: hidden;
-    transition: 0.5s;
-    a{color: rgb(0, 0, 0);}
-    ul {
-      padding: 1rem;
-      text-decoration: none;
-      font-size: 1vw;
-      display: block;
-      transition: 0.3s;
-      height: 30vh;
-      list-style-type:none;
-    }
   }
-  
   .display_function
   { 
-    width: 80%;
+    width: 90%;
+    min-width: 20rem;
     padding: 1rem;
     border: 1px saddlebrown solid;
     margin: 0 auto;
-    justify-content: center; /* Centers children vertically */
-    align-items: center; /* Centers children horizontally */
-    transition: max-height .5s ease-in-out;
+    /*justify-content: center; /* Centers children vertically */
+    /*align-items: center; /* Centers children horizontally 
+    transition: max-height .5s ease-in-out;*/
+  }
+
+
+/*Large Devices (desktops and laptops):*/
+@media (min-width: 992px) and (max-width: 1200px) {
+  .profile
+  {
+    display: flex;
+    background-color: lightgreen;
+    flex-direction: column;
+    align-items: center;
+    img{border-radius: 50%; width: clamp(100px, 20vw, 50em); height: auto;; margin: 1rem;}
+    button
+    {padding: auto; font-size: 1vw;}
+  }
+  .main_dash
+  { 
+  display: flex;
+  flex-direction: column;
+  .sidebar_button
+    { 
+    background-color: lightpink; padding: 1rem;border: 1px rgb(0, 255, 110) solid;
+    .close-open{
+      display: block;
+      }
+    }
   }
 }
 
+/*Medium Devices (small laptops and tablets in landscape):*/
+@media (min-width: 768px) and (max-width: 992px) {
+  .profile
+  {
+    display: flex;
+    background-color: lightgreen;
+    flex-direction: column;
+    align-items: center;
+    img{border-radius: 50%; width: clamp(100px, 20vw, 50em); height: auto;; margin: 1rem;}
+    button
+    {padding: auto; font-size: 1vw;}
+  }
+  .main_dash
+  { 
+  display: flex;
+  flex-direction: column;
+  .sidebar_button
+    { 
+    background-color: lightpink; padding: 1rem;border: 1px rgb(0, 255, 110) solid;
+    .close-open{
+      display: block;
+      }
+    }
+  }
+}
+
+
+/*Small Devices (tablets):*/
+@media (min-width: 576px) and (max-width: 768px) {
+  .profile
+  {
+    display: flex;
+    background-color: lightgreen;
+    flex-direction: column;
+    align-items: center;
+    img{border-radius: 50%; width: clamp(100px, 20vw, 50em); height: auto;; margin: 1rem;}
+    button
+    {padding: auto; font-size: 1vw;}
+  }
+  .main_dash
+  { 
+  display: flex;
+  flex-direction: column;
+  .sidebar_button
+    { 
+    background-color: lightpink; padding: 1rem;border: 1px rgb(0, 255, 110) solid;
+    .close-open{
+      display: block;
+      }
+    }
+  }
+}
+
+/*Extra Small Devices (phones):*/
+@media (max-width: 576px) {
+  .profile
+  {
+    display: flex;
+    background-color: lightgreen;
+    flex-direction: column;
+    align-items: center;
+    img{border-radius: 50%; width: clamp(100px, 20vw, 50em); height: auto;; margin: 1rem;}
+    button
+    {padding: auto; font-size: 1vw;}
+  }
+  .main_dash
+  { 
+  display: flex;
+  flex-direction: column;
+  .sidebar_button
+    { 
+    background-color: lightpink; 
+    padding: 1rem;border: 1px rgb(0, 255, 110) solid;
+    min-width: 20rem;
+    .close-open{
+      display: block;
+      }
+    }
+  }
+}

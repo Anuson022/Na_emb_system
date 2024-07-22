@@ -1,0 +1,19 @@
+/*Large Devices (desktops and laptops):*/
+@media (min-width: 992px) and (max-width: 1200px) {
+    *{background-color: green;}
+}
+
+/*Medium Devices (small laptops and tablets in landscape):*/
+@media (min-width: 768px) and (max-width: 992px) {
+    *{background-color: yellow;}
+}
+
+/*Small Devices (tablets):*/
+@media (min-width: 576px) and (max-width: 768px) {
+    *{background-color: rgb(0, 255, 119);}
+}
+
+/*Extra Small Devices (phones):*/
+@media (max-width: 576px) {
+    *{background-color: rgb(47, 0, 255);}
+}

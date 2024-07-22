@@ -7,7 +7,7 @@ function Image_AD() {
     const [FileShow,SetFileShow] = useState([])
     const [SearchLogo,SetSearchLogo] = useState('')
     const fetchFiles = async (e) => {
-        const res = await axios.post('http://localhost:5000/files');
+        const res = await axios.post('/api/files');
         SetFileShow(res.data);
     };
     useEffect(() => {
@@ -27,19 +27,19 @@ function Image_AD() {
         formData.append('file', FileImage);
         formData.append('name', FileName);
 
-        await axios.post('http://localhost:5000/upload', formData);
+        await axios.post('/upload', formData);
         fetchFiles();
     };
 
     const onDeleteFile = async (id) => {
-        await axios.delete(`http://localhost:5000/files/${id}`);
+        await axios.delete(`/files/${id}`);
         fetchFiles();
     };
     const handleSearch = async (e) =>
         {
             const search_name = e.target.value
             console.log(search_name)
-            const res = await axios.post('http://localhost:5000/files',{search_name});
+            const res = await axios.post('/api/files',{search_name});
             SetFileShow(res.data);
         }
   return (
@@ -65,7 +65,7 @@ function Image_AD() {
             {FileShow.map((file) => (
                     <div className='Image_item' key={file.id}>
                         <img 
-                            src={`http://localhost:5000/uploads/${file.path.split('/').pop()}`} 
+                            src={`/uploads/${file.path.split('/').pop()}`} 
                             alt={file.name} 
                         />
                         <br />

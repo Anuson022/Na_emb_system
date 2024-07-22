@@ -34,7 +34,7 @@
     background-color: #ddd;
     margin: 0 auto;
     padding: 1.6vh;
-    width: 95%;
+    width: 100%;
 }
 .input_right_container
 {display: grid;grid-template-columns:auto 25%;  align-items: center; gap:3vh; margin: 0 auto;}
@@ -101,7 +101,7 @@
     background-color: #ddd;
     text-align: center;
     font-size: 1vh;
-    box-sizing: border-box;    overflow: hidden;
+    box-sizing: border-box;
 
 }
 .shirt_design
@@ -260,22 +260,35 @@
 
 @media only screen and (max-width: 640px) 
 {
+
+}
+
+/* Small devices such as large phones (640px and up) */
+@media only screen and (max-width: 768px) 
+{
     :root {
-        --image_width:30rem;
-        --image_height:20rem;
-      }
-    .container_form
-    {
+        --image_width: 50rem;
+        --image_height: 40rem;
+    }
+    .container_form {
         display: grid;
         grid-template-columns: 1fr;
-        grid-gap: 0.8vh; /* Optional: space between items */
+    }
+    .grid_name {
+        bottom: 30.5rem;
+        gap: 6rem;
+        font-family: 'JS_Chanok';
     
+        div {
+            font-size: 0.9rem;
+        }
     }
     .dot_right {
-        bottom: 18rem;
-        left: 8rem;
-        font-size: 0.5rem;
-        rotate: z 80deg;
+        bottom: 33rem;
+        left: 17rem;
+        font-size: 0.8rem;
+        rotate: z 20deg;
+    
     }
     .dot_right h1 {
         margin: -1.875rem;
@@ -290,10 +303,10 @@
         margin-left: 2.5rem;
     }
     .dot_left {
-        bottom: 18rem;
-        left: 15.9rem;
-        font-size: 0.5rem;
-        rotate: z -80deg;
+        bottom: 33rem;
+        left: 27rem;
+        font-size: 0.8rem;
+        rotate: z -20deg;
     }
     .dot_left h1 {
         margin: -1.875rem;
@@ -307,23 +320,11 @@
     .dot_left .dot1 {
         margin-right: 2.5rem;
     }
-        .Logo_ {
-            img {width: 3rem;height: 3rem;}
-        }
-}
-
-/* Small devices such as large phones (640px and up) */
-@media only screen and (min-width: 640px) 
-{
-    :root {
-        --image_width:30rem;
-        --image_height:20rem;
-      }
-    .container_form
+    .dot_name{font-size: 1.5rem;}
+    .dot_school{font-size: 1.5rem;}
+    .Logo_
     {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-gap: 0.8vh; /* Optional: space between items */
+        img{width: 5rem; height:5rem;}
     }
 
 }
@@ -336,7 +337,7 @@
 }
 .container_form {
     display: grid;
-    grid-template-columns: 50% auto;
+    grid-template-columns: 1fr;
 }
 .grid_name {
     bottom: 30.5rem;
