@@ -15,7 +15,7 @@ function UserAdd() {
             const formData = new FormData();
             formData.append('file', Profile);
             console.log(Profile.name)
-            await axios.post('/profile_create', formData);
+            await axios.post('/upload1', formData);
         }
     const HandleChange = async(e) =>
         {
@@ -38,17 +38,14 @@ function UserAdd() {
                 <h1>ชื่อผู้ใช้งาน</h1>
                 <input type="text" 
                 name='username' 
-                onChange={HandleChange}
-                required />
+                onChange={HandleChange}/>
                 <h1>รหัสผ่าน</h1>
                 <input type="text" 
                 name='password' 
-                onChange={HandleChange}
-                required />
+                onChange={HandleChange}/>
                 <h1>ตำแหน่ง</h1>
                 <select name='role' 
-                onChange={HandleChange}
-                required >
+                onChange={HandleChange}>
                     <option value="employee">พนักงาน</option>
                     <option value="manager">ผู้จัดการ</option>
                 </select>

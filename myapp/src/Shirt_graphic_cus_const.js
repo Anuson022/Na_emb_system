@@ -3,20 +3,25 @@ import Shirt_graphic_cus_com from './Shirt_graphic_cus_com';
 import axios from "axios";
 function Shirt_graphic_cus() {
   const [formdata, setformdata] = useState({
-    text_right: {
-      textright_input: "",
-      color_right: "#0000FF",
+    SName: {
+      fullname: "",
+      color: "#0000FF",
+      position_n:""
     },
-    text_left: {
-      textleft_input: "",
-      color_left: "#0000FF",
+    SSchool: {
+      name: "",
+      color1: "#0000FF",
+      position_s:""
     },
+    SLogo:
+    {school_name:"",image_path:"",position_l:""},
     dot: {
       type: "",
       position: "",
       amount_dot: "",
       color_dot: "",
     },
+
   });
 
   const [checbox_dot,setcheck_dot] = useState(false)
@@ -27,15 +32,8 @@ function Shirt_graphic_cus() {
     dot_left: "hidden",
     dot_right: "hidden",
   });
-  const [selectedRightLogo, setSelectedRightLogo] = useState(null);
-  const [selectedLeftLogo, setSelectedLeftLogo] = useState(null);
-  const [Logo,Setlogo] = useState(
-    {
-      Logo_right:
-      {school_name:"",image_path:""},
-      Logo_left:
-      {school_name:"",image_path:""}
-    })
+  const [selectedLogo, setSelectedLogo] = useState(null);
+
   const [Image,Setimage] = useState([])
 
   const [formdata_info, setformdata_info] = useState({
@@ -103,12 +101,25 @@ function Shirt_graphic_cus() {
   useEffect(() => {
     fetch_image();
   }, []);
+
+  useEffect(() => {
+    if(formdata.SName.position_n === "name_right")
+      {
+        alert("test")
+      }
+    else if(formdata.SName.position_n === "name_left")
+      {
+        alert("test")
+      }
+  }, [formdata.SName]);
+
+
   const HandleSubmit = async(event) =>
     {
       const Combine_shirt = 
       {
         ...formdata,
-        ...Logo
+        ...formdata
       }
       try {
         const responses = await axios.post("/cus_input",{Combine_shirt,formdata_info})
@@ -122,15 +133,12 @@ function Shirt_graphic_cus() {
     <Shirt_graphic_cus_com setcheck_dot={setcheck_dot} checbox_dot={checbox_dot} 
     formdata={formdata} setformdata={setformdata} set_dot_position={set_dot_position} 
     dot_position_class={dot_position_class}
-    Logo = {Logo} Setlogo = {Setlogo}
     Image = {Image} Setimage = {Setimage}
     formdata_info = {formdata_info}
     setformdata_info ={setformdata_info}
-    selectedRightLogo = {selectedRightLogo} setSelectedRightLogo = {setSelectedRightLogo}
-    selectedLeftLogo = {selectedLeftLogo} setSelectedLeftLogo ={setSelectedLeftLogo}
+    selectedLogo = {selectedLogo} setSelectedLogo = {setSelectedLogo}
     />
     <br />
-    <div style={{textAlign:'center'}} onClick={HandleSubmit}><button >Submit</button></div>
 
     </>
   )

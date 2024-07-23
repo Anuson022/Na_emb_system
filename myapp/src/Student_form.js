@@ -10,7 +10,6 @@ function Student_form() {
 
     return (
       <>
-      <h2 style={{ fontSize: "3vh" }}>กรุณากรอกข้อมูล</h2>
       <div >
         <Shirt_graphic_cus_const />
 

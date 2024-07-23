@@ -1,11 +1,4 @@
 /* src/fonts.css */
-*{box-sizing: border-box;}
-:root
-{
-    --image_width:40rem;
-    --image_height:30rem;
-    --gap1:0.833vh;
-}
 .test1{width: 100%;}
 @font-face {
     font-family: 'JS_Chanok';
@@ -16,34 +9,35 @@
 .hidden {
   display: none;
 }
-
 .visible {
   display: block;
 }
-
 .container_form
 {
+    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr;
     /*grid-template-columns: repeat(auto-fit,minmax(75rem,1fr)); /* Two equal-width columns */
-    grid-gap: 0.8vh; /* Optional: space between items */
+    grid-gap: 1rem; /* Optional: space between items */
+    max-width: 100rem;
+    min-width: 65rem;
+    border: #000 solid 1px;
 
 }
 .container_form .grid_input
 {
     background-color: #ddd;
     margin: 0 auto;
-    padding: 1.6vh;
-    width: 100%;
+    padding: 1rem;
+    width: 80%;
 }
 .input_right_container
-{display: grid;grid-template-columns:auto 25%;  align-items: center; gap:3vh; margin: 0 auto;}
+{display: grid;grid-template-columns:auto 25%;  align-items: center; gap:1rem; margin: 0 auto;}
 .textarea_input_right textarea
 {
-    font-size: 2.5vh;
+    font-size: clamp(1rem, 1vw, 70rem);
     width:100%;
-    height: 12.5vh;
-    padding: 0.8vh;
+
 }
 .color_container_right
 {
@@ -57,10 +51,9 @@
 }
 .color_input_right {
     min-width:50%;
-    height: 12.5vh;
+    height: 5rem;
     padding: 1px;
     border-radius: 5px;
-    
 }
 
 .input_left_container
@@ -97,7 +90,7 @@
     align-items: center;
     margin: 0 auto;
     padding: 1.6vh;
-    width: 100%;
+    width: 80%;
     background-color: #ddd;
     text-align: center;
     font-size: 1vh;
@@ -113,11 +106,15 @@
     position: sticky;
     top: 1vh; /* Distance from the top of the viewport */
     display: inline-block;
+    border: #ff0000 solid 1px;
 }
-.shirt_design img{
+.shirt_design {
+    .shirt_img{
     margin: 0 auto;
-    width: var(--image_width);
-    height: var(--image_height);
+    width: 40rem;
+    min-width: 50rem;
+    
+    height: 40rem;}
     }
 
 .hidden {
@@ -184,44 +181,38 @@
 {       
     font-family: "Noto Serif Thai", serif;
     position: relative;
-    bottom: 18rem;
-    left: 8rem;
-    font-size: 0.5rem;
-    rotate: z 80deg;
+    bottom: 33.5rem;
+    left: 18.1rem;
+    font-size: 0.7rem;
+    rotate: -20deg;
 }
 .dot_right h1 {
-    margin: -1.875rem;
+    margin: -1.3rem;
 }
 .dot_right .dot3 {
-    margin-left: 0rem;
 }
 .dot_right .dot2 {
-    margin-left: 1.25rem;
 }
 .dot_right .dot1 {
-    margin-left: 2.5rem;
 }
 
 .dot_left
 {   
     font-family: "Noto Serif Thai", serif;
     position: relative;
-    bottom: 18rem;
-    left: 15.9rem;
-    font-size: 0.5rem;
-    rotate: z -80deg;
+    bottom: 33.5rem;
+    left: 25.5rem;
+    font-size: 0.7rem;
+    rotate: 20deg;
 }
 .dot_left h1 {
-    margin: -1.875rem;
+    margin: -1.3rem;
 }
 .dot_left .dot3 {
-    margin-right: 0rem;
 }
 .dot_left .dot2 {
-    margin-right: 1.25rem;
 }
 .dot_left .dot1 {
-    margin-right: 2.5rem;
 }
 
 .grid_name
@@ -234,13 +225,13 @@
     justify-content: center;
     text-wrap: nowrap;
     position: relative;
-    bottom: 15rem;
+    bottom: 30rem;
     font-family: 'JS_Chanok';
-    gap: 1rem;
+    gap: 5.5rem;
 }
 .grid_name div
 {
-    font-size: 0.5rem;
+    font-size: 0.9rem;
 }
 .dot_school{font-size: 0.9rem;}
 .on_right
@@ -255,207 +246,9 @@
 {margin: 0rem;}
 .Logo_
 {
-    img{width: 3rem; height:3rem;}
-}
-
-@media only screen and (max-width: 640px) 
-{
-
-}
-
-/* Small devices such as large phones (640px and up) */
-@media only screen and (max-width: 768px) 
-{
-    :root {
-        --image_width: 50rem;
-        --image_height: 40rem;
-    }
-    .container_form {
-        display: grid;
-        grid-template-columns: 1fr;
-    }
-    .grid_name {
-        bottom: 30.5rem;
-        gap: 6rem;
-        font-family: 'JS_Chanok';
-    
-        div {
-            font-size: 0.9rem;
-        }
-    }
-    .dot_right {
-        bottom: 33rem;
-        left: 17rem;
-        font-size: 0.8rem;
-        rotate: z 20deg;
-    
-    }
-    .dot_right h1 {
-        margin: -1.875rem;
-    }
-    .dot_right .dot3 {
-        margin-left: 0rem;
-    }
-    .dot_right .dot2 {
-        margin-left: 1.25rem;
-    }
-    .dot_right .dot1 {
-        margin-left: 2.5rem;
-    }
-    .dot_left {
-        bottom: 33rem;
-        left: 27rem;
-        font-size: 0.8rem;
-        rotate: z -20deg;
-    }
-    .dot_left h1 {
-        margin: -1.875rem;
-    }
-    .dot_left .dot3 {
-        margin-right: 0rem;
-    }
-    .dot_left .dot2 {
-        margin-right: 1.25rem;
-    }
-    .dot_left .dot1 {
-        margin-right: 2.5rem;
-    }
-    .dot_name{font-size: 1.5rem;}
-    .dot_school{font-size: 1.5rem;}
-    .Logo_
+    img
     {
-        img{width: 5rem; height:5rem;}
-    }
-
-}
-
-/* Medium devices such as tablets (768px and up) */
-@media only screen and (min-width: 768px) 
-{        :root {
-    --image_width: 50rem;
-    --image_height: 40rem;
-}
-.container_form {
-    display: grid;
-    grid-template-columns: 1fr;
-}
-.grid_name {
-    bottom: 30.5rem;
-    gap: 6rem;
-    font-family: 'JS_Chanok';
-
-    div {
-        font-size: 0.9rem;
+        width: auto; height:auto;
+        max-width: 5rem;
     }
 }
-.dot_right {
-    bottom: 33rem;
-    left: 17rem;
-    font-size: 0.8rem;
-    rotate: z 20deg;
-
-}
-.dot_right h1 {
-    margin: -1.875rem;
-}
-.dot_right .dot3 {
-    margin-left: 0rem;
-}
-.dot_right .dot2 {
-    margin-left: 1.25rem;
-}
-.dot_right .dot1 {
-    margin-left: 2.5rem;
-}
-.dot_left {
-    bottom: 33rem;
-    left: 27rem;
-    font-size: 0.8rem;
-    rotate: z -20deg;
-}
-.dot_left h1 {
-    margin: -1.875rem;
-}
-.dot_left .dot3 {
-    margin-right: 0rem;
-}
-.dot_left .dot2 {
-    margin-right: 1.25rem;
-}
-.dot_left .dot1 {
-    margin-right: 2.5rem;
-}
-.dot_name{font-size: 1.5rem;}
-.dot_school{font-size: 1.5rem;}
-.Logo_
-{
-    img{width: 5rem; height:5rem;}
-}
-
-}
-
-/* Large devices such as laptops (1024px and up) */
-@media only screen and (min-width: 1024px) {
-    :root {
-        --image_width: 50rem;
-        --image_height: 40rem;
-    }
-    .container_form {
-        display: grid;
-        grid-template-columns: 50% auto;
-    }
-    .grid_name {
-        bottom: 30.5rem;
-        gap: 6rem;
-        font-family: 'JS_Chanok';
-
-        div {
-            font-size: 0.9rem;
-        }
-    }
-    .dot_right {
-        bottom: 33rem;
-        left: 17rem;
-        font-size: 0.8rem;
-        rotate: z 20deg;
-
-    }
-    .dot_right h1 {
-        margin: -1.875rem;
-    }
-    .dot_right .dot3 {
-        margin-left: 0rem;
-    }
-    .dot_right .dot2 {
-        margin-left: 1.25rem;
-    }
-    .dot_right .dot1 {
-        margin-left: 2.5rem;
-    }
-    .dot_left {
-        bottom: 33rem;
-        left: 27rem;
-        font-size: 0.8rem;
-        rotate: z -20deg;
-    }
-    .dot_left h1 {
-        margin: -1.875rem;
-    }
-    .dot_left .dot3 {
-        margin-right: 0rem;
-    }
-    .dot_left .dot2 {
-        margin-right: 1.25rem;
-    }
-    .dot_left .dot1 {
-        margin-right: 2.5rem;
-    }
-    .dot_name{font-size: 1.5rem;}
-    .dot_school{font-size: 1.5rem;}
-    .Logo_
-    {
-        img{width: 5rem; height:5rem;}
-    }
-}
-
-/* Largest devices such as desktops (1280px and up) */

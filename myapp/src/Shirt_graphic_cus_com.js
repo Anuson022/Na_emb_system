@@ -5,6 +5,9 @@ import './Shirt_graphic_cus_com.css'
 const render_h1 = (text) => {
   return text.split("\n").map((line, index) => <h1 key={index}>{line}</h1>);
 };
+const render_school = (text) => {
+  return text.split("\n").map((line, index) => <h1 key={index}>{line}</h1>);
+};
 const render_dot1 = (dot_type, dot_amount) => {
   var dot_star = "";
   let dot_array = [];
@@ -111,11 +114,9 @@ function Shirt_graphic_cus_com({
   setformdata,
   set_dot_position,
   dot_position_class,
-  Logo,Setlogo,
   Image,Setimage,
   formdata_info,setformdata_info,
-  selectedRightLogo,setSelectedRightLogo,
-  selectedLeftLogo,setSelectedLeftLogo
+  selectedLogo,setSelectedLogo
 }) 
 {
   
@@ -151,12 +152,12 @@ function Shirt_graphic_cus_com({
     const { name, value } = e.target;
     setformdata((prevData) => ({
       ...prevData,
-      text_right: {
-        ...prevData.text_right,
+      SName: {
+        ...prevData.SName,
         [name]: value,
       },
-      text_left: {
-        ...prevData.text_left,
+      SSchool: {
+        ...prevData.SSchool,
         [name]: value,
       },
     }));
@@ -217,7 +218,28 @@ function Shirt_graphic_cus_com({
       }));
     }
   };
+  const HandleName_position = (event) =>
+    {
+      setformdata((prevData) => ({
+        ...prevData,
+        SName: {
+          ...prevData.SName,
+          position_n: event.target.value,
+        },
+      }));
+      if(formdata.SName.position_n === "name_right")
+        {
+          alert("test")
+        }
+    }
+  const HandleSchool_position = (event) =>
+    {
 
+    }
+  const HandleLogo_position = (event) =>
+    {
+
+    }
   const Option_select = [
     {
       label: "ไม่มี",
@@ -246,44 +268,17 @@ function Shirt_graphic_cus_com({
     );
   };
 
-  const handlechange_logo = (selectedOption,position) =>
+  const handlechange_logo = (selectedOption) =>
     {
-      console.log(selectedOption)
-      Setlogo((prevData) => {
-        if (position === 'left') {
-          setSelectedLeftLogo(selectedOption);
-          setSelectedRightLogo(null);  // Clear the right logo selection
-          return {
-            ...prevData,
-            Logo_left: {
-              ...prevData.Logo_left,
-              school_name: selectedOption.label,
-              image_path: selectedOption.image
-            },
-            Logo_right: {
-              ...prevData.Logo_right,
-              school_name: "ไม่มี",
-              image_path: null
-            }
-          };
-        } else if (position === 'right') {
-          setSelectedRightLogo(selectedOption);
-          setSelectedLeftLogo(null);  // Clear the left logo selection
-          return {
-            ...prevData,
-            Logo_right: {
-              ...prevData.Logo_right,
-              school_name: selectedOption.label,
-              image_path: selectedOption.image
-            },
-            Logo_left: {
-              ...prevData.Logo_left,
-              school_name: "ไม่มี",
-              image_path: null
-            }
-          };
-        }
-      });
+      setSelectedLogo(selectedOption)
+      setformdata((prevData) => ({
+        ...prevData,
+        SLogo: {
+          ...prevData.SLogo,
+          school_name: selectedOption.label,
+          image_path: selectedOption.image,
+        },
+      }));
     }
       const handleChange_info = (event) =>
         {
@@ -300,13 +295,13 @@ function Shirt_graphic_cus_com({
         <div className="grid_input">
           <div className="input_right">
             <form onSubmit={""}>
-              <h2 style={{ fontSize: "3vh" }}>สิ่งที่ต้องการปักปักด้านขวา</h2>
-
+                <h2>ชื่อ - นามสกุล</h2>
+                <br />
               <div className="input_right_container">
                 <div className="textarea_input_right">
                   <textarea
-                    value={formdata.text_right.textright_input}
-                    name="textright_input"
+                    value={formdata.SName.fullname}
+                    name="fullname"
                     onChange={handle_text}
                     placeholder="สิ่งที่ต้องการปัก"
                   />
@@ -315,50 +310,71 @@ function Shirt_graphic_cus_com({
                   <input
                     className="color_input_right"
                     type="color"
-                    value={formdata.text_right.color_right}
-                    name="color_right"
-                    onChange={handle_text}
-                  />
-                </div>
-                <div style={{}}>
-                  <Select
-                    value={selectedRightLogo}
-                    options={Option_select}
-                    components={{ Option: Custom_option }}
-                    placeholder="โปรดเลือกโลโก้(หากมี)"
-                    onChange={(selectedOption)=>handlechange_logo(selectedOption,"right")}
-                  />
-                </div>
-              </div>
-              <h2 style={{ fontSize: "3vh" }}>สิ่งที่ต้องการปักปักด้านซ้าย</h2>
-              <div className="input_left_container">
-                <div className="textarea_input_left">
-                  <textarea
-                    value={formdata.text_left.textleft_input}
-                    name="textleft_input"
-                    onChange={handle_text}
-                    placeholder="สิ่งที่ต้องการปัก"
-                  />
-                </div>
-                <div className="color_container_left">
-                  <input
-                    className="color_input_left"
-                    type="color"
-                    value={formdata.text_left.color_left}
-                    name="color_left"
+                    value={formdata.SName.color}
+                    name="color"
                     onChange={handle_text}
                   />
                 </div>
                 <div>
+                <input type="radio" name="Name-Position" 
+                checked={formdata.SName.position_n === 'name_right'}
+                onChange={HandleName_position} 
+                value="name_right"/>ด้านขวา
+
+                <input type="radio" name="Name-Position"
+                checked={formdata.SName.position_n === 'name_left'}
+                onChange={HandleName_position} 
+                value="name_left"/>ด้านซ้าย
+                
+                <input type="radio" name="Name-Position" 
+                checked={formdata.SName.position_n === 'none'}
+                onChange={HandleName_position}
+                value="none"/>ไม่มี
+                </div>
+                <br />
+                <h2>ตัวย่อโรงเรียน</h2>
+                <br />
+                <div className="textarea_input_right">
+                  <textarea
+                    value={formdata.SSchool.name}
+                    name="name"
+                    onChange={handle_text}
+                    placeholder="สิ่งที่ต้องการปัก"
+                  />
+                </div>
+                <div className="color_container_right">
+                  <input
+                    className="color_input_right"
+                    type="color"
+                    value={formdata.SSchool.color1}
+                    name="color1"
+                    onChange={handle_text}
+                  />
+                </div>
+                <div>
+                ด้านขวา<input type="radio" name="Name-Position" value="name_right"/>
+                ด้านซ้าย<input type="radio" name="Name-Position" value="name_left"/>
+                ไม่มี<input type="radio" name="Name-Position" value="none"/>
+                </div>
+                <br />
+                <div style={{}}>
+                <h2>โรงเรียน</h2>
                   <Select
-                    value={selectedLeftLogo}
+                    value={selectedLogo}
                     options={Option_select}
                     components={{ Option: Custom_option }}
                     placeholder="โปรดเลือกโลโก้(หากมี)"
-                    onChange={(selectedOption)=>handlechange_logo(selectedOption,"left")}
+                    onChange={(selectedOption)=>handlechange_logo(selectedOption)}
                   />
                 </div>
               </div>
+
+              <div>
+                ด้านขวา<input type="radio" name="Name-Position" value="name_right"/>
+                ด้านซ้าย<input type="radio" name="Name-Position" value="name_left"/>
+                ไม่มี<input type="radio" name="Name-Position" value="none"/>
+                </div>
+                <br />
 
               <div className="dot_checkbox">
                 <div style={{ display: "flex" }}>
@@ -459,7 +475,7 @@ function Shirt_graphic_cus_com({
         <div className="body_shirt">
           <h1>รูปแบบกราฟิค</h1>
           <div className="shirt_design">
-            <img src="image_folder/S_Shirt.png" alt="" />
+            <img className="shirt_img" src="image_folder/S_Shirt.png" alt="" />
             <div className="grid_dot">
               <div 
               className={dot_position_class.dot_left}
@@ -486,15 +502,18 @@ function Shirt_graphic_cus_com({
                   )}
                 </div>
                 <div className="Logo_">
-                  {Logo.Logo_right.image_path && (
+                  {formdata.SLogo.image_path && (
                     <img
-                      src={Logo.Logo_right.image_path}
-                      alt={Logo.Logo_right.school_name}
+                      src={formdata.SLogo.image_path}
+                      alt={formdata.SLogo.school_name}
                     />
                   )}
                 </div>
-                <div style={{ color: formdata.text_right.color_right }}>
-                  {render_h1(formdata.text_right.textright_input)}
+                <div className={"School-right"} style={{ color: formdata.SSchool.color1 }}>
+                  {render_school(formdata.SSchool.name)}
+                </div>
+                <div style={{ color: formdata.SName.color }}>
+                  {render_h1(formdata.SName.fullname)}
                 </div>
               </div>
 
@@ -506,15 +525,18 @@ function Shirt_graphic_cus_com({
                   {render_dot_name(formdata.dot.type, formdata.dot.amount_dot)}
                 </div>
                 <div className="Logo_">
-                  {Logo.Logo_left.image_path && (
+                  {formdata.SLogo.image_path && (
                     <img
-                      src={Logo.Logo_left.image_path}
-                      alt={Logo.Logo_left.school_name}
+                      src={formdata.SLogo.image_path}
+                      alt={formdata.SLogo.school_name}
                     />
                   )}
                 </div>
-                <div style={{ color: formdata.text_left.color_left }}>
-                  {render_h1(formdata.text_left.textleft_input)}
+                <div style={{ color: formdata.SSchool.color1 }}>
+                  {render_school(formdata.SSchool.name)}
+                </div>
+                <div style={{ color: formdata.SName.color}}>
+                  {render_h1(formdata.SName.fullname)}
                 </div>
               </div>
             </div>
