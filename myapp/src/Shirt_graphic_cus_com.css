@@ -106,7 +106,7 @@
     position: sticky;
     top: 1vh; /* Distance from the top of the viewport */
     display: inline-block;
-    border: #ff0000 solid 1px;
+    max-height: 40rem;
 }
 .shirt_design {
     .shirt_img{
@@ -164,6 +164,7 @@
         { margin: 1rem;font-size: 2vh ;width: 90%;min-width:6rem;}
     }
 }
+
 .grid_dot
 {
     display: grid;
@@ -229,26 +230,70 @@
     font-family: 'JS_Chanok';
     gap: 5.5rem;
 }
-.grid_name div
+.grid_name
 {
-    font-size: 0.9rem;
+    .on_right,.on_left
+    {
+        .nameright{font-size: 0.8rem;}
+        .nameleft{font-size: 0.8rem;}
+    }
 }
-.dot_school{font-size: 0.9rem;}
+.School-left,.School-right
+{
+    font-family:'Times New Roman', Times, serif;
+    font-size: 1rem;margin-top: -0.8rem;
+}
+.dot_school{font-size: 1.5rem;}
 .on_right
 {border: 1px solid #000;}
 .on_right h1
 {margin: 0rem;}
 
-.dot_name{font-size: 0.9rem;}
+.dot_name{font-size: 1.5rem;}
 .on_left
 {border: 1px solid #000;}
 .on_left h1
 {margin: 0rem;}
-.Logo_
+.logo-right,.logo-left
 {
     img
     {
         width: auto; height:auto;
         max-width: 5rem;
+    }
+}
+
+.info-form
+{
+    margin: 0 auto;
+    background-color: #ddd;
+    width: 80%;
+    form
+    {
+        div
+        {
+            align-items: center;
+            padding: 2rem;
+            margin-top: -1rem;
+
+            label
+            {
+                font-size: 1rem;
+            }
+            textarea
+            {
+                padding: 1rem;
+                font-size: clamp(1rem, 1vw, 70rem);
+                width:100%;
+                height: 10rem;
+            }
+            input
+            {
+                padding: 1rem;
+                width:100%;            
+                height: 4rem;
+                font-size: clamp(1rem, 1vw, 70rem);
+            }
+        }
     }
 }

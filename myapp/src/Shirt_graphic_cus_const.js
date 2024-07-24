@@ -6,15 +6,18 @@ function Shirt_graphic_cus() {
     SName: {
       fullname: "",
       color: "#0000FF",
-      position_n:""
+      position_n:"ชื่อด้านซ้าย"
     },
     SSchool: {
       name: "",
       color1: "#0000FF",
-      position_s:""
+      position_s:"ชื่อโรงเรียนด้านขวา"
     },
     SLogo:
-    {school_name:"",image_path:"",position_l:""},
+    {
+      school_name:"",
+      image_path:"",
+      position_l:"โลโก้ด้านขวา"},
     dot: {
       type: "",
       position: "",
@@ -24,13 +27,22 @@ function Shirt_graphic_cus() {
 
   });
 
-  const [checbox_dot,setcheck_dot] = useState(false)
-
+  const [checkbox_dot,setcheck_dot] = useState(false)
+  const [checkbox_logo,setcheck_logo] = useState(false)
   const [dot_position_class, set_dot_position] = useState({
     onschool: "hidden",
     onname: "hidden",
     dot_left: "hidden",
     dot_right: "hidden",
+  });
+  const [SNamePositionClass, SetSNamePositionClass] = useState({
+    fullname_right: "hidden",fullname_left: "hidden",
+  });
+  const [SSchoolPositionClass, SetSSchoolPositionClass] = useState({
+    right: "hidden",left: "hidden",
+  });
+  const [SLogoPositionClass, SetSLogoPositionClass] = useState({
+    right: "hidden",left: "hidden",
   });
   const [selectedLogo, setSelectedLogo] = useState(null);
 
@@ -51,7 +63,7 @@ function Shirt_graphic_cus() {
     var dot_star = ''
     var position = ''
     var amount = ''
-    if (checbox_dot === true) {
+    if (checkbox_dot === true) {
       if(formdata.dot.type === 'จุด')
         {dot_star = '•';}
       if(formdata.dot.type ==='ดาว')
@@ -96,23 +108,104 @@ function Shirt_graphic_cus() {
     document.body.classList.add('body_of_edit');
     return () => {
       document.body.classList.remove('body_of_edit');
-    };}, [formdata.dot, checbox_dot]);
+    };}, [formdata.dot, checkbox_dot]);
 
   useEffect(() => {
     fetch_image();
   }, []);
 
+  //name position
   useEffect(() => {
-    if(formdata.SName.position_n === "name_right")
+    if(formdata.SName.position_n === "ชื่อด้านขวา")
       {
-        alert("test")
+        SetSNamePositionClass(data=>(
+          {
+            ...data,
+            fullname_right: "nameright",
+            fullname_left: "hidden",
+          }))
       }
-    else if(formdata.SName.position_n === "name_left")
+    else if(formdata.SName.position_n === "ชื่อด้านซ้าย")
       {
-        alert("test")
+        SetSNamePositionClass(data=>(
+          {
+            ...data,
+            fullname_right: "hidden",
+            fullname_left: "nameleft",
+          }))
       }
+    else
+    {
+      SetSNamePositionClass(data=>(
+        {
+          ...data,
+          fullname_right: "hidden",
+          fullname_left: "hidden",
+        }))
+    }
   }, [formdata.SName]);
+  
+  //school position
+  useEffect(() => {
+    if(formdata.SSchool.position_s === "ชื่อโรงเรียนด้านขวา")
+      {
+        SetSSchoolPositionClass(data=>(
+          {
+            ...data,
+            right: "School-right",
+            left: "hidden",
+          }))
+      }
+    else if(formdata.SSchool.position_s === "ชื่อโรงเรียนด้านซ้าย")
+      {
+        SetSSchoolPositionClass(data=>(
+          {
+            ...data,
+            right: "hidden",
+            left: "School-left",
+          }))
+      }
+    else
+    {
+      SetSSchoolPositionClass(data=>(
+        {
+          ...data,
+          right: "hidden",
+          left: "hidden",
+        }))
+    }
+  }, [formdata.SSchool]);
 
+    //logo position
+  useEffect(() => {
+    if(formdata.SLogo.position_l === "โลโก้ด้านขวา")
+      {
+        SetSLogoPositionClass(data=>(
+          {
+            ...data,
+            right: "logo-right",
+            left: "hidden",
+          }))
+      }
+    else if(formdata.SLogo.position_l === "โลโก้ด้านซ้าย")
+      {
+        SetSLogoPositionClass(data=>(
+          {
+            ...data,
+            right: "hidden",
+            left: "logo-left",
+          }))
+      }
+    else
+    {
+      SetSLogoPositionClass(data=>(
+        {
+          ...data,
+          right: "hidden",
+          left: "hidden",
+        }))
+    }
+  }, [formdata.SLogo]);
 
   const HandleSubmit = async(event) =>
     {
@@ -130,13 +223,17 @@ function Shirt_graphic_cus() {
     }
   return (
     <>
-    <Shirt_graphic_cus_com setcheck_dot={setcheck_dot} checbox_dot={checbox_dot} 
+    <Shirt_graphic_cus_com setcheck_dot={setcheck_dot} checkbox_dot={checkbox_dot} 
+    setcheck_logo={setcheck_logo} checkbox_logo={checkbox_logo}
     formdata={formdata} setformdata={setformdata} set_dot_position={set_dot_position} 
     dot_position_class={dot_position_class}
     Image = {Image} Setimage = {Setimage}
     formdata_info = {formdata_info}
-    setformdata_info ={setformdata_info}
     selectedLogo = {selectedLogo} setSelectedLogo = {setSelectedLogo}
+    SNamePositionClass = {SNamePositionClass} SetSNamePositionClass = {SetSNamePositionClass}
+    SSchoolPositionClass = {SSchoolPositionClass} SetSSchoolPositionClass = {SetSSchoolPositionClass}
+    SLogoPositionClass = {SLogoPositionClass} SetSLogoPositionClass = {SetSLogoPositionClass}
+    setformdata_info ={setformdata_info}
     />
     <br />
 
