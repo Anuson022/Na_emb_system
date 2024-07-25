@@ -14,8 +14,10 @@ function UserAdd() {
             e.preventDefault();
             const formData = new FormData();
             formData.append('file', Profile);
-            console.log(Profile.name)
-            await axios.post('/upload1', formData);
+            formData.append('AccountData',JSON.stringify(AccountData));
+            console.log(AccountData)
+            const res = await axios.post('/AcountCreate', formData);;
+            console.log(res.data)
         }
     const HandleChange = async(e) =>
         {

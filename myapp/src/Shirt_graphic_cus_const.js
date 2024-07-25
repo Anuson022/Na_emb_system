@@ -8,6 +8,10 @@ function Shirt_graphic_cus() {
       color: "#0000FF",
       position_n:"ชื่อด้านซ้าย"
     },
+    SUndername: {
+      under_name: "",
+      color0: "#0000FF",
+    },
     SSchool: {
       name: "",
       color1: "#0000FF",
@@ -29,6 +33,7 @@ function Shirt_graphic_cus() {
 
   const [checkbox_dot,setcheck_dot] = useState(false)
   const [checkbox_logo,setcheck_logo] = useState(false)
+  const [checkbox_undername,setcheck_undername] = useState(false)
   const [dot_position_class, set_dot_position] = useState({
     onschool: "hidden",
     onname: "hidden",
@@ -225,6 +230,7 @@ function Shirt_graphic_cus() {
     <>
     <Shirt_graphic_cus_com setcheck_dot={setcheck_dot} checkbox_dot={checkbox_dot} 
     setcheck_logo={setcheck_logo} checkbox_logo={checkbox_logo}
+    setcheck_undername={setcheck_undername} checkbox_undername={checkbox_undername}
     formdata={formdata} setformdata={setformdata} set_dot_position={set_dot_position} 
     dot_position_class={dot_position_class}
     Image = {Image} Setimage = {Setimage}

@@ -110,6 +110,7 @@ const render_dot_name = (dot_type, dot_amount) => {
 function Shirt_graphic_cus_com({
   setcheck_dot,checkbox_dot,
   setcheck_logo,checkbox_logo,
+  setcheck_undername,checkbox_undername,
   formdata,
   setformdata,
   set_dot_position,
@@ -171,14 +172,56 @@ function Shirt_graphic_cus_com({
         },
       }));
     } //remove input dot1
+    /*
+    setformdata((prevFormdata) => ({
+      ...prevFormdata,
+      SUndername: {
+        ...prevFormdata.SUndername,
+        under_name: "",
+        color0: "#0000FF",
+      },
+    }));
+    */
 
+    
   };
+  const HandleCheckboxUndername = (event) =>
+    {
+      setcheck_undername(event.target.checked);
+      if (event.target.checked === true) 
+        {
+          setformdata((prevFormdata) => ({
+            ...prevFormdata,
+            SUndername: {
+              ...prevFormdata.SUndername,
+              under_name: "",
+              color0: "#0000FF",
+            },
+          }));
+          
+        } //auto input dot1
+      else if (event.target.checked === false) {
+        setformdata((prevFormdata) => ({
+          ...prevFormdata,
+          SUndername: {
+            ...prevFormdata.SUndername,
+            under_name: "",
+            color0: "#0000FF",
+          },
+        }));
+    } }
+
+
   const handle_text = (e) => {
     const { name, value } = e.target;
     setformdata((prevData) => ({
       ...prevData,
       SName: {
         ...prevData.SName,
+        [name]: value,
+      },
+      SUndername: {
+        ...prevData.SUndername,
         [name]: value,
       },
       SSchool: {
@@ -337,7 +380,7 @@ function Shirt_graphic_cus_com({
                     value={formdata.SName.fullname}
                     name="fullname"
                     onChange={handle_text}
-                    placeholder="สิ่งที่ต้องการปัก"
+                    placeholder="ชื่อ - นามสกุล"
                   />
                 </div>
                 <div className="color_container_right">
@@ -349,7 +392,24 @@ function Shirt_graphic_cus_com({
                     onChange={handle_text}
                   />
                 </div>
+                
+                {checkbox_undername?
+                  (
+                    <>
+                <div className="textarea_input_right">
+                  <textarea
+                    value={formdata.SUndername.under_name}
+                    name="under_name"
+                    onChange={handle_text}
+                    placeholder="สาขาหรือสิ่งที่ต้องการปักใต้ชื่อ"
+                  />
+                </div>
+                      <br />
+                    </>
+                  ):("")}
 
+                <div>
+                  
                 <div>
                   <input
                     type="radio"
@@ -376,7 +436,25 @@ function Shirt_graphic_cus_com({
                   />
                   ไม่มี
                 </div>
+                </div>
+
                 <br />
+                <div className="dot_checkbox">
+                  <div style={{ display: "flex" }}>
+                    <h2>มีสาขาหรือไม่</h2>
+                    <input
+                      style={{}}
+                      type="checkbox"
+                      checked={checkbox_undername}
+                      onChange={HandleCheckboxUndername}
+                    />
+                  </div>
+
+                  </div>
+ 
+
+                <br />
+
                 <h2>ตัวย่อโรงเรียน</h2>
                 <br />
                 <div className="textarea_input_right">
@@ -606,6 +684,7 @@ function Shirt_graphic_cus_com({
                   style={{ color: formdata.SName.color }}
                 >
                   {render_h1(formdata.SName.fullname)}
+                  {render_h1(formdata.SUndername.under_name)}
                 </div>
               </div>
 
@@ -635,6 +714,7 @@ function Shirt_graphic_cus_com({
                   style={{ color: formdata.SName.color }}
                 >
                   {render_h1(formdata.SName.fullname)}
+                  {render_h1(formdata.SUndername.under_name)}
                 </div>
               </div>
             </div>
@@ -644,7 +724,7 @@ function Shirt_graphic_cus_com({
         <div className="info-form">
           <form>
           <div>
-            <label htmlFor="">รายละเอียด</label>
+            <h2>รายละเอียด</h2>
             <br />
             <textarea
               name="info_data"
@@ -656,7 +736,7 @@ function Shirt_graphic_cus_com({
           </div>
 
           <div>
-            <label htmlFor="">ชื่อผู้สั่ง</label>
+            <h2>ชื่อผู้สั่ง</h2>
             <br />
             <input
               type="text"
@@ -666,8 +746,9 @@ function Shirt_graphic_cus_com({
               onChange={handleChange_info}
             />
           </div>
+          
           <div>
-            <label htmlFor="">เบอร์โทร</label>
+            <h2>เบอร์โทร</h2>
             <br />
             <input
               type="text"

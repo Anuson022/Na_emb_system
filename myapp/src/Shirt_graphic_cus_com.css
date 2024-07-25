@@ -21,8 +21,11 @@
     grid-gap: 1rem; /* Optional: space between items */
     max-width: 100rem;
     min-width: 65rem;
-    border: #000 solid 1px;
-
+    border: #ff0202 solid 1px;
+    h2
+    {
+        font-size: 1.5rem;
+    }
 }
 .container_form .grid_input
 {
@@ -32,10 +35,11 @@
     width: 80%;
 }
 .input_right_container
-{display: grid;grid-template-columns:auto 25%;  align-items: center; gap:1rem; margin: 0 auto;}
+{display: grid;grid-template-columns:auto 10rem;  align-items: center; gap:1rem; margin: 0 auto;}
 .textarea_input_right textarea
 {
-    font-size: clamp(1rem, 1vw, 70rem);
+    padding: 1rem;
+    font-size: 2rem;
     width:100%;
 
 }
@@ -47,11 +51,10 @@
     border: 0.1em white solid;
     border-radius: 50%;
     overflow: hidden;*/
-    
 }
 .color_input_right {
     min-width:50%;
-    height: 5rem;
+    height: 7rem;
     padding: 1px;
     border-radius: 5px;
 }
@@ -242,6 +245,7 @@
 {
     font-family:'Times New Roman', Times, serif;
     font-size: 1rem;margin-top: -0.8rem;
+    /*font-size: 0.8rem;*/
 }
 .dot_school{font-size: 1.5rem;}
 .on_right
@@ -274,8 +278,7 @@
         {
             align-items: center;
             padding: 2rem;
-            margin-top: -1rem;
-
+            margin-top: -3rem;
             label
             {
                 font-size: 1rem;
@@ -296,4 +299,23 @@
             }
         }
     }
+}
+
+
+/*Extra Small Devices (phones):*/
+@media (max-width: 280px) {
+    .container_form
+{
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    /*grid-template-columns: repeat(auto-fit,minmax(75rem,1fr)); /* Two equal-width columns */
+    grid-gap: 1rem; /* Optional: space between items */
+    max-width: 100rem;
+    min-width: 65rem;
+    h2
+    {
+        font-size: 1.5rem;
+    }
+}
 }

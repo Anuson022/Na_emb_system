@@ -6,14 +6,6 @@ const pool = require('../na_db'); // Adjust the path as necessary
 
 const app_router = express.Router();
 
-// Enable files upload
-app_router.use(fileUpload({
-  createParentPath: true
-}));
-
-// Serve static files
-app_router.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 // Upload endpoint
 app_router.post('/upload', (req, res) => {
   if (!req.files || !req.body.name) {

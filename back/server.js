@@ -23,6 +23,8 @@ app1.use(bodyParser.json());
 app1.use(express.json());
 app1.use(express.urlencoded({ extended: true }));
 
+app1.use(fileUpload())
+
 app1.use(router_imageUpload); //image uploader
 
 app1.use(router_fileFetcher); //image file search
@@ -32,6 +34,26 @@ app1.use(router_imageDelete); //Image delete
 app1.use(router_AccountFetcher) //account fetch
 
 app1.use(router_AccountCreater) //account create
+
+// Ensure new directories exist
+const directories = ['user_profile/profile', 'function_server/uploads'];
+directories.forEach(dir => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+});
+
+// Serve static files from the directories
+app1.use('/profile', express.static(path.join(__dirname, 'user_profile/profile')));
+app1.use('/uploads', express.static(path.join(__dirname, 'function_server/uploads')));
+
+
+
+
+
+
+
+
 
 
 const JWT_SECRET = "JWTMAYBE"
@@ -67,9 +89,8 @@ app1.post("/na_login",(req,res)=>
                 console.log('login_succes')
           })
 
-
-
   })
+
 
 
 cus_insert = (shirt_data, obj) => {
