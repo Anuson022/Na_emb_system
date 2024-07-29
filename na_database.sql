@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2024 at 07:58 PM
+-- Generation Time: Jul 29, 2024 at 05:42 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,15 +34,17 @@ CREATE TABLE `customer_data` (
   `phone_number` varchar(15) NOT NULL,
   `shirt` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `cus_order` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL
+  `status` varchar(255) DEFAULT NULL,
+  `price` varchar(100) DEFAULT NULL,
+  `is_paid` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer_data`
 --
 
-INSERT INTO `customer_data` (`cus_id`, `info`, `parent_name`, `phone_number`, `shirt`, `cus_order`, `status`) VALUES
-(1, '', '', '', '{\"text_right\":{\"textright_input\":\"saf\",\"color_right\":\"#0000FF\",\"textleft_input\":\"asf\"},\"text_left\":{\"textleft_input\":\"asf\",\"color_left\":\"#0000FF\",\"textright_input\":\"saf\"},\"dot\":{\"type\":\"\",\"position\":\"\",\"amount_dot\":\"\",\"color_dot\":\"\"},\"Logo_right\":{\"school_name\":\"โรงเรียนศรี\",\"image_path\":\"/uploads/Sriboonya.jpg\"},\"Logo_left\":{\"school_name\":\"ไม่มี\",\"image_path\":null}}', NULL, 'ยังไม่ตรวจสอบ');
+INSERT INTO `customer_data` (`cus_id`, `info`, `parent_name`, `phone_number`, `shirt`, `cus_order`, `status`, `price`, `is_paid`) VALUES
+(1, '', 'เจน', '010', '{\"SName\":{\"fullname\":\"As\",\"color\":\"#0000FF\",\"position_n\":\"ชื่อด้านซ้าย\"},\"SUndername\":{\"under_name\":\"dasd\",\"color0\":\"#0000FF\"},\"SSchool\":{\"name\":\"ad\",\"color1\":\"#0000FF\",\"position_s\":\"ชื่อโรงเรียนด้านขวา\"},\"SLogo\":{\"school_name\":\"โรงเรียนวัดดอน\",\"image_path\":\"/uploads/watdon.png\",\"position_l\":\"โลโก้ด้านขวา\"},\"dot\":{\"type\":\"จุด\",\"position\":\"บนปกขวา\",\"amount_dot\":\"3\",\"color_dot\":\"#0000FF\"}}', '[{\"id\":1,\"value1\":\"test\",\"value2\":\"1\",\"value3\":\"20\",\"value4\":\"20\"}]', 'กำลังดำเนินการ', '20', '1');
 
 -- --------------------------------------------------------
 
@@ -84,7 +86,8 @@ CREATE TABLE `files` (
 
 INSERT INTO `files` (`id`, `name`, `path`) VALUES
 (7, 'โรงเรียนศรี', './uploads/Sriboonya.jpg'),
-(8, 'โรงเรียนวัดดอน', './uploads/watdon.png');
+(8, 'โรงเรียนวัดดอน', './uploads/watdon.png'),
+(17, 'โรงเรียนคณะราษฎรบำรุง', './function_server/uploads/kb.png');
 
 -- --------------------------------------------------------
 
@@ -97,6 +100,25 @@ CREATE TABLE `images` (
   `School_name` varchar(255) NOT NULL,
   `path` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `queue`
+--
+
+CREATE TABLE `queue` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `queue`
+--
+
+INSERT INTO `queue` (`id`, `name`) VALUES
+(1, '1312'),
+(2, 'asddsa');
 
 -- --------------------------------------------------------
 
@@ -117,9 +139,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `profile`) VALUES
-(1, 'Admin', '123', 'manager', './uploads/Sriboonya.jpg'),
-(2, 'user', '321', 'employee', './uploads/watdon.png'),
-(3, 'user2', '123', 'employee', 'idk');
+(19, 'test', '123', 'employee', './profile/S_Shirt.png');
 
 --
 -- Indexes for dumped tables
@@ -150,6 +170,12 @@ ALTER TABLE `images`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `queue`
+--
+ALTER TABLE `queue`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -175,7 +201,7 @@ ALTER TABLE `custom_input`
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `images`
@@ -184,10 +210,16 @@ ALTER TABLE `images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
+-- AUTO_INCREMENT for table `queue`
+--
+ALTER TABLE `queue`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
