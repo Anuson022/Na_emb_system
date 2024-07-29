@@ -73,9 +73,10 @@
   
   .popup-inner {
     background-color: white;
-    padding: 20px;
+    width: 80%;
+    height: 80%;
     border-radius: 5px;
-    text-align: center;
+    padding: 2rem;
   }
   
   .popup-inner button {

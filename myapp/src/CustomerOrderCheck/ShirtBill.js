@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Select from 'react-select';
 
-import './Shirt_graphic_cus_com.css'
+import '../Shirt_graphic_cus_com.css'
+import axios from "axios";
 const render_h1 = (text) => {
   return text.split("\n").map((line, index) => <h1 key={index}>{line}</h1>);
 };
@@ -107,24 +108,296 @@ const render_dot_name = (dot_type, dot_amount) => {
   );
 };
 
-function Shirt_graphic_cus_com({
-  setcheck_dot,checkbox_dot,
-  setcheck_logo,checkbox_logo,
-  setcheck_undername,checkbox_undername,
-  formdata,
-  setformdata,
-  set_dot_position,
-  dot_position_class,
-  Image,Setimage,
-  formdata_info,setformdata_info,
-  SNamePositionClass,SetSNamePositionClass,
-  SSchoolPositionClass,SetSSchoolPositionClass,
-  SLogoPositionClass,SetSLogoPositionClass,
-  selectedLogo,setSelectedLogo,
-  
-}) 
+
+
+function ShirtBill({cus_id}) 
 {
+    const [FetchData,SetFetchData] = useState({})
+  const Fetch_graphic = async() => 
+    {
+      try {
+        const response = await axios.get('/get_cusID', {
+          params: {
+            id: cus_id
+          }
+        });
+        //console.log(response.data[0])
+        const object = JSON.parse(response.data[0].shirt);
+        await SetFetchData(object);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    useEffect(() => {
+      Fetch_graphic();
+    }, []);
+    useEffect(() => {
+      if (FetchData.SName) {
+        setformdata(prevFormData => ({
+          ...prevFormData,
+          SName: {
+            ...prevFormData.SName,
+            fullname: FetchData.SName.fullname || "",
+            color: FetchData.SName.color || "",
+            position_n: FetchData.SName.position_n || "",
+          },
+          SUndername: {
+            ...prevFormData.SUndername,
+            under_name: FetchData.SUndername.under_name || "",
+            color0: FetchData.SUndername.color0 || "",
+          },
+          SSchool: {
+            ...prevFormData.SSchool,
+            name: FetchData.SSchool.name,
+            color1: FetchData.SSchool.color1,
+            position_s: FetchData.SSchool.position_s
+          },
+          SLogo: {
+            ...prevFormData.SLogo,
+            school_name:FetchData.SLogo.school_name,
+            image_path:FetchData.SLogo.image_path,
+            position_l:FetchData.SLogo.position_l,
+          },
+          dot: {
+            ...prevFormData.dot,
+            type: FetchData.dot.type || "",
+            position: FetchData.dot?.position || "",
+            amount_dot: FetchData.dot?.amount_dot || "",
+            color_dot: FetchData.dot?.color_dot || "",
+          },
+        }));
+      }
+      if(FetchData.dot?.type)
+        {
+          setcheck_dot(true)
+        }
+      if(FetchData.SLogo?.image_path)
+        {
+          setcheck_logo(true)
+          setSelectedLogo({
+            label:FetchData.SLogo.school_name,
+            image:FetchData.SLogo.image_path
+          })
+        }
+      if(FetchData.SUndername?.under_name)
+        {
+          setcheck_undername(true)
+        }
+    }, [FetchData]);
+
+
+
+  const [formdata, setformdata] = useState({
+    SName: {
+      fullname: "",
+      color: "#0000FF",
+      position_n:"ชื่อด้านซ้าย"
+    },
+    SUndername: {
+      under_name: "",
+      color0: "#0000FF",
+    },
+    SSchool: {
+      name: "",
+      color1: "#0000FF",
+      position_s:"ชื่อโรงเรียนด้านขวา"
+    },
+    SLogo:
+    {
+      school_name:"",
+      image_path:"",
+      position_l:"โลโก้ด้านขวา"},
+    dot: {
+      type: "",
+      position: "",
+      amount_dot: "",
+      color_dot: "",
+    },
+  });
+
+  const [checkbox_dot,setcheck_dot] = useState(false)
+  const [checkbox_logo,setcheck_logo] = useState(false)
+  const [checkbox_undername,setcheck_undername] = useState(false)
+
+  const [dot_position_class, set_dot_position] = useState({
+    onschool: "hidden",
+    onname: "hidden",
+    dot_left: "hidden",
+    dot_right: "hidden",
+  });
+  const [SNamePositionClass, SetSNamePositionClass] = useState({
+    fullname_right: "hidden",fullname_left: "hidden",
+  });
+  const [SSchoolPositionClass, SetSSchoolPositionClass] = useState({
+    right: "hidden",left: "hidden",
+  });
+  const [SLogoPositionClass, SetSLogoPositionClass] = useState({
+    right: "hidden",left: "hidden",
+  });
+
+
+  const [Image,Setimage] = useState([])
+
+  const [selectedLogo, setSelectedLogo] = useState(null);
+  const [formdata_info, setformdata_info] = useState({
+    info_data:"",
+    parent_name:"",
+    phone_number:"",
+    status:"ยังไม่ตรวจสอบ",
+  });
+  const fetch_image = async () => {
+    const res = await axios.post('/api/files');
+    console.log(res.data)
+    Setimage(res.data);
+};
+
+
+  useEffect(() => {
+    var dot_star = ''
+    var position = ''
+    var amount = ''
+    if (checkbox_dot === true) {
+      if(formdata.dot.type === 'จุด')
+        {dot_star = '•';}
+      if(formdata.dot.type ==='ดาว')
+        {dot_star = '★';}
+      if(formdata.dot.position === 'บนชื่อโรงเรียน')
+        {
+          set_dot_position(data_position =>(
+            {...data_position,
+              onschool:"onschool",
+              onname:"hidden",
+              dot_left:"hidden",
+              dot_right:"hidden"}))
+        }
+      if(formdata.dot.position === 'บนชื่อนักเรียน')
+        {
+          set_dot_position(data_position =>(
+            {...data_position,
+              onschool:"hidden",
+              onname:"onname",
+              dot_left:"hidden",
+              dot_right:"hidden"}))
+        }
+      if(formdata.dot.position === 'บนปกขวา')
+        {
+          set_dot_position(data_position =>(
+            {...data_position,
+              onschool:"hidden",
+              onname:"hidden",
+              dot_left:"hidden",
+              dot_right:"dot_right"}))
+        }
+      if(formdata.dot.position === 'บนปกซ้าย')
+        {
+          set_dot_position(data_position =>(
+            {...data_position,
+              onschool:"hidden",
+              onname:"hidden",
+              dot_left:"dot_left",
+              dot_right:"hidden"}))
+        }
+    }
+    document.body.classList.add('body_of_edit');
+    return () => {
+      document.body.classList.remove('body_of_edit');
+    };}, [formdata.dot, checkbox_dot]);
+    //name position
+    useEffect(() => {
+      if(formdata.SName.position_n === "ชื่อด้านขวา")
+        {
+          SetSNamePositionClass(data=>(
+            {
+              ...data,
+              fullname_right: "nameright",
+              fullname_left: "hidden",
+            }))
+        }
+      else if(formdata.SName.position_n === "ชื่อด้านซ้าย")
+        {
+          SetSNamePositionClass(data=>(
+            {
+              ...data,
+              fullname_right: "hidden",
+              fullname_left: "nameleft",
+            }))
+        }
+      else
+      {
+        SetSNamePositionClass(data=>(
+          {
+            ...data,
+            fullname_right: "hidden",
+            fullname_left: "hidden",
+          }))
+      }
+    }, [formdata.SName]);
+    
+    //school position
+    useEffect(() => {
+      if(formdata.SSchool.position_s === "ชื่อโรงเรียนด้านขวา")
+        {
+          SetSSchoolPositionClass(data=>(
+            {
+              ...data,
+              right: "School-right",
+              left: "hidden",
+            }))
+        }
+      else if(formdata.SSchool.position_s === "ชื่อโรงเรียนด้านซ้าย")
+        {
+          SetSSchoolPositionClass(data=>(
+            {
+              ...data,
+              right: "hidden",
+              left: "School-left",
+            }))
+        }
+      else
+      {
+        SetSSchoolPositionClass(data=>(
+          {
+            ...data,
+            right: "hidden",
+            left: "hidden",
+          }))
+      }
+    }, [formdata.SSchool]);
   
+      //logo position
+    useEffect(() => {
+      if(formdata.SLogo.position_l === "โลโก้ด้านขวา")
+        {
+          SetSLogoPositionClass(data=>(
+            {
+              ...data,
+              right: "logo-right",
+              left: "hidden",
+            }))
+        }
+      else if(formdata.SLogo.position_l === "โลโก้ด้านซ้าย")
+        {
+          SetSLogoPositionClass(data=>(
+            {
+              ...data,
+              right: "hidden",
+              left: "logo-left",
+            }))
+        }
+      else
+      {
+        SetSLogoPositionClass(data=>(
+          {
+            ...data,
+            right: "hidden",
+            left: "hidden",
+          }))
+      }
+    }, [formdata.SLogo]);
+
+  useEffect(() => {
+    fetch_image();
+  }, []);
   const handlecheckbox_dot = (event) => {
     setcheck_dot(event.target.checked);
     if (event.target.checked === true) {
@@ -362,273 +635,6 @@ function Shirt_graphic_cus_com({
   return (
     <>
       <div className="container_form">
-        <div className="grid_input">
-          <div className="input_right">
-            <form onSubmit={""}>
-              <h2>ชื่อ - นามสกุล</h2>
-              <br />
-              <div className="input_right_container">
-                <div className="textarea_input_right">
-                  <textarea
-                    value={formdata.SName.fullname}
-                    name="fullname"
-                    onChange={handle_text}
-                    placeholder="ชื่อ - นามสกุล"
-                  />
-                </div>
-                <div className="color_container_right">
-                  <input
-                    className="color_input_right"
-                    type="color"
-                    value={formdata.SName.color}
-                    name="color"
-                    onChange={handle_text}
-                  />
-                </div>
-                
-                {checkbox_undername?
-                  (
-                    <>
-                <div className="textarea_input_right">
-                  <textarea
-                    value={formdata.SUndername.under_name}
-                    name="under_name"
-                    onChange={handle_text}
-                    placeholder="สาขาหรือสิ่งที่ต้องการปักใต้ชื่อ"
-                  />
-                </div>
-                      <br />
-                    </>
-                  ):("")}
-
-                <div>
-                  
-                <div>
-                  <input
-                    type="radio"
-                    name="Name-Position"
-                    checked={formdata.SName.position_n === "ชื่อด้านขวา"}
-                    onChange={HandleName_position}
-                    value="ชื่อด้านขวา"
-                  />
-                  ด้านขวา
-                  <input
-                    type="radio"
-                    name="Name-Position"
-                    checked={formdata.SName.position_n === "ชื่อด้านซ้าย"}
-                    onChange={HandleName_position}
-                    value="ชื่อด้านซ้าย"
-                  />
-                  ด้านซ้าย
-                  <input
-                    type="radio"
-                    name="Name-Position"
-                    checked={formdata.SName.position_n === "none"}
-                    onChange={HandleName_position}
-                    value="none"
-                  />
-                  ไม่มี
-                </div>
-                </div>
-
-                <br />
-                <div className="dot_checkbox">
-                  <div style={{ display: "flex" }}>
-                    <h2>มีสาขาหรือไม่</h2>
-                    <input
-                      style={{}}
-                      type="checkbox"
-                      checked={checkbox_undername}
-                      onChange={HandleCheckboxUndername}
-                    />
-                  </div>
-
-                  </div>
- 
-
-                <br />
-
-                <h2>ตัวย่อโรงเรียน</h2>
-                <br />
-                <div className="textarea_input_right">
-                  <textarea
-                    value={formdata.SSchool.name}
-                    name="name"
-                    onChange={handle_text}
-                    placeholder="สิ่งที่ต้องการปัก"
-                  />
-                </div>
-                <div className="color_container_right">
-                  <input
-                    className="color_input_right"
-                    type="color"
-                    value={formdata.SSchool.color1}
-                    name="color1"
-                    onChange={handle_text}
-                  />
-                </div>
-
-                <div /*school position*/>
-                  <input
-                    type="radio"
-                    name="SchoolName-Position"
-                    checked={
-                      formdata.SSchool.position_s === "ชื่อโรงเรียนด้านขวา"
-                    }
-                    onChange={HandleSchool_position}
-                    value="ชื่อโรงเรียนด้านขวา"
-                  />
-                  ด้านขวา
-                  <input
-                    type="radio"
-                    name="SchoolName-Position"
-                    checked={
-                      formdata.SSchool.position_s === "ชื่อโรงเรียนด้านซ้าย"
-                    }
-                    onChange={HandleSchool_position}
-                    value="ชื่อโรงเรียนด้านซ้าย"
-                  />
-                  ด้านซ้าย
-                  <input
-                    type="radio"
-                    name="SchoolName-Position"
-                    checked={formdata.SSchool.position_s === "none"}
-                    onChange={HandleSchool_position}
-                    value="none"
-                  />
-                  ไม่มี
-                </div>
-                <br />
-
-                <div className="dot_checkbox">
-                  <div style={{ display: "flex" }}>
-                    <h2>มีโลโก้หรือไม่</h2>
-                    <input
-                      style={{}}
-                      type="checkbox"
-                      checked={checkbox_logo}
-                      onChange={HandleCheckboxLogo}
-                    />
-                  </div>
-                  {checkbox_logo ? (
-                    <>
-                      <div>
-                        <Select
-                          value={selectedLogo}
-                          options={Option_select}
-                          components={{ Option: Custom_option }}
-                          placeholder="โปรดเลือกโลโก้(หากมี)"
-                          onChange={(selectedOption) =>
-                            handlechange_logo(selectedOption)
-                          }
-                        />
-                      </div>
-                      <div /*logo position*/>
-                        <input
-                          type="radio"
-                          name="Logo-Position"
-                          checked={formdata.SLogo.position_l === "โลโก้ด้านขวา"}
-                          onChange={HandleLogo_position}
-                          value="โลโก้ด้านขวา"
-                        />
-                        ด้านขวา
-                        <input
-                          type="radio"
-                          name="Logo-Position"
-                          checked={
-                            formdata.SLogo.position_l === "โลโก้ด้านซ้าย"
-                          }
-                          onChange={HandleLogo_position}
-                          value="โลโก้ด้านซ้าย"
-                        />
-                        ด้านซ้าย
-                      </div>
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-
-              <br />
-
-              <div className="dot_checkbox">
-                <div style={{ display: "flex" }}>
-                  <h2>มีจุดหรือไม่</h2>
-                  <input
-                    style={{}}
-                    type="checkbox"
-                    checked={checkbox_dot}
-                    onChange={handlecheckbox_dot}
-                  />
-                </div>
-                {checkbox_dot ? (
-                  <div>
-                    <div className="dot_type">
-                      {/*
-                        <p>
-                          {formdata.dot.type +
-                            formdata.dot.position +
-                            formdata.dot.amount_dot +
-                            formdata.dot.color_dot}
-                        </p>*/}
-                      <p>จุดหรือดาว</p>
-                      <select
-                        name="type"
-                        value={formdata.dot.type}
-                        onChange={handledot}
-                      >
-                        {/*<option value="no_dot">จุดหรือดาว</option>*/}
-                        <option value="จุด">จุด</option>
-                        <option value="ดาว">ดาว</option>
-                      </select>
-                    </div>
-
-                    <div className="dot_position">
-                      <p>ตำแหน่งของจุด</p>
-                      <select
-                        name="position"
-                        value={formdata.dot.position}
-                        onChange={handledot_position}
-                      >
-                        {/*<option value="no_dot">ตำแหน่งของจุด</option>*/}
-                        <option value="บนชื่อโรงเรียน">บนชื่อโรงเรียน</option>
-                        <option value="บนชื่อนักเรียน">บนชื่อนักเรียน</option>
-                        <option value="บนปกขวา">บนปกขวา</option>
-                        <option value="บนปกซ้าย">บนปกซ้าย</option>
-                      </select>
-                    </div>
-
-                    <div className="dot_amount">
-                      <p>จำนวนจุด</p>
-                      <select
-                        name="amount_dot"
-                        value={formdata.dot.amount_dot}
-                        onChange={handledot}
-                      >
-                        <option value="1">1 จุด</option>
-                        <option value="2">2 จุด</option>
-                        <option value="3">3 จุด</option>
-                      </select>
-                    </div>
-
-                    <div className="dot_color" onChange={handledot}>
-                      <p>สีของจุด</p>
-                      <input
-                        type="color"
-                        name="color_dot"
-                        value={formdata.dot.color_dot}
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-                
-              </div>
-            </form>
-          </div>
-        </div>
 
         <div className="body_shirt">
           <h1>รูปแบบกราฟิค</h1>
@@ -721,4 +727,4 @@ function Shirt_graphic_cus_com({
   );
 }
 
-export default Shirt_graphic_cus_com;
+export default ShirtBill;

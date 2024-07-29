@@ -14,6 +14,7 @@ const router_fileFetcher = require("./function_server/Image_fetcher");
 const router_imageDelete = require("./function_server/Image_delete");
 const router_AccountFetcher = require("./user_profile/Account_fetch")
 const router_AccountCreater = require("./user_profile/Account_create")
+const router_CusGetQue = require("./CusGetQue/CusGetQue")
 const app1 = express();
 
 app1.use(cors());
@@ -35,6 +36,8 @@ app1.use(router_AccountFetcher) //account fetch
 
 app1.use(router_AccountCreater) //account create
 
+app1.use(router_CusGetQue)
+
 // Ensure new directories exist
 const directories = ['user_profile/profile', 'function_server/uploads'];
 directories.forEach(dir => {
@@ -46,15 +49,6 @@ directories.forEach(dir => {
 // Serve static files from the directories
 app1.use('/profile', express.static(path.join(__dirname, 'user_profile/profile')));
 app1.use('/uploads', express.static(path.join(__dirname, 'function_server/uploads')));
-
-
-
-
-
-
-
-
-
 
 const JWT_SECRET = "JWTMAYBE"
 
@@ -93,6 +87,67 @@ app1.post("/na_login",(req,res)=>
 
 
 
+
+
+// Get all queue items
+app1.get('/queue', (req, res) => {
+  pool.query('SELECT * FROM queue', (err, results) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    res.send(results);
+  });
+});
+
+// Insert a new item
+app1.post('/queue', (req, res) => {
+  const { name } = req.body;
+  pool.query('INSERT INTO queue (name) VALUES (?)', [name], (err, results) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    res.send(results);
+  });
+});
+
+// Delete an item and reset IDs
+app1.delete('/queue/:id', (req, res) => {
+  const { id } = req.params;
+  pool.query('DELETE FROM queue WHERE id = ?', [id], (err, results) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+
+    // Update subsequent rows to shift IDs
+    pool.query('UPDATE queue SET id = id - 1 WHERE id > ?', [id], err => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+
+      // Reset auto increment
+      pool.query('ALTER TABLE queue AUTO_INCREMENT = 1', err => {
+        if (err) {
+          res.status(500).send(err);
+          return;
+        }
+        res.send(results);
+      });
+    });
+  });
+});
+
+
+
+
+
+
+
+
+
 cus_insert = (shirt_data, obj) => {
   return new Promise((resolve, reject) => {
     const json_data = [JSON.stringify(shirt_data)];
@@ -111,13 +166,15 @@ cus_insert = (shirt_data, obj) => {
   });
 };
 
-adm_update = (cus_input, formdata, order) => {
+adm_update = (cus_input, formdata, order ,SumPrice,IsPaid) => {
   const json_form = [JSON.stringify(formdata)];
-  const json_order = [JSON.stringify(formdata)];
+  const json_order = [JSON.stringify(order)];
+  const PricePaidValue = [SumPrice,IsPaid,cus_input.cus_id];
   const update_cus =
     "UPDATE customer_data SET info=?,parent_name=?,phone_number=?,status=? WHERE cus_id = ?";
   const update_form = "UPDATE customer_data SET shirt=? WHERE cus_id = ?";
   const update_order = "UPDATE customer_data SET cus_order=? WHERE cus_id = ?";
+  const update_Paid_Price = "UPDATE customer_data SET price = ?, is_paid = ? WHERE cus_id = ?";
   // First update query
   pool.query(
     update_cus,
@@ -141,19 +198,30 @@ adm_update = (cus_input, formdata, order) => {
           if (error) {
             return console.log(error);
           }
-
-          // Third update query within the callback of the second query
-          pool.query(
-            update_order,
-            [json_order, cus_input.cus_id],
-            (error, result) => {
-              if (error) {
-                return console.log(error);
-              }
-
-              console.log("Success");
-            }
-          );
+        }
+      );
+      // Third update query within the callback of the second query
+      pool.query(
+        update_order,
+        [json_order, cus_input.cus_id],
+        (error, result) => {
+          if (error) {
+            return console.log(error);
+          }
+          console.log(json_order);
+          console.log("success");
+        }
+      );
+            // Fourth update query within the callback of the second query
+      pool.query(
+        update_Paid_Price,
+        PricePaidValue,
+        (error, result) => {
+          if (error) {
+            return console.log(error);
+          }
+          console.log(result);
+          console.log("success");
         }
       );
     }
@@ -166,13 +234,31 @@ const data_queing = async () => {
   await pool.query(`ALTER TABLE customer_data AUTO_INCREMENT =1;`);
   console.log("asf");
 };
-const adm_delete = async (cus_id) => {
-  const delete_sql = "DELETE FROM customer_data WHERE cus_id = ?";
-  pool.query(delete_sql, [cus_id], (error, result, fields) => {
-    if (error) {
-      return console.log(error);
+
+const adm_delete = async (cus_id,res) => {
+
+  pool.query('DELETE FROM customer_data WHERE cus_id = ?', [cus_id], (err, results) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
     }
-    console.log("Success");
+
+    // Update subsequent rows to shift IDs
+    pool.query('UPDATE customer_data SET cus_id = cus_id - 1 WHERE cus_id > ?', [cus_id], err => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+
+      // Reset auto increment
+      pool.query('ALTER TABLE customer_data AUTO_INCREMENT = 1', err => {
+        if (err) {
+          res.status(500).send(err);
+          return;
+        }
+        res.send(results);
+      });
+    });
   });
 };
 app1.get("/", (req, res) => {
@@ -181,16 +267,12 @@ app1.get("/", (req, res) => {
   res.end();
 });
 app1.post("/cus_input", async (req, res) => {
-  await data_queing();
-
   const Shirt_data = req.body.Combine_shirt;
   const Cus_info = req.body.formdata_info;
   await console.log(req.body);
   //await console.log(typeof(req.body))
   await cus_insert(Shirt_data, Cus_info);
   res.json();
-  await data_queing();
-
   //customer input
 });
 
@@ -199,21 +281,36 @@ app1.post("/update_customdata", async (req, res) => {
   const cus_data = req.body.formdata_cus;
   const shirt = req.body.Combine_shirt;
   const orders = req.body.orders;
-  await adm_update(cus_data, shirt, orders);
+  const Sumprice = req.body.SumPrice;
+  const IsPaid = req.body.IsPaid
+
+  await adm_update(cus_data, shirt, orders ,Sumprice,IsPaid);
   res.json();
   //storefront input
 });
-app1.post("/delete_cusdata", async (req, res) => {
+app1.delete("/delete_cusdata/:id", async (req, res) => {
   //await console.log(req.body.popupData)
-  adm_delete(req.body.popup_delete);
+  const { id } = req.params;
+  adm_delete(id,res);
   //await data_queing();
-  res.json();
+  //res.json();
   //storefront delete
 });
 app1.post("/search_cus1", async (req, res) => {
   const searchTerm = req.body.search_value;
   console.log(searchTerm);
-  const query = `SELECT * FROM customer_data WHERE cus_id LIKE ?`;
+  const query = `SELECT * FROM customer_data WHERE cus_id LIKE ? AND status = "ยังไม่ตรวจสอบ"`;
+  try {
+    pool.query(query, [`%${searchTerm}%`], (err, results) => {
+      if (err) throw err;
+      res.json(results);
+    });
+  } catch (error) {}
+});
+app1.post("/search_cus2", async (req, res) => {
+  const searchTerm = req.body.search_value;
+  console.log(searchTerm);
+  const query = `SELECT * FROM customer_data WHERE cus_id LIKE ? AND status = "กำลังดำเนินการ"`;
   try {
     pool.query(query, [`%${searchTerm}%`], (err, results) => {
       if (err) throw err;

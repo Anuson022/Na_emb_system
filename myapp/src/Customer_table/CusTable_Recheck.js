@@ -2,6 +2,7 @@ import axios from "axios";
 import { Link,useNavigate } from "react-router-dom";
 import { useState,useEffect } from "react";
 import yes_no_Popup from "./yes_no_Popup";
+
 import './CustomerTable.css'
 
 const ITEMS_PER_PAGE = 5;
@@ -12,7 +13,6 @@ const Customer_table = () => {
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
   const [popup_delete, setpopup_delete] = useState(null);
   const [popup_view, setpopup_view] = useState({});
 
@@ -31,7 +31,8 @@ const Customer_table = () => {
   };
   const handleYes_delete = async() => {
     try {
-      const response = await axios.post('/delete_cusdata', {popup_delete});
+      const id = popup_delete
+      const response = await axios.delete(`/delete_cusdata/${id}`);
       setpopup_delete(response.data)
       fetching_data();
       //alert(popup_delete)
@@ -55,6 +56,8 @@ const Customer_table = () => {
       const search_value = '';
       const response = await axios.post('/search_cus1', {search_value}).then(response => {
       setData(response.data);
+      const test = JSON.parse(response.data.shirt[0])
+      //console.log(test.SName.fullname)
         // Extract column headers from the data keys
         /*if (response.data.length > 0) {
           setColumns(Object.keys(response.data[0]));
@@ -102,7 +105,7 @@ const Customer_table = () => {
 		<thead className="table_head">
 			<tr>
             <th>รหัสลูกค้า</th>
-            <th>รายละเอียด</th>
+            <th>รายละเอียดการปัก</th>
             <th>ชื่อผู้สั่ง</th>
             <th>เบอร์โทร</th>
             <th>สถานะ</th>
@@ -112,19 +115,24 @@ const Customer_table = () => {
 			</tr>
 		</thead>
 		<tbody className="table_body">
-        {currentItems.map((item) => (
+        {currentItems.map((item) => 
+        {
+          const shirtInfo = data[item.cus_id] ? JSON.parse(data[item.cus_id].shirt) : null;
+        return(
             <tr key={item.cus_id}>
               <td className="td_nowarp">{item.cus_id}</td>
-              <td className="info_text">{item.info}</td>
+              <td className="info_text"
+              onClick={() => handleShowPopup_view(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}
+              >ชื่อ : {shirtInfo ? shirtInfo.SName.fullname : 'ไม่มี'}</td>
               <td className="td_nowarp">{item.parent_name}</td>
               <td className="td_nowarp">{item.phone_number}</td>
               <td className="info_text">{item.status}</td>
               <td className="td_nowarp"><button class="fa fa-info" aria-hidden="true" 
-             onClick={() => handleShowPopup_view(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}></button></td>
+                onClick={() => handleShowPopup_view(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}></button></td>
               <td className="td_nowarp"><button onClick={() => handleClick(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}>Edit</button></td>
               <td className="td_nowarp"><button onClick={() => handleShowPopup_delete(item.cus_id)} >Delete</button></td>
             </tr>
-          ))}
+          )})}
 		</tbody>
 	</table>
   <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>

@@ -69,8 +69,9 @@ function Admin_dashboard() {
         <div className={sideNavOpen ? 'sidebar' : 'sidebar_close'}>
         <h3>หน้าแรก</h3>
         <h3>จัดการข้อมูลลูกค้า</h3>
-        <p>ที่ต้องตรวจสอบ</p>
-        <p><Link to="/Admin_dashboard/Customer_table">ที่ต้องดำเนินการ</Link></p>
+        <p><Link to="/Admin_dashboard/RecheckTable">ที่ต้องตรวจสอบ</Link></p>
+        
+        <p><Link to="/Admin_dashboard/CustomerTable">ที่ต้องดำเนินการ</Link></p>
         <p>รายการที่เสร็จสิ้น</p>
         <h3>จัดการข้อมูลพนักงาน</h3>
         <p><Link to="/Admin_dashboard/User_edit">ข้อมูลพนักงาน</Link></p>

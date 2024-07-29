@@ -60,7 +60,7 @@
         border: 1px saddlebrown solid;
         margin: 0 auto;
         justify-content: center; /* Centers children vertically */
-        align-items: center; /* Centers children horizontally 
+        /*align-items: center; /* Centers children horizontally 
         flex-grow: 1;
         transition: opacity 0.5s ease-in-out;
         opacity: 1;
@@ -70,4 +70,12 @@
       }
     }
   }*/
+
+  @font-face {
+    font-family: 'RSU_Regular';
+    src: url('./RSU_Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   

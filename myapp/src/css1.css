@@ -12,7 +12,7 @@ body
     /*max-width: fit-content;*/
     margin-inline: auto;
     margin: 0 auto;
-    fieldset{width: 100%; min-width: 120rem;}
+    fieldset{width: 100%; min-width: 100rem;}
 }
 .Shirt_com
 {

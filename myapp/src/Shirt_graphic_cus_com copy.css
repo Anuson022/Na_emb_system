@@ -27,7 +27,7 @@
     grid-template-columns: 1fr;
     /*grid-template-columns: repeat(auto-fit,minmax(75rem,1fr)); /* Two equal-width columns */
     grid-gap: 0.8vh; /* Optional: space between items */
-
+    font-family:'RSU_regular';
 }
 .container_form .grid_input
 {

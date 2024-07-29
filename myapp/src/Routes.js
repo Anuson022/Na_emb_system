@@ -2,9 +2,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import Admin_dashboard from './Admin_dashboard';
-import Customer_table from './Customer_table/CusTable_Recheck';
+import CusTable_Recheck from './Customer_table/CusTable_Recheck';
+import CusTable_Inprocess from './Customer_table/CusTable_Inprocess';
 import Custom_input from './Custom_input';
-import TextareaToParagraphs from './TextareaToParagraphs';
+import Recheck from './Recheck';
 import Image_input from './Image_input';
 import Test from './Test';
 import DynamicForm from './DynamicForm';
@@ -16,6 +17,7 @@ import Secure_dashboard from './Login_component/Secure_dashboard';
 import UserSAED from './UserEdit/UserSAED';
 import UserEdit from './UserEdit/UserEdit';
 import UserAdd from './UserEdit/UserAdd';
+import CusOrderCheck from './CustomerOrderCheck/CusOrderCheck';
 
 const Router = createBrowserRouter([
   {
@@ -24,12 +26,20 @@ const Router = createBrowserRouter([
     children: [],
   },
   {
+    path: "/CusOrder",
+    element: <CusOrderCheck/>,
+  },
+  {
     path: "Admin_dashboard",
     element: <Secure_dashboard />,
     children: [
         {
-            path: "Customer_table",
-            element: <Customer_table />,
+            path: "RecheckTable",
+            element: <CusTable_Recheck/>,
+        },
+        {
+          path: "CustomerTable",
+          element: <CusTable_Inprocess/>,
         },
         {
           path: "User_edit",
@@ -56,7 +66,7 @@ const Router = createBrowserRouter([
   },
   {
     path: "test-com",
-    element: <TextareaToParagraphs />,
+    element: <Recheck />,
   },
   {
     path: "test-image",

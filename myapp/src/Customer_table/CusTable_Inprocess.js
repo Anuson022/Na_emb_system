@@ -53,7 +53,7 @@ const Customer_table = () => {
   const fetching_data =async(page) =>
     {
       const search_value = '';
-      const response = await axios.post('/search_cus1', {search_value}).then(response => {
+      const response = await axios.post('/search_cus2', {search_value}).then(response => {
       setData(response.data);
         // Extract column headers from the data keys
         /*if (response.data.length > 0) {
@@ -71,7 +71,7 @@ const Customer_table = () => {
     setSearchTerm(e.target.value)
     const search_value = e.target.value
     try {
-      const response = await axios.post('/search_cus1', {search_value});
+      const response = await axios.post('/search_cus2', {search_value});
       setData(response.data);
     } catch (error) {
       console.error('Error fetching search results:', error);

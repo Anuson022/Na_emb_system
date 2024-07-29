@@ -21,7 +21,8 @@ function Shirt_graphic_cus() {
     {
       school_name:"",
       image_path:"",
-      position_l:"โลโก้ด้านขวา"},
+      position_l:"โลโก้ด้านขวา"
+    },
     dot: {
       type: "",
       position: "",
@@ -217,7 +218,6 @@ function Shirt_graphic_cus() {
       const Combine_shirt = 
       {
         ...formdata,
-        ...formdata
       }
       try {
         const responses = await axios.post("/cus_input",{Combine_shirt,formdata_info})
@@ -226,6 +226,19 @@ function Shirt_graphic_cus() {
         alert(error)
       }
     }
+    const handleChange_info = (event) =>
+      {
+          const { name, value } = event.target;
+          setformdata_info((prevFormData) => ({
+            ...prevFormData,
+            [name]: value
+          }));
+        };
+    const Info_input = () =>
+      {
+
+
+      }
   return (
     <>
     <Shirt_graphic_cus_com setcheck_dot={setcheck_dot} checkbox_dot={checkbox_dot} 
@@ -234,15 +247,56 @@ function Shirt_graphic_cus() {
     formdata={formdata} setformdata={setformdata} set_dot_position={set_dot_position} 
     dot_position_class={dot_position_class}
     Image = {Image} Setimage = {Setimage}
-    formdata_info = {formdata_info}
     selectedLogo = {selectedLogo} setSelectedLogo = {setSelectedLogo}
     SNamePositionClass = {SNamePositionClass} SetSNamePositionClass = {SetSNamePositionClass}
     SSchoolPositionClass = {SSchoolPositionClass} SetSSchoolPositionClass = {SetSSchoolPositionClass}
     SLogoPositionClass = {SLogoPositionClass} SetSLogoPositionClass = {SetSLogoPositionClass}
-    setformdata_info ={setformdata_info}
     />
     <br />
+    <div className="info_container">
+    <div className="info-form">
+          <form>
+          <div>
+            <h2>รายละเอียด</h2>
+            <br />
+            <textarea
+              name="info_data"
+              id=""
+              placeholder="สิ่งที่ต้องการปัก..."
+              value={formdata_info.info_data}
+              onChange={handleChange_info}
+            ></textarea>
+          </div>
 
+          <div>
+            <h2>ชื่อผู้สั่ง</h2>
+            <br />
+            <input
+              type="text"
+              name="parent_name"
+              id=""
+              value={formdata_info.parent_name}
+              onChange={handleChange_info}
+            />
+          </div>
+          
+          <div>
+            <h2>เบอร์โทร</h2>
+            <br />
+            <input
+              type="text"
+              name="phone_number"
+              id=""
+              value={formdata_info.phone_number}
+              onChange={handleChange_info}
+            />
+          </div>
+          </form>
+        </div>
+    </div>
+    <div className="Cus-submit">
+      <button onClick={HandleSubmit}>test</button>
+    </div>
     </>
   )
 }
