@@ -22,6 +22,7 @@
   background-color: lightgreen;
   flex-direction: column;
   align-items: center;
+  width: clamp(100%, 3vw, 110rem);
   img{border-radius: 50%; width: clamp(10px, 3vw, 50em); height: auto;; margin: 1rem;}
   button
   {padding: auto; font-size: 1vw;}
@@ -35,7 +36,7 @@
   .sidebar_button
   { 
     background-color: lightpink; padding: 1rem;
-    min-width: 10rem;
+    width: clamp(100%, 3vw, 110rem);
     border: 1px rgb(0, 255, 110) solid;
     .close-open{
       display: none;

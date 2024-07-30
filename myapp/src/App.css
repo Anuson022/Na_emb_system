@@ -78,4 +78,21 @@
     font-style: normal;
   }
 
+  .accordion {
+    border: 1px solid #ccc;
+  }
+  
+  .accordion-header {
+    background-color: #f1f1f1;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .accordion-content {
+    padding: 10px;
+    background-color: #fff;
+  }
   

@@ -8,6 +8,7 @@ function CusOrderCheck() {
   const [OrderSum, SetOrderSum] = useState([]);
   const [SearchData, SetSearchData] = useState("");
   const [ShowQue, SetShowQue] = useState(false);
+  const [status,setstatus] = useState()
   const IsFound = () => {
     console.log(Data);
     if (Data === "notfound") {
@@ -15,7 +16,7 @@ function CusOrderCheck() {
     } else {
       return (
         <>
-          <ShirtBill cus_id={Data[0].cus_id} />
+          <ShirtBill cus_id={Data[1].cus_id} />
           <div>
             <h1>รายการ</h1>
             <table>
@@ -43,7 +44,7 @@ function CusOrderCheck() {
             <div>ราคารวม {OrderSum}</div>
           </div>
 
-          <div>Status :</div>
+          <div>Status :{status}</div>
         </>
       );
     }
@@ -55,9 +56,10 @@ function CusOrderCheck() {
     console.log(SearchData);
     const quedata = await axios.post("/api/GetCusQue", { SearchData });
     SetData(quedata.data);
-    const Order_obj = JSON.parse(quedata.data[0].cus_order);
-    const Order_sum = quedata.data[0].price
-    const status = quedata.data[0].status
+    const Order_obj = JSON.parse(quedata.data[1].cus_order);
+    const Order_sum = quedata.data[1].price
+    const status = quedata.data[1].status
+    setstatus(status)
     SetOrderSum(Order_sum)
     SetOrderData(Order_obj);
     SetShowQue(true);

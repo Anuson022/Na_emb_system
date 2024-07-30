@@ -2,6 +2,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import Admin_dashboard from './Admin_dashboard';
+import Approve from './Customer_table/Aprrove';
 import CusTable_Recheck from './Customer_table/CusTable_Recheck';
 import CusTable_Inprocess from './Customer_table/CusTable_Inprocess';
 import Custom_input from './Custom_input';
@@ -33,6 +34,10 @@ const Router = createBrowserRouter([
     path: "Admin_dashboard",
     element: <Secure_dashboard />,
     children: [
+        {
+            path: "ApproveOrder",
+            element: <Approve/>,
+        },
         {
             path: "RecheckTable",
             element: <CusTable_Recheck/>,

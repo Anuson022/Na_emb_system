@@ -3,6 +3,8 @@ import { Link,useNavigate } from "react-router-dom";
 import { useState,useEffect } from "react";
 import yes_no_Popup from "./yes_no_Popup";
 import './CustomerTable.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const ITEMS_PER_PAGE = 5;
 const Customer_table = () => {
@@ -23,9 +25,9 @@ const Customer_table = () => {
     setpopup_delete(cus_id);
     setshowpopup_delete(true);
   };
-  const handleShowPopup_view = (cus_id,info,parent_name,phone_number,status) => {
-    setpopup_view([cus_id,info,parent_name,phone_number,status]);
-    console.log(data[0])
+  const handleShowPopup_view = (shirtInfo) => {
+    setpopup_view({shirtInfo});
+    console.log(popup_view.shirtInfo.SName.fullname)
 
     setshowpopup_view(true);
   };
@@ -66,6 +68,7 @@ const Customer_table = () => {
       .finally
       {
       };
+      
 }
   const handleSearch = async (e) => {
     setSearchTerm(e.target.value)
@@ -92,69 +95,131 @@ const Customer_table = () => {
     };
 
     return (
-      
-<div class="container_customer_table">
-  <div>
-
-
-  </div>
-	<table>
-		<thead className="table_head">
-			<tr>
-            <th>รหัสลูกค้า</th>
-            <th>รายละเอียด</th>
-            <th>ชื่อผู้สั่ง</th>
-            <th>เบอร์โทร</th>
-            <th>สถานะ</th>
-            <th>Actions</th>
-            <th>Actions</th>
-            <th>Actions</th>
-			</tr>
-		</thead>
-		<tbody className="table_body">
-        {currentItems.map((item) => (
-            <tr key={item.cus_id}>
-              <td className="td_nowarp">{item.cus_id}</td>
-              <td className="info_text">{item.info}</td>
-              <td className="td_nowarp">{item.parent_name}</td>
-              <td className="td_nowarp">{item.phone_number}</td>
-              <td className="info_text">{item.status}</td>
-              <td className="td_nowarp"><button class="fa fa-info" aria-hidden="true" 
-             onClick={() => handleShowPopup_view(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}></button></td>
-              <td className="td_nowarp"><button onClick={() => handleClick(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}>Edit</button></td>
-              <td className="td_nowarp"><button onClick={() => handleShowPopup_delete(item.cus_id)} >Delete</button></td>
+      <div class="container_customer_table">
+        <div></div>
+        <table>
+          <thead className="table_head">
+            <tr>
+              <th>รหัสลูกค้า</th>
+              <th>รายละเอียดการปัก</th>
+              <th>ชื่อผู้สั่ง</th>
+              <th>เบอร์โทร</th>
+              <th>สถานะ</th>
+              <th>Actions</th>
+              <th>Actions</th>
+              <th>Actions</th>
             </tr>
-          ))}
-		</tbody>
-	</table>
-  <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-  <button onClick={handleNextPage} disabled={indexOfLastItem >= data.length}>Next</button>
-      {showpopup_delete && (
-        <div className="popup">
-          <div className="popup-inner">
-            <p>Do you want to proceed? {popup_delete}</p>
-            <button onClick={handleYes_delete}>Yes</button>
-            <button onClick={handleNo}>No</button>
+          </thead>
+          <tbody className="table_body">
+            {currentItems.map((item) => {
+              const shirtDetails = JSON.parse(item.shirt);
+              return (
+                <tr key={item.cus_id}>
+                  <td className="td_nowarp">{item.cus_id}</td>
+                  <td className="info_text">
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faMagnifyingGlass}
+                        onClick={() => handleShowPopup_view(shirtDetails)}
+                      />
+                    </div>
+                  </td>
+                  <td className="td_nowarp">{item.parent_name}</td>
+                  <td className="td_nowarp">{item.phone_number}</td>
+                  <td className="td_nowarp">
+                    <select name="">
+                      <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
+                      <option value="เสร็จสิ้น">เสร็จสิ้น</option>
+                    </select>
+                  </td>
+                  {/*<td className="td_nowarp"><button class="fa fa-info" aria-hidden="true" 
+             onClick={() => handleShowPopup_view(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}></button></td>*/}
+                  <td className="td_nowarp">
+                    <button
+                      onClick={() =>
+                        handleClick(
+                          item.cus_id,
+                          item.info,
+                          item.parent_name,
+                          item.phone_number,
+                          item.status
+                        )
+                      }
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td className="td_nowarp">
+                    <button onClick={() => handleShowPopup_delete(item.cus_id)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <button onClick={handlePrevPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        <button
+          onClick={handleNextPage}
+          disabled={indexOfLastItem >= data.length}
+        >
+          Next
+        </button>
+        {showpopup_delete && (
+          <div className="popup">
+            <div className="popup-inner">
+              <p>Do you want to proceed? {popup_delete}</p>
+              <button onClick={handleYes_delete}>Yes</button>
+              <button onClick={handleNo}>No</button>
+            </div>
           </div>
-        </div>
-      )}
-      {showpopup_view && (
-        <div className="popup">
-          <div className="popup-inner">
-            {popup_view.map((item) => (
-              <div key={item}>
-                <p>
-                  {item}
-                </p>
+        )}
+        {showpopup_view && (
+          <div className="popup">
+            <div className="popup-shirt">
+                <div className="button-close">
+                  <button onClick={handleNo}>No</button>
+                </div>
+                <div className="Shirt-data">
+                <div className="Name-data">
+                <div>ชื่อ - นามสกุล : {popup_view.shirtInfo.SName.fullname}</div>
+                <div>ตำแหน่ง : {popup_view.shirtInfo.SName.position_n}</div>
+                <div>ปักใต้ชื่อ : {popup_view.shirtInfo.SUndername.under_name}</div>
+                <div style={{display:'flex'}}>สี : 
+                  <div style={{backgroundColor:popup_view.shirtInfo.SName.color}}></div></div>
+                </div>
+                
+                <div className="School1-data">
+                <div>ชื่อย่อโรงเรียน : {popup_view.shirtInfo.SSchool.name}</div>
+                <div>
+                  ตำแหน่งโรงเรียน : {popup_view.shirtInfo.SSchool.position_s}
+                </div>
+                <div style={{display:'flex'}}>สี : 
+                <div style={{backgroundColor:popup_view.shirtInfo.SSchool.color1}}></div></div>
+                </div>
+                
+                <div className="School2-data">
+                <div>ชื่อโลโก้ : {popup_view.shirtInfo.SLogo.school_name}</div>
+                <div>ตำแหน่งโลโก้ : {popup_view.shirtInfo.SLogo.position_l}</div>
+                </div>
+
+                <div className="Dot-data">
+                <div>ประเภทจุด : {popup_view.shirtInfo.dot.type}</div>
+                <div>ตำแหน่งจุด : {popup_view.shirtInfo.dot.position}</div>
+                <div>จำนวนจุด : {popup_view.shirtInfo.dot.amount_dot}</div>
+                <div style={{display:'flex'}}>สี : 
+                <div style={{backgroundColor:popup_view.shirtInfo.dot.color_dot}}></div></div>
+                </div>
+
               </div>
-
-          ))}
-
-            <button onClick={handleNo}>No</button>
+            </div>
           </div>
-        </div>
-      )}
-</div>
+        )}
+      </div>
     );
 }
 export default Customer_table;
+

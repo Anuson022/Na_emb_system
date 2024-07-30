@@ -1,84 +1,172 @@
-
 .container_customer_table {
-    margin: auto 0;
+  overflow-x: auto;
 }
 
 .container_customer_table table {
-    margin: 10px 10px;
-    width: 100%;
-    border: 1px solid black;
-    table-layout: fixed;
-	border-collapse: collapse;
-	overflow: hidden;
-	box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    border-radius: 5px;
-    font-size: 1vw;
+
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  font-size: clamp(1rem, 1vw, 10rem);
+  ;
 }
 
 .table_head tr th,
 .table_body tr td {
-	padding: 1vmax ;
-	background-color: rgba(255, 255, 255, 0.2);
-	color: #000000;
-    button
-    {padding: auto; font-size: 1vw;}
+  padding: 1.7rem;
+  background-color: rgba(255, 255, 255, 0.2);
+
+  color: #000000;
+
+  button {
+    padding: auto;
+    font-size: 1vw;
+  }
 }
 
 .table_head tr th {
-	text-align: left;
-    
+  text-align: left;
+
 }
 
-.table_head tr{
-	th {
-		background-color: #a3ffa1;
-        white-space: nowrap;
+.table_head tr {
+  th {
+    background-color: #a3ffa1;
+    white-space: nowrap;
 
-	}
+  }
 }
 
 .table_body {
-    
-    tr:nth-child(even) {
-        background-color: rgba(211, 211, 211, 0.522);
-      }
-	td {
-		position: relative;
-        border-bottom: 1px solid black;
-        vertical-align: top;
-	}
-    .td_nowarp{white-space: nowrap;}
+
+  tr:nth-child(even) {
+    background-color: rgba(211, 211, 211, 0.522);
+  }
+
+  td {
+    position: relative;
+    vertical-align: top;
+  }
+
+  .td_nowarp {
+    white-space: nowrap;
+  }
 
 }
+
 .info_text {
-    max-width: 12.5rem;
-    border: 1px solid rgb(255, 0, 0);
-    word-wrap: break-word; /* Ensures long words are wrapped */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: pre;
-  }
-  .popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  left: 2.5rem;
+
+  div {
+    background-color: whitesmoke;
+    width: 2rem;
+    height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: #000000 solid 1px;
+    border-radius: 3px;
   }
-  
-  .popup-inner {
-    background-color: white;
-    width: 80%;
-    height: 80%;
-    border-radius: 5px;
-    padding: 2rem;
+
+  div:hover {
+    background-color: grey;
   }
-  
-  .popup-inner button {
-    margin: 5px;
+
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-inner {
+  background-color: white;
+  width: 12rem;
+  height: 10rem;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.popup-inner button {
+  margin: 110px;
+}
+
+.popup-shirt {
+  display: flex;
+  background-color: white;
+  width: 100rem;
+  max-width: 100rem;
+  height: 50rem;
+  border-radius: 5px;
+  padding: 2rem;
+  .button-close{
+    button
+    {
+      position: absolute;
+      margin: 0rem 95rem;
+    }}
+
+  .Shirt-data
+  {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    width: 50rem;
+    border: #000000 solid 1px;
+    /*margin-top: 200px;*/
+    font-size: clamp(1.5rem,2vw,2rem);
+    
   }
+  .Name-data
+  {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    gap: clamp(2rem,1vw,2rem);
+    div{display: flex;
+      align-items: center;
+      div{margin: 1rem; width: 2rem; height: 2rem;border-radius: 50%;}
+    }
+  }
+  .School1-data
+  {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    gap: clamp(1rem,1vw,2rem);
+    div{display: flex;
+      align-items: center;
+      div{margin: 1rem; width: 2rem; height: 2rem;border-radius: 50%;}
+    }
+  }
+  .School2-data
+  {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    gap: clamp(1rem,1vw,2rem);
+    div{display: flex;
+      align-items: center;
+      div{margin: 1rem; width: 2rem; height: 2rem;border-radius: 50%;}
+    }
+  }
+
+  .Dot-data
+  {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    gap: clamp(1rem,1vw,2rem);
+    div{display: flex;
+      align-items: center;
+      div{margin: 1rem; width: 2rem; height: 2rem;border-radius: 50%;}
+    }
+  }
+
+}

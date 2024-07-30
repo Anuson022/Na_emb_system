@@ -25,10 +25,15 @@ const Recheck = () => {
       //console.log(response.data[0])
       const object = JSON.parse(response.data[0].shirt);
       await SetFetchData(object);
+      
       const billOrder = JSON.parse(response.data[0].cus_order);
-      const IsCusPaid = parseInt(response.data[0].is_paid)
-      setOrders(billOrder);
-      SetIsPaid(IsCusPaid)
+      const IsCusPaid = parseInt(response.data[0].is_paid);
+      if (billOrder) {
+        setOrders(billOrder);
+      }
+      if (IsCusPaid) {
+        SetIsPaid(IsCusPaid);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -293,7 +298,8 @@ const Recheck = () => {
   const [IsPaid, SetIsPaid] = useState(false);
   //order varible
 
-  const addInput = () => {
+  const addInput = (e) => {
+    e.preventDefault()
     setOrders([
       ...orders,
       { id: orders.length + 1, value1: "", value2: "", value3: "", value4: "" },
@@ -443,7 +449,8 @@ Price: int*/
                   onChange={handle_cuschange}
                 >
                   <option value={cus_data.status}>{cus_data.status}</option>
-                  <option value="กำลังดำเนินการ">ตรวจสอบแล้ว</option>
+                  <option value="ยังไม่ตรวจสอบ">ยังไม่ตรวจสอบ</option>
+                  <option value="ปักเสร็จแล้ว">ปักเสร็จแล้ว</option>
                 </select>
               </div>
             </div>
