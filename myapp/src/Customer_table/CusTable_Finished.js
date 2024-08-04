@@ -67,7 +67,7 @@ const Customer_table = () => {
   const fetching_data = async (page) => {
     const search_value = "";
     const response = await axios
-      .post("/search_cus2", { search_value })
+      .post("/search_cus3", { search_value })
       .then((response) => {
         setData(response.data);
         // Extract column headers from the data keys
@@ -85,7 +85,7 @@ const Customer_table = () => {
     setSearchTerm(e.target.value);
     const search_value = e.target.value;
     try {
-      const response = await axios.post("/search_cus2", { search_value });
+      const response = await axios.post("/search_cus3", { search_value });
       setData(response.data);
     } catch (error) {
       console.error("Error fetching search results:", error);
@@ -146,7 +146,7 @@ const Customer_table = () => {
                 <td className="td_nowarp">{item.phone_number}</td>
                 <td className="td_nowarp">
                   <select value={item.status} onChange={(event) => HandleStatus(item.cus_id,event.target.value)}>
-                  <option value="การปักเสร็จสิ้น">การปักเสร็จสิ้น</option>
+                    <option value="การปักเสร็จสิ้น">การปักเสร็จสิ้น</option>
                     <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
                     <option value="ยังไม่ตรวจสอบ">ยังไม่ตรวจสอบ</option>
                   </select>

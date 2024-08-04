@@ -84,7 +84,9 @@ function Admin_dashboard() {
             <p>
               <Link to="/Admin_dashboard/CustomerTable">ที่ต้องดำเนินการ</Link>
             </p>
-            <p>รายการที่เสร็จสิ้น</p>
+            <p>
+              <Link to="/Admin_dashboard/FinishedTable">รายการที่เสร็จสิ้น</Link>
+            </p>
             <h3>จัดการข้อมูลพนักงาน</h3>
             <p>
               <Link to="/Admin_dashboard/User_edit">ข้อมูลพนักงาน</Link>
@@ -93,6 +95,9 @@ function Admin_dashboard() {
             <p>ข้อมูลรายได้</p>
             <p>
               <Link to="/Admin_dashboard/Image_edit">อัพโหลดรูปภาพโลโก้</Link>
+            </p>
+            <p>
+              <Link to="/Admin_dashboard/autoinput">ข้อมูลการปักของโรงเรียน</Link>
             </p>
           </div>
         </div>

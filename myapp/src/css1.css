@@ -9,13 +9,14 @@ body
 .body_of_edit
 {
     padding: 1rem;
-    /*max-width: fit-content;*/
+    max-width: fit-content;
     margin-inline: auto;
     margin: 0 auto;
-    fieldset{width: 100%; min-width: 100rem;}
+    fieldset{width: 100%;max-width: 90rem;min-width: 70rem;}
 }
 .Shirt_com
 {
+  margin: 0 auto;
 }
 .cus_edit
 {
@@ -67,8 +68,6 @@ body
     display: flex;
     flex-direction: column;
 }
-
-
 
 .order_sum
 {

@@ -12,9 +12,14 @@ const pool = require("./na_db");
 const router_imageUpload = require("./function_server/Image_uploader");
 const router_fileFetcher = require("./function_server/Image_fetcher");
 const router_imageDelete = require("./function_server/Image_delete");
+const router_autoFetcher = require('./AutoForm/AutoFormFetch')
+
 const router_AccountFetcher = require("./user_profile/Account_fetch")
 const router_AccountCreater = require("./user_profile/Account_create")
+
 const router_CusGetQue = require("./CusGetQue/CusGetQue")
+const router_CusCurrentQue = require("./CusGetQue/CurrentQue")
+
 const app1 = express();
 
 app1.use(cors());
@@ -27,16 +32,18 @@ app1.use(express.urlencoded({ extended: true }));
 app1.use(fileUpload())
 
 app1.use(router_imageUpload); //image uploader
-
 app1.use(router_fileFetcher); //image file search
-
 app1.use(router_imageDelete); //Image delete
+
+app1.use(router_autoFetcher) //autoform
+
 
 app1.use(router_AccountFetcher) //account fetch
 
 app1.use(router_AccountCreater) //account create
 
 app1.use(router_CusGetQue)
+app1.use(router_CusCurrentQue)
 
 // Ensure new directories exist
 const directories = ['user_profile/profile', 'function_server/uploads'];
@@ -269,10 +276,10 @@ app1.get("/", (req, res) => {
 app1.post("/cus_input", async (req, res) => {
   const Shirt_data = req.body.Combine_shirt;
   const Cus_info = req.body.formdata_info;
-  await console.log(req.body);
+  //await console.log(req.body);
   //await console.log(typeof(req.body))
   await cus_insert(Shirt_data, Cus_info);
-  res.json();
+  res.send('Success');
   //customer input
 });
 
@@ -318,6 +325,31 @@ app1.post("/search_cus2", async (req, res) => {
     });
   } catch (error) {}
 });
+app1.post("/search_cus3", async (req, res) => {
+  const searchTerm = req.body.search_value;
+  console.log(searchTerm);
+  const query = `SELECT * FROM customer_data WHERE cus_id LIKE ? AND status = "การปักเสร็จสิ้น"`;
+  try {
+    pool.query(query, [`%${searchTerm}%`], (err, results) => {
+      if (err) throw err;
+      res.json(results);
+    });
+  } catch (error) {}
+});
+app1.post("/update_status", async (req, res) => {
+  const ChangeStatus = req.body.change_status;
+  const ID = req.body.change_id;
+  console.log(ChangeStatus);
+  const query = `UPDATE customer_data SET status = ? WHERE cus_id = ?`;
+  try {
+    pool.query(query, [ChangeStatus,ID], (err, results) => {
+      if (err) throw err;
+      res.json(results);
+      console.log('success')
+    });
+  } catch (error) {}
+});
+
 app1.post("/data_table1", async (req, res) => {
   pool.query("SELECT * FROM customer_data", (err, results) => {
     if (err) {

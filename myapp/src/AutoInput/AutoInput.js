@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const ITEMS_PER_PAGE = 5;
-const Customer_table = () => {
+const AutoInput = () => {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -104,26 +104,18 @@ const Customer_table = () => {
     const cus_data = { cus_id, info, parent_name, phone_number, status };
     navigate("/test-com", { state: { cus_data } });
   };
-  const HandleStatus = async(cus_id,status) =>
-    {
-      const change_id = cus_id
-      const change_status = status
-      const update_status = await axios.post('/update_status',{change_id,change_status})
-      alert(update_status.data)
-      fetching_data(currentPage);
-    }
+
   return (
     <div class="container_customer_table">
-      <div></div>
+      <div>
+        <input type="text" name="" id="" onChange={handleSearch}/>
+      </div>
       <table>
         <thead className="table_head">
           <tr>
-            <th>รหัสลูกค้า</th>
-            <th>รายละเอียดการปัก</th>
-            <th>ชื่อผู้สั่ง</th>
-            <th>เบอร์โทร</th>
-            <th>สถานะ</th>
-            <th>บิล</th>
+            <th>ลำดับที่</th>
+            <th>รูปแบบการปัก</th>
+            <th>ชื่อโรงเรียน</th>
             <th>Actions</th>
             <th>Actions</th>
           </tr>
@@ -137,32 +129,10 @@ const Customer_table = () => {
             return (
               <tr key={item.cus_id}>
                 <td className="td_nowarp">{item.cus_id}</td>
-                <td className="info_text">
-                  <div onClick={() => handleShowPopup_view(shirtDetails)}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                  </div>
-                </td>
                 <td className="td_nowarp">{item.parent_name}</td>
                 <td className="td_nowarp">{item.phone_number}</td>
-                <td className="td_nowarp">
-                  <select value={item.status} onChange={(event) => HandleStatus(item.cus_id,event.target.value)}>
-                  <option value="การปักเสร็จสิ้น">การปักเสร็จสิ้น</option>
-                    <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
-                    <option value="ยังไม่ตรวจสอบ">ยังไม่ตรวจสอบ</option>
-                  </select>
-                </td>
                 {/*<td className="td_nowarp"><button class="fa fa-info" aria-hidden="true" 
              onClick={() => handleShowPopup_view(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}></button></td>*/}
-                <td className="td_nowarp">
-                  <div className="view-order">
-                    <FontAwesomeIcon
-                      icon={faFileInvoice}
-                      onClick={() =>
-                        handleShowPopup_bill(Order_obj, Order_sum, Order_paid)
-                      }
-                    />
-                  </div>{" "}
-                </td>
                 <td className="td_nowarp">
                   <button
                     onClick={() =>
@@ -315,4 +285,4 @@ const Customer_table = () => {
     </div>
   );
 };
-export default Customer_table;
+export default AutoInput;

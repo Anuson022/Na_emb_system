@@ -81,7 +81,111 @@
 }
 
 /*UserAdd*/
-.UserAdd-form
-{
-    
+/* UserSAED.css */
+
+
+.UserAdd-form {
+  margin: 0 auto    ;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 50rem;
+  max-width: 100%;
+  min-width: 30rem;
 }
+
+.UserAdd-form fieldset {
+  border: none;
+}
+
+.UserAdd-form legend h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.UserAdd-form-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.Form-Profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.Form-Profile h1 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.Form-Profile img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #ddd;
+}
+
+.Input-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Input-profile label {
+    display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff; /* Blue background color */
+  border: 1px solid #007bff; /* Blue border */
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none; /* Remove underline for links */
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.UserAdd-form h1 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.UserAdd-form input[type="text"],
+.UserAdd-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.UserAdd-form input[type="file"] {
+  display: none;
+}
+
+.UserAdd-form button[type="submit"] {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.UserAdd-form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/*test*/

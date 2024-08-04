@@ -12,7 +12,7 @@ const Recheck = () => {
     info: cus_data.info,
     parent_name: cus_data.parent_name,
     phone_number: cus_data.phone_number,
-    status: "กำลังดำเนินการ",
+    status: cus_data.status,
   });
   const [FetchData, SetFetchData] = useState({});
   const Fetch_graphic = async () => {
@@ -448,9 +448,9 @@ Price: int*/
                   value={formdata_cus.status}
                   onChange={handle_cuschange}
                 >
-                  <option value={cus_data.status}>{cus_data.status}</option>
                   <option value="ยังไม่ตรวจสอบ">ยังไม่ตรวจสอบ</option>
-                  <option value="ปักเสร็จแล้ว">ปักเสร็จแล้ว</option>
+                  <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
+                  <option value="การปักเสร็จสิ้น">การปักเสร็จสิ้น</option>
                 </select>
               </div>
             </div>

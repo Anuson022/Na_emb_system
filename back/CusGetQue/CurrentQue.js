@@ -4,13 +4,11 @@ const pool = require('../na_db'); // Adjust the path as necessary
 
 const fetchRouter = express.Router();
 
-fetchRouter.post('/api/GetCusQue',(req,res)=>
+fetchRouter.post('/api/GetCurrentQue',(req,res)=>
     {
-        const data = req.body.SearchData
-        console.log(data)
-         const SearchQue = "SELECT * FROM customer_data WHERE phone_number = ? AND status = 'กำลังดำเนินการ'"
-        try {
-            pool.query(SearchQue,[data],(err,results)=>
+         const SearchQue = "SELECT MIN(cus_id) FROM customer_data WHERE status = 'กำลังดำเนินการ'"
+         try {
+            pool.query(SearchQue,(err,results)=>
                 {
                     if (err)
                         {console.log(err)}
@@ -19,7 +17,8 @@ fetchRouter.post('/api/GetCusQue',(req,res)=>
                             console.log("not found")
                             return res.send("notfound")
                         }
-                    res.json(results);
+                    res.json(results[0]);
+
                 })
         } catch (error) 
         {

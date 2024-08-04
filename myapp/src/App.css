@@ -96,3 +96,45 @@
     background-color: #fff;
   }
   
+/* App.css */
+
+
+.custom-sweetalert
+{
+  font-family: 'RSU_Regular';
+
+}
+.custom-sweetalert .btn-custom {
+  padding: 0.5rem 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  min-width: 80px; /* Ensures consistent button width */
+  background-color: #007bff;
+  font-size: 1.7rem;
+  text-decoration: none;
+
+  
+}
+
+.custom-sweetalert .btn-custom:first-child {
+  margin-right: 10px;
+  background-color: #6c757d; /* Grey color for cancel button */
+  border: none;
+  color: white;
+  
+}
+
+.custom-sweetalert .btn-custom:last-child {
+  background-color: #007bff; /* Blue color for confirm button */
+  border: none;
+  color: white;
+}
+
+.custom-sweetalert .btn-custom:first-child:hover {
+  background-color: #5a6268; /* Darker grey on hover */
+}
+
+.custom-sweetalert .btn-custom:last-child:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+

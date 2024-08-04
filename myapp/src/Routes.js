@@ -5,12 +5,15 @@ import Admin_dashboard from './Admin_dashboard';
 import Approve from './Customer_table/Aprrove';
 import CusTable_Recheck from './Customer_table/CusTable_Recheck';
 import CusTable_Inprocess from './Customer_table/CusTable_Inprocess';
+import CusTable_Finnished from './Customer_table/CusTable_Finished';
+
 import Custom_input from './Custom_input';
 import Recheck from './Recheck';
 import Image_input from './Image_input';
 import Test from './Test';
 import DynamicForm from './DynamicForm';
 import Image_AD from './Image_AD';
+import AutoInput from './AutoInput/AutoInput'
 import Login from './Login_component/Login';
 import Login_detect from './Login_component/Login_detect';
 import ProtectedRoute from './Login_component/ProtectedRoute'
@@ -47,6 +50,10 @@ const Router = createBrowserRouter([
           element: <CusTable_Inprocess/>,
         },
         {
+          path: "FinishedTable",
+          element: <CusTable_Finnished/>,
+        },
+        {
           path: "User_edit",
           element: <UserSAED />,
         },
@@ -54,6 +61,10 @@ const Router = createBrowserRouter([
             path: "Image_edit",
             element: <Image_AD />,
         },
+        {
+          path: "autoinput",
+          element: <AutoInput />,
+      },
         {
             path: "Test1",
             element: <Test />,

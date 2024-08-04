@@ -3,69 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Grid Example</title>
+    <title>Profile Grid</title>
     <style>
-    body {
-    font-family: Arial, sans-serif;
-}
+        /* Reset some default styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
 
-.grid-container {
-    display: grid;
-    position:absolute;
-    grid-template-columns: repeat(3, 1fr); /* Three equal columns */
-    grid-template-rows: repeat(2, 100px); /* Two equal rows */
-    gap: 10px; /* Space between grid items */
-}
+        /* Container for the profile grid */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.grid-container > div {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-}
+        /* Profile image */
+        .profile-image img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            grid-row: span 2; /* Span two rows */
+        }
 
-.item1 {
-    grid-column: 1 / 2; /* Position in the first column */
-    grid-row: 1 / 2; /* Position in the first row */
-}
+        /* Profile info section */
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
 
-.item2 {
-    grid-column: 2 / 3; /* Position in the second column */
-    grid-row: 1 / 2; /* Position in the first row */
-}
+        .profile-field {
+            margin-bottom: 10px;
+        }
 
-.item3 {
-    grid-column: 3 / 4; /* Position in the third column */
-    grid-row: 1 / 2; /* Position in the first row */
-}
+        .profile-field label {
+            font-weight: bold;
+        }
 
-.item4 {
-    grid-column: 1 / 2; /* Position in the first column */
-    grid-row: 2 / 3; /* Position in the second row */
-}
+        /* Buttons */
+        .profile-actions {
+            grid-column: 1 / span 2;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
 
-.item5 {
-    grid-column: 2 / 3; /* Position in the second column */
-    grid-row: 2 / 3; /* Position in the second row */
-}
+        .edit-button, .delete-button, .add-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+        }
 
-.item6 {
-    grid-column: 3 / 4; /* Position in the third column */
-    grid-row: 2 / 3; /* Position in the second row */
-}
+        .edit-button {
+            background-color: #4CAF50;
+        }
 
+        .delete-button {
+            background-color: #f44336;
+        }
+
+        .add-button {
+            background-color: #2196F3;
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+
+        .delete-button:hover {
+            background-color: #e53935;
+        }
+
+        .add-button:hover {
+            background-color: #0b79d0;
+        }
+
+        /* Form styling */
+        .add-user-form {
+            display: none; /* Initially hidden */
+            grid-column: 1 / span 2;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-user-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .add-user-form input {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .add-user-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            background-color: #4CAF50;
+        }
+
+        .add-user-form button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
-    <div class="grid-container">
-        <div class="item1">Item 1</div>
-        <div class="item2">Item 2</div>
-        <div class="item3">Item 3</div>
-        <div class="item4">Item 4</div>
-        <div class="item5">Item 5</div>
-        <div class="item6">Item 6</div>
+    <div class="profile-grid">
+        <div class="profile-image">
+            <img src="profile.jpg" alt="Profile Image">
+        </div>
+        <div class="profile-info">
+            <div class="profile-field">
+                <label for="username">Username:</label>
+                <span id="username">JohnDoe</span>
+            </div>
+            <div class="profile-field">
+                <label for="password">Password:</label>
+                <span id="password">••••••••</span>
+            </div>
+            <div class="profile-field">
+                <label for="role">Role:</label>
+                <span id="role">Administrator</span>
+            </div>
+        </div>
+        <div class="profile-actions">
+            <button class="edit-button">Edit</button>
+            <button class="delete-button">Delete</button>
+        </div>
+        <button class="add-button" onclick="toggleForm()">Add User</button>
+        <div class="add-user-form" id="addUserForm">
+            <h3>Add New User</h3>
+            <label for="new-username">Username:</label>
+            <input type="text" id="new-username" placeholder="Enter username">
+            <label for="new-password">Password:</label>
+            <input type="password" id="new-password" placeholder="Enter password">
+            <label for="new-role">Role:</label>
+            <input type="text" id="new-role" placeholder="Enter role">
+            <button onclick="submitForm()">Add User</button>
+        </div>
     </div>
+
+    <script>
+        function toggleForm() {
+            const form = document.getElementById('addUserForm');
+            form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
+        }
+
+        function submitForm() {
+            // Handle form submission logic here
+            alert('User added successfully!');
+            toggleForm(); // Hide the form after submission
+        }
+    </script>
 </body>
 </html>
