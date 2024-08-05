@@ -67,7 +67,7 @@ function Admin_dashboard() {
             {sideNavOpen ? "\u2715 " + " Close " : "\u2630" + " Open "}
           </p>
           <div className={sideNavOpen ? "sidebar" : "sidebar_close"}>
-            <h3>หน้าแรก</h3>
+            <h3><Link style={{ textDecoration: "none" }} to="/Admin_dashboard">หน้าแรก</Link></h3>
             <h3>อนุมัติออเดอร์การปัก</h3>
                       
             {/*<Accordion title="Section 1" content="This is the content for section 1" />*/}

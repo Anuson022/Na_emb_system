@@ -23,6 +23,11 @@ import UserEdit from './UserEdit/UserEdit';
 import UserAdd from './UserEdit/UserAdd';
 import CusOrderCheck from './CustomerOrderCheck/CusOrderCheck';
 
+
+import HomeComponent from './Admin/HomeComponent';
+
+
+
 const Router = createBrowserRouter([
   {
     path: "/",
@@ -38,6 +43,10 @@ const Router = createBrowserRouter([
     element: <Secure_dashboard />,
     children: [
         {
+            path: "",
+            element: <HomeComponent />
+        },
+        {
             path: "ApproveOrder",
             element: <Approve/>,
         },
@@ -46,16 +55,16 @@ const Router = createBrowserRouter([
             element: <CusTable_Recheck/>,
         },
         {
-          path: "CustomerTable",
-          element: <CusTable_Inprocess/>,
+            path: "CustomerTable",
+            element: <CusTable_Inprocess/>,
         },
         {
-          path: "FinishedTable",
-          element: <CusTable_Finnished/>,
+            path: "FinishedTable",
+            element: <CusTable_Finnished/>,
         },
         {
-          path: "User_edit",
-          element: <UserSAED />,
+            path: "User_edit",
+            element: <UserSAED />,
         },
         {
             path: "Image_edit",

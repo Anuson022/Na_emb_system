@@ -7,6 +7,8 @@ const fileUpload = require("express-fileupload");
 const fs = require("fs");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 
 const pool = require("./na_db");
 const router_imageUpload = require("./function_server/Image_uploader");
@@ -375,6 +377,11 @@ app1.get("/get_cusID", async (req, res) => {
 app1.post("/data_tester", (req, res) => {
   console.log(req.body);
 });
-app1.listen(3001, () => {
+
+
+
+const { IP, PORT } = process.env;
+
+app1.listen(PORT, IP, () => {
   console.log("Running on port 3001");
 });
