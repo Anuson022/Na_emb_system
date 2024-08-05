@@ -23,25 +23,59 @@
   flex-direction: column;
   align-items: center;
   width: clamp(100%, 3vw, 110rem);
-  img{border-radius: 50%; width: clamp(10px, 3vw, 50em); height: auto;; margin: 1rem;}
-  button
-  {padding: auto; font-size: 1vw;}
+  img{border-radius: 50%; width: clamp(10px, 6vw, 50em); height: clamp(10px, 6vw, 50em); margin-top: 1rem;}
+  .logout-button {
+    background-color: #ff4b5c; /* Red color */
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 1rem;
+  }
+  
+  .logout-button:hover {
+    background-color: #ff1e3a; /* Darker red */
+    transform: scale(1.05); /* Slightly enlarge the button */
+  }
+  
+  .logout-button:active {
+    background-color: #c23b4b; /* Even darker red */
+    transform: scale(0.98); /* Slightly shrink on click */
+  }
+  
+  .logout-button:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 2px rgba(255, 75, 92, 0.5); /* Add a custom focus shadow */
+  }
 }
-
+.div-awesome
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.div-cus-dit
+{
+  transform: translateX(1.6rem);
+}
 .main_dash
 { 
   display: grid;
-  grid-template-columns: 15% auto;
+  grid-template-columns: 20rem auto;
   align-items: flex-start;
   .sidebar_button
   { 
     background-color: lightpink; padding: 1rem;
-    width: clamp(100%, 3vw, 110rem);
+    width: clamp(100%, 3vw, 10rem);
     border: 1px rgb(0, 255, 110) solid;
     .close-open{
       display: none;
       font-size: clamp(15px, 2vw, 2em);color: rgb(0, 0, 0);}
-    cursor: pointer;
   }
   .sidebar_button p
   {
@@ -72,7 +106,7 @@
 
 
 /*Large Devices (desktops and laptops):*/
-@media (min-width: 992px) and (max-width: 1200px) {
+@media (min-width: 992px) and (max-width: 1400px) {
   .profile
   {
     display: flex;
@@ -89,12 +123,14 @@
   flex-direction: column;
   .sidebar_button
     { 
+    width: 100%;
     background-color: lightpink; padding: 1rem;border: 1px rgb(0, 255, 110) solid;
     .close-open{
       display: block;
       }
     }
   }
+  .close-open-full{display: none;}
 }
 
 /*Medium Devices (small laptops and tablets in landscape):*/
@@ -115,12 +151,14 @@
   flex-direction: column;
   .sidebar_button
     { 
+      
     background-color: lightpink; padding: 1rem;border: 1px rgb(0, 255, 110) solid;
     .close-open{
       display: block;
       }
     }
   }
+  .close-open-full{display: none;}
 }
 
 
@@ -148,6 +186,7 @@
       }
     }
   }
+  .close-open-full{display: none;}
 }
 
 /*Extra Small Devices (phones):*/
@@ -176,4 +215,5 @@
       }
     }
   }
+  .close-open-full{display: none;}
 }

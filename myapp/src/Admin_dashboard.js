@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faCaretDown,faCheckToSlot,faFilePen,faHouse } from "@fortawesome/free-solid-svg-icons";
 import "./Admin_dashboard.css";
 import Customer_table from "./Customer_table/CusTable_Recheck";
 function Admin_dashboard() {
   const [sideNavOpen, setSideNavOpen] = useState(true);
+  const [sideFullOpen, setSideFullOpen] = useState(true);
+
   const location = useLocation();
   const Token = localStorage.getItem("token");
   const UserData = JSON.parse(localStorage.getItem("UserData"));
+  const Logoutnavigate = useNavigate();
   const toggleNav = () => {
     setSideNavOpen(!sideNavOpen);
   };
-
+  const toggleFull = () => {
+    setSideFullOpen(!sideFullOpen);
+  };
   useEffect(() => {
+    console.log(`/profile/${UserData.profile.split("/").pop()}`);
     if (
       UserData === null ||
       UserData === undefined ||
@@ -37,17 +43,53 @@ function Admin_dashboard() {
 
     return (
       <div className="accordion">
-        
         <div className="accordion-header" onClick={toggleAccordion}>
           <h3>{title}</h3>
-          <span>{isOpen ? <FontAwesomeIcon icon={faCaretDown} style={{fontSize:'2rem',rotate:"180deg"}} /> : <FontAwesomeIcon icon={faCaretDown} style={{fontSize:'2rem'}} />}</span>
+          <span>
+            {isOpen ? (
+              <FontAwesomeIcon
+                icon={faCaretDown}
+                style={{ fontSize: "2rem", rotate: "180deg" }}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faCaretDown}
+                style={{ fontSize: "2rem" }}
+              />
+            )}
+          </span>
         </div>
-        
+
         {isOpen && <div className="accordion-content">{content}</div>}
       </div>
     );
   };
-
+  const HandleLogout = () => {
+    localStorage.clear();
+    Logoutnavigate("/login");
+  };
+  const navbarButton = {
+    buttonContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      backgroundColor: '#007bff', // Button background color
+      color: '#fff', // Text color
+      padding: '10px 20px', // Padding around the button
+      borderRadius: '5px', // Rounded corners
+      cursor: 'pointer', // Pointer cursor on hover
+      transition: 'background-color 0.3s ease', // Smooth transition on hover
+      marginTop:'-2rem',
+      marginTop:'-1rem',
+    },
+    icon: {
+      marginRight: '10px', // Space between the icon and text
+      fontSize: '18px', // Size of the icon
+    },
+    text: {
+      fontSize: '16px', // Size of the text
+      fontWeight: 'bold', // Make the text bold
+    },
+  };
   return (
     <div>
       <nav className="navbar_header">
@@ -57,26 +99,50 @@ function Admin_dashboard() {
         </div>
       </nav>
       <br />
-      <nav className="main_dash">
-        <div className="sidebar_button">
+      <p className="close-open-full" onClick={toggleFull}>
+            {sideFullOpen ? <div style={navbarButton.buttonContainer}>
+              <FontAwesomeIcon icon={faBars} style={navbarButton.icon}/> 
+            <div>Close</div></div>:
+            <div style={navbarButton.buttonContainer}>
+              <FontAwesomeIcon icon={faBars} style={navbarButton.icon}/> 
+            <div>Open</div></div>}
+      </p>
+      <nav className={sideFullOpen ? "main_dash":"maindash-full"}>
+        
+        <div className={sideFullOpen ? "sidebar_button" : "hidden"}>
           <div className="profile">
-            <img src="/General_image/Na_logo.png" alt="" />
+            <img src={`/profile/${UserData.profile.split("/").pop()}`} alt="" />
             <p>{UserData.username}</p>
+            <button className="logout-button" onClick={HandleLogout}>Logout</button>
           </div>
+          
           <p className="close-open" onClick={toggleNav}>
             {sideNavOpen ? "\u2715 " + " Close " : "\u2630" + " Open "}
           </p>
           <div className={sideNavOpen ? "sidebar" : "sidebar_close"}>
+            <div className="div-awesome">
+            <FontAwesomeIcon icon={faHouse} />
             <h3>หน้าแรก</h3>
-            <h3>อนุมัติออเดอร์การปัก</h3>
-                      
-            {/*<Accordion title="Section 1" content="This is the content for section 1" />*/}
-            <p>
+            </div>
+
+            <div className="div-awesome">
+            <FontAwesomeIcon icon={faCheckToSlot} />
+            <h3>
               <Link to="/Admin_dashboard/ApproveOrder">
-                ยืนยันออเดอร์การปัก
+                อนุมัติออเดอร์
               </Link>
-            </p>
+            </h3>
+            </div>
+            
+
+            {/*<Accordion title="Section 1" content="This is the content for section 1" />*/}
+            <div className="div-awesome">
+            <FontAwesomeIcon icon={faFilePen} />
             <h3>จัดการข้อมูลลูกค้า</h3>
+
+            </div>
+
+            <div className="div-cus-dit">
             <p>
               <Link to="/Admin_dashboard/RecheckTable">ที่ต้องตรวจสอบ</Link>
             </p>
@@ -87,6 +153,8 @@ function Admin_dashboard() {
             <p>
               <Link to="/Admin_dashboard/FinishedTable">รายการที่เสร็จสิ้น</Link>
             </p>
+            </div>
+
             <h3>จัดการข้อมูลพนักงาน</h3>
             <p>
               <Link to="/Admin_dashboard/User_edit">ข้อมูลพนักงาน</Link>
@@ -97,7 +165,9 @@ function Admin_dashboard() {
               <Link to="/Admin_dashboard/Image_edit">อัพโหลดรูปภาพโลโก้</Link>
             </p>
             <p>
-              <Link to="/Admin_dashboard/autoinput">ข้อมูลการปักของโรงเรียน</Link>
+              <Link to="/Admin_dashboard/autoinput">
+                ข้อมูลการปักของโรงเรียน
+              </Link>
             </p>
           </div>
         </div>
