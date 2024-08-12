@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faCaretDown,faCheckToSlot,faFilePen,faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faCaretDown,faChartPie,faCheckToSlot,faFilePen,faHouse, faUserGear } from "@fortawesome/free-solid-svg-icons";
 import "./Admin_dashboard.css";
 import Customer_table from "./Customer_table/CusTable_Recheck";
+import ShirtOrder from "./Customer_table/ShirtOrder";
 function Admin_dashboard() {
   const [sideNavOpen, setSideNavOpen] = useState(true);
   const [sideFullOpen, setSideFullOpen] = useState(true);
+  const [SideCusTable, SetSideCusTable] = useState(true);
 
   const location = useLocation();
   const Token = localStorage.getItem("token");
@@ -19,7 +21,6 @@ function Admin_dashboard() {
     setSideFullOpen(!sideFullOpen);
   };
   useEffect(() => {
-    console.log(`/profile/${UserData.profile.split("/").pop()}`);
     if (
       UserData === null ||
       UserData === undefined ||
@@ -35,7 +36,7 @@ function Admin_dashboard() {
   }, [location, UserData]);
 
   const Accordion = ({ title, content }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     const toggleAccordion = () => {
       setIsOpen(!isOpen);
@@ -44,8 +45,10 @@ function Admin_dashboard() {
     return (
       <div className="accordion">
         <div className="accordion-header" onClick={toggleAccordion}>
-          <h3>{title}</h3>
-          <span>
+        <div className="div-awesome">
+            <FontAwesomeIcon icon={faFilePen} />
+            <h3>จัดการข้อมูลลูกค้า</h3>
+            
             {isOpen ? (
               <FontAwesomeIcon
                 icon={faCaretDown}
@@ -57,10 +60,23 @@ function Admin_dashboard() {
                 style={{ fontSize: "2rem" }}
               />
             )}
-          </span>
+            </div>
         </div>
 
-        {isOpen && <div className="accordion-content">{content}</div>}
+        {isOpen && <div className="accordion-content">
+          <div className="div-cus-dit">
+            <p>
+              <Link to="/Admin_dashboard/RecheckTable">ที่ต้องตรวจสอบ</Link>
+            </p>
+
+            <p>
+              <Link to="/Admin_dashboard/CustomerTable">ที่ต้องดำเนินการ</Link>
+            </p>
+            <p>
+              <Link to="/Admin_dashboard/FinishedTable">รายการที่เสร็จสิ้น</Link>
+            </p>
+            </div>
+          </div>}
       </div>
     );
   };
@@ -72,14 +88,14 @@ function Admin_dashboard() {
     buttonContainer: {
       display: 'flex',
       alignItems: 'center',
-      backgroundColor: '#007bff', // Button background color
-      color: '#fff', // Text color
+      backgroundColor: 'White', // Button background color
+      color: 'Black', // Text color
       padding: '10px 20px', // Padding around the button
       borderRadius: '5px', // Rounded corners
       cursor: 'pointer', // Pointer cursor on hover
       transition: 'background-color 0.3s ease', // Smooth transition on hover
       marginTop:'-2rem',
-      marginTop:'-1rem',
+      marginBottom:'-1rem',
     },
     icon: {
       marginRight: '10px', // Space between the icon and text
@@ -122,7 +138,11 @@ function Admin_dashboard() {
           <div className={sideNavOpen ? "sidebar" : "sidebar_close"}>
             <div className="div-awesome">
             <FontAwesomeIcon icon={faHouse} />
-            <h3>หน้าแรก</h3>
+            <h3>
+            <Link to="/Admin_dashboard">
+                หน้าแรก
+              </Link>
+            </h3>
             </div>
 
             <div className="div-awesome">
@@ -135,32 +155,26 @@ function Admin_dashboard() {
             </div>
             
 
-            {/*<Accordion title="Section 1" content="This is the content for section 1" />*/}
+            <Accordion/>
+            
+            {(UserData.role === "manager") &&
+              <>
             <div className="div-awesome">
-            <FontAwesomeIcon icon={faFilePen} />
-            <h3>จัดการข้อมูลลูกค้า</h3>
-
-            </div>
-
-            <div className="div-cus-dit">
-            <p>
-              <Link to="/Admin_dashboard/RecheckTable">ที่ต้องตรวจสอบ</Link>
-            </p>
-
-            <p>
-              <Link to="/Admin_dashboard/CustomerTable">ที่ต้องดำเนินการ</Link>
-            </p>
-            <p>
-              <Link to="/Admin_dashboard/FinishedTable">รายการที่เสร็จสิ้น</Link>
-            </p>
-            </div>
-
+            <FontAwesomeIcon icon={faUserGear} />
+            <Link to="/Admin_dashboard/User_edit">
             <h3>จัดการข้อมูลพนักงาน</h3>
-            <p>
-              <Link to="/Admin_dashboard/User_edit">ข้อมูลพนักงาน</Link>
-            </p>
+            </Link>
+            </div>
+
+            <div className="div-awesome">
+            <FontAwesomeIcon icon={faChartPie} />
+            <Link to="/Admin_dashboard/Statistic-data">
+            <h3>ข้อมูลเชิงสถิติ</h3>
+            </Link>
+            </div>
+
             <h3>อื่นๆ</h3>
-            <p>ข้อมูลรายได้</p>
+            
             <p>
               <Link to="/Admin_dashboard/Image_edit">อัพโหลดรูปภาพโลโก้</Link>
             </p>
@@ -169,6 +183,7 @@ function Admin_dashboard() {
                 ข้อมูลการปักของโรงเรียน
               </Link>
             </p>
+            </>}
           </div>
         </div>
 

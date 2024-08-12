@@ -54,7 +54,7 @@ function Login() {
             <br />
             <div className='Login-pass'>
                 <div class="fa fa-lock fa-3x icon1" aria-hidden="true"></div>
-                <input type="text" placeholder='โปรดกรอกรหัสผ่าน...'
+                <input type="password" placeholder='โปรดกรอกรหัสผ่าน...'
                 value={Password}
                 onChange={(e)=>setPassword(e.target.value)}
                 />

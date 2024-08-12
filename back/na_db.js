@@ -1,12 +1,16 @@
 const mysql1 = require('mysql');
 
-var pool =mysql1.createPool(
+
+const { DB_HOST, DB_USER, DB_PASS, DB_NAME } = process.env;
+
+
+var pool = mysql1.createPool(
     {
     connectionLimit : 10,
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'na_database'
+    host     : DB_HOST,
+    user     : DB_USER,
+    password : DB_PASS,
+    database : DB_NAME
 });
 
 pool.getConnection((err, connection) => {
@@ -21,9 +25,11 @@ pool.getConnection((err, connection) => {
         console.error('Database connection was refused.');
       }
     }
+    else
+    {console.log("Connection successfully");}
   
     if (connection) connection.release();
-  
+    
     return;
   });
 

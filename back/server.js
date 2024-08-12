@@ -7,6 +7,8 @@ const fileUpload = require("express-fileupload");
 const fs = require("fs");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 
 const pool = require("./na_db");
 const router_imageUpload = require("./function_server/Image_uploader");
@@ -16,9 +18,15 @@ const router_autoFetcher = require('./AutoForm/AutoFormFetch')
 
 const router_AccountFetcher = require("./user_profile/Account_fetch")
 const router_AccountCreater = require("./user_profile/Account_create")
+const router_AccountEdit = require("./user_profile/Account_edit")
+const router_AccountDeleter = require("./user_profile/Account_delete")
 
+const router_NewOrderFetcher = require("./NewOrder/NewOrderFetch")
 const router_CusGetQue = require("./CusGetQue/CusGetQue")
 const router_CusCurrentQue = require("./CusGetQue/CurrentQue")
+
+const router_StatisticData = require("./StatisticData/StatisticCustomerData")
+const router_StatisticPrice = require("./StatisticData/StatisticPriceData")
 
 const app1 = express();
 
@@ -37,13 +45,21 @@ app1.use(router_imageDelete); //Image delete
 
 app1.use(router_autoFetcher) //autoform
 
+app1.use(router_NewOrderFetcher) //new ordercheck
 
 app1.use(router_AccountFetcher) //account fetch
 
 app1.use(router_AccountCreater) //account create
+app1.use(router_AccountEdit) //account edit
+app1.use(router_AccountDeleter) //account delete
+
+
+app1.use(router_StatisticData) //Stat
+app1.use(router_StatisticPrice) //stat price
 
 app1.use(router_CusGetQue)
 app1.use(router_CusCurrentQue)
+
 
 // Ensure new directories exist
 const directories = ['user_profile/profile', 'function_server/uploads'];
@@ -375,6 +391,9 @@ app1.get("/get_cusID", async (req, res) => {
 app1.post("/data_tester", (req, res) => {
   console.log(req.body);
 });
-app1.listen(3001, () => {
-  console.log("Running on port 3001");
+
+const { IP, PORT } = process.env;
+
+app1.listen(PORT,() => {
+  console.log("Running on port "+ PORT);
 });

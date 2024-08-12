@@ -108,9 +108,7 @@ const render_dot_name = (dot_type, dot_amount) => {
   );
 };
 
-
-
-function ShirtBill({cus_id}) 
+function ShirtComponent({cus_id}) 
 {
     const [FetchData,SetFetchData] = useState({})
   const Fetch_graphic = async() => 
@@ -298,7 +296,10 @@ function ShirtBill({cus_id})
               dot_right:"hidden"}))
         }
     }
-  }, [formdata.dot, checkbox_dot]);
+    document.body.classList.add('body_of_edit');
+    return () => {
+      document.body.classList.remove('body_of_edit');
+    };}, [formdata.dot, checkbox_dot]);
     //name position
     useEffect(() => {
       if(formdata.SName.position_n === "ชื่อด้านขวา")
@@ -724,4 +725,4 @@ function ShirtBill({cus_id})
   );
 }
 
-export default ShirtBill;
+export default ShirtComponent;

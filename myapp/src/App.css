@@ -79,12 +79,9 @@
   }
 
   .accordion {
-    border: 1px solid #ccc;
   }
   
   .accordion-header {
-    background-color: #f1f1f1;
-    padding: 10px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -92,8 +89,6 @@
   }
   
   .accordion-content {
-    padding: 10px;
-    background-color: #fff;
   }
   
 /* App.css */

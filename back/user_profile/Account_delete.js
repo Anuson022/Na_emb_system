@@ -6,15 +6,15 @@ const pool = require('../na_db'); // Adjust the path as necessary
 const deleteRouter = express.Router();
 
 // Delete file endpoint
-deleteRouter.delete('/files/:id', (req, res) => {
+deleteRouter.delete('/user_delete/:id', (req, res) => {
   let id = req.params.id;
-  let sql = "SELECT * FROM files WHERE id = ?";
+  let sql = "SELECT * FROM users WHERE id = ?";
   pool.query(sql, [id], (err, results) => {
     if (err) throw err;
     if (results.length > 0) {
-      let filePath = results[0].path;
-      console.log(results[0].path)
-      let deleteSql = "DELETE FROM files WHERE id = ?";
+      let filePath = './user_profile'+(results[0].profile).slice(1);
+      let deleteSql = "DELETE FROM users WHERE id = ?";
+      console.log(results[0].profile)
       pool.query(deleteSql, [id], (err, result) => {
         if (err) throw err;
         fs.unlink(filePath, err => {

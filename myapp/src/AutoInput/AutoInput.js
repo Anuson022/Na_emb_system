@@ -2,7 +2,6 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import yes_no_Popup from "./yes_no_Popup";
-import "./CustomerTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,

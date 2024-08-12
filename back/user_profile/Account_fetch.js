@@ -6,8 +6,8 @@ const fetchRouter = express.Router();
 
 // Fetch files endpoint
 fetchRouter.post('/users_account', (req, res) => {
-  const searchTerm = req.body.search;
-
+  const searchTerm = req.body.searching;
+  console.log(searchTerm)
   let query;
   let queryParams;
 
@@ -18,12 +18,12 @@ fetchRouter.post('/users_account', (req, res) => {
   else {
     query = `SELECT * FROM users WHERE username LIKE ?`;
     queryParams = [`%${searchTerm}%`];
-    console.log('tr')
+    console.log('t1r')
   }
   try {
     pool.query(query, queryParams, (err, results) => {
       if (err) throw err;
-      console.log(results)
+      console.log('tr')
       res.json(results);
     });
   } catch (error) {

@@ -1,83 +1,181 @@
-.User-form
+.User-form 
 {
 
 }
-.User-grid
-{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(clamp(15rem , 20vw ,30rem), 1fr));
-    gap: 1rem;
-    justify-items: center;
-    align-items: center;
+
+.User-grid {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(1rem, 25rem, 100%), 1fr));
+  row-gap: 1rem;
+  column-gap: 1rem;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  min-width: 17rem;
 }
-.User-item
-{
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: #90eeee;
-    width: clamp(11rem, 20vw, 30rem);
-    height: auto;
-    .User-profile
-    {
-        border-bottom: 1px solid black;
-        border-radius: 0px;
-        justify-content: center;
-    }
-    .User-button
-    {
-        display: flex;
-        border: 1px solid black;
-        justify-content: center;
-        gap: 20px;
-        button
-        {
-            width: clamp(4em , 5vw, 10em);
-            height: clamp(2.5em, 3vw, 7em);
-            font-size: clamp(10px,1vw,2rem);        
-        }
-        background-color: #90eeee;
-    }
-    div
-    {   
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        img
-        {
-            width: clamp(5rem, 10vw, 10rem);
-            min-width: 1rem;
-        }
-        .p-static
-        {
-            text-align: right; font-size: clamp(10px,1vw,2rem); 
-            width: clamp(60px,6vw,20rem);
-            min-width: 70px;
-        }
-        .p-value
-        {
-            text-align: left; font-size: clamp(10px,1vw,2rem); 
-            width: clamp(60px,6vw,20rem);
-        }
-    }
-}
-.User-add
-{
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: #90eeee;
-    width: clamp(10rem, 20vw, 30rem);
-    height: clamp(10rem, 22vw, 30rem);
-    display: flex;
+
+.User-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 1rem;
+  border: 2px solid rgb(0, 0, 0);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+
+  .User-profile {
+    border-radius: 0px;
     justify-content: center;
     align-items: center;
-    img
-    {    
-        border: 1px solid black;
-        width: clamp(5rem, 15vw, 20rem);
-        min-width: 1rem;
-        height: auto;
+
+    img {
+      width: 10rem;
+      height: 10rem;
+      padding: 1rem;
+      border: #333 solid 2px;
     }
-    
+  }
+
+  .User-button {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    min-width: 10rem;
+    button:nth-child(1) {
+      margin: 1rem;
+      padding: 6px 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+      border-radius: 6px;
+      border: none;
+      height: 3rem;
+      width: 5rem;
+      color: #fff;
+      background: linear-gradient(180deg, #4B91F7 0%, #367AF6 100%);
+      background-origin: border-box;
+      box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+
+    button:first-child:focus {
+      box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+      outline: 0;
+    }
+
+    button:nth-child(2) {
+      margin: 1rem;
+      padding: 6px 14px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+      border-radius: 6px;
+      border: none;
+      height: 3rem;
+      width: 5rem;
+      color: #fff;
+      background: linear-gradient(180deg, #f74b4b 0%, #f63636 100%);
+      background-origin: border-box;
+      box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+
+    button:first-child:focus {
+      box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+      outline: 0;
+    }
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+
+    img {
+      width: clamp(5rem, 10vw, 10rem);
+      min-width: 1rem;
+
+    }
+
+    .p-static {
+      text-align: right;
+      font-size: clamp(10px, 1vw, 2rem);
+      width: clamp(60px, 6vw, 20rem);
+      min-width: 70px;
+    }
+
+    .p-value {
+      color: blue;
+      background-color: #ddd;
+      text-align: left;
+      font-size: clamp(10px, 1vw, 2rem);
+      width: clamp(60px, 6vw, 20rem);
+      padding: 0.3rem 0.5rem;
+      white-space: nowrap; 
+      overflow: hidden;
+      text-overflow: ellipsis;     
+    }
+  }
+}
+
+.User-add {
+  margin: 1rem;
+
+  button {
+    appearance: none;
+    background-color: #2ea44f;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 6px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  button:focus:not(:focus-visible):not(.focus-visible) {
+    box-shadow: none;
+    outline: none;
+  }
+
+  button:hover {
+    background-color: #2c974b;
+  }
+
+  button:focus {
+    box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+    outline: none;
+  }
+
+  button:disabled {
+    background-color: #94d3a2;
+    border-color: rgba(27, 31, 35, .1);
+    color: rgba(255, 255, 255, .8);
+    cursor: default;
+  }
+
+  button:active {
+    background-color: #298e46;
+    box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+  }
 }
 
 /*UserAdd*/
@@ -85,14 +183,13 @@
 
 
 .UserAdd-form {
-  margin: 0 auto    ;
+  margin: 0 auto;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 50rem;
-  max-width: 100%;
-  min-width: 30rem;
+  width: 100%;
+  min-width: 15rem;
 }
 
 .UserAdd-form fieldset {
@@ -139,16 +236,19 @@
 }
 
 .Input-profile label {
-    display: inline-block;
+  display: inline-block;
   padding: 10px 20px;
   font-size: 16px;
   color: #fff;
-  background-color: #007bff; /* Blue background color */
-  border: 1px solid #007bff; /* Blue border */
+  background-color: #007bff;
+  /* Blue background color */
+  border: 1px solid #007bff;
+  /* Blue border */
   border-radius: 4px;
   text-align: center;
   cursor: pointer;
-  text-decoration: none; /* Remove underline for links */
+  text-decoration: none;
+  /* Remove underline for links */
   transition: background-color 0.3s, border-color 0.3s;
 }
 
@@ -186,6 +286,32 @@
 
 .UserAdd-form button[type="submit"]:hover {
   background-color: #0056b3;
+}
+
+.UserAdd-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 900px;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+
+  button {}
+}
+
+.UserAdd-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /*test*/

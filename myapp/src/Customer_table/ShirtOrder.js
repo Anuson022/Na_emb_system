@@ -35,7 +35,7 @@ const render_dot1 = (dot_type, dot_amount) => {
       {dot_array.map((item, index) => {
         const re_index = dot_array.length - index;
         return (
-          <h1 key={index} className={"dot" + re_index} >
+          <h1 style={{margin:'-1rem'}} key={index} className={"dot" + re_index} >
             {item}
           </h1>
         );
@@ -110,7 +110,7 @@ const render_dot_name = (dot_type, dot_amount) => {
 
 
 
-function ShirtBill({cus_id}) 
+function ShirtOrder({ cus_id, parent_name, phone_number, status }) 
 {
     const [FetchData,SetFetchData] = useState({})
   const Fetch_graphic = async() => 
@@ -631,12 +631,10 @@ function ShirtBill({cus_id})
   
   return (
     <>
-      <div className="container_form">
 
         <div className="body_shirt">
-          <h1>รูปแบบกราฟิค</h1>
-          <div className="shirt_design">
-            <img className="shirt_img" src="image_folder/S_Shirt.png" alt="" />
+          <div className="shirt_design" style={{margin:'-0.5rem'}}>
+            <img className="shirt_img" src="/image_folder/S_Shirt.png" alt="" />
             <div className="grid_dot">
               <div
                 className={dot_position_class.dot_left}
@@ -646,12 +644,12 @@ function ShirtBill({cus_id})
               </div>
               <div
                 className={dot_position_class.dot_right}
-                style={{ color: formdata.dot.color_dot }}
+                style={{ color: formdata.dot.color_dot}}
               >
                 {render_dot1(formdata.dot.type, formdata.dot.amount_dot)}
               </div>
             </div>
-            <div className="grid_name">
+            <div className="grid_name" style={{bottom:'30rem'}}>
               <div className="on_right">
                 <div
                   className={dot_position_class.onschool}
@@ -718,10 +716,26 @@ function ShirtBill({cus_id})
           </div>
         </div>
 
-
-      </div>
+        <div>
+      <p>
+        <strong>ลำดับออเดอร์:</strong>
+        <span>{cus_id}</span>
+      </p>
+      <p>
+        <strong>ชื่อผู้สั่ง:</strong>
+        <span>{parent_name}</span>
+      </p>
+      <p>
+        <strong>เบอร์โทร:</strong>
+        <span>{phone_number}</span>
+      </p>
+      <p>
+        <strong>สถานะ:</strong>
+        <span>{status}</span>
+      </p>
+    </div>
     </>
   );
 }
 
-export default ShirtBill;
+export default ShirtOrder;
