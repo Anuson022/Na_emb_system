@@ -9,6 +9,7 @@ import CusTable_Finnished from './Customer_table/CusTable_Finished';
 
 import Custom_input from './Custom_input';
 import Recheck from './Recheck';
+import NewOrderSubmit from './Customer_table/NewOrderSubmit';
 import Image_input from './Image_input';
 import Test from './Test';
 import DynamicForm from './DynamicForm';
@@ -17,7 +18,6 @@ import AutoInput from './AutoInput/AutoInput'
 import Login from './Login_component/Login';
 import Login_detect from './Login_component/Login_detect';
 import ProtectedRoute from './Login_component/ProtectedRoute'
-import Secure_dashboard from './Login_component/Secure_dashboard';
 import UserSAED from './UserEdit/UserSAED';
 import UserEdit from './UserEdit/UserEdit';
 import UserAdd from './UserEdit/UserAdd';
@@ -27,7 +27,8 @@ import CusOrderCheck from './CustomerOrderCheck/CusOrderCheck';
 import HomeComponent from './Admin/HomeComponent';
 import MainStatistic from './StatisticDisplay/MainStatistic';
 
-
+import Secure_dashboard from './Login_component/Secure_dashboard';
+import Secure_component from './Login_component/Secure_component';
 
 const Router = createBrowserRouter([
   {
@@ -105,6 +106,10 @@ const Router = createBrowserRouter([
   {
     path: "test-com",
     element: <Recheck />,
+  },
+  {
+    path: "FullOrderAdd",
+    element: <Secure_component Page={<NewOrderSubmit/>}/>,
   },
   {
     path: "test-image",

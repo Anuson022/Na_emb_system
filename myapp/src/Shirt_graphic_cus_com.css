@@ -50,7 +50,7 @@ header h1 {
     /*grid-template-columns: repeat(auto-fit,minmax(75rem,1fr)); /* Two equal-width columns */
     grid-gap: 1rem;
     /* Optional: space between items */
-    max-width: 100rem;
+    max-width: 100%;
     min-width: 65rem;
     font-family: 'RSU_regular';
     background-color: #FAF9F6;
@@ -226,7 +226,7 @@ header h1 {
     }
 
     .dot_type {
-        font-size: 2.5vh;
+        font-size: 2rem;
         
         display: grid;
         grid-template-columns: 25% 75%;
@@ -241,7 +241,7 @@ header h1 {
     }
 
     .dot_position {
-        font-size: 2.5vh;
+        font-size: 2rem;
         ;
         display: grid;
         grid-template-columns: 25% 75%;
@@ -257,7 +257,7 @@ header h1 {
     }
     .amount-color
     {
-        font-size: 2.5vh;
+        font-size: 2rem;
         display: grid;
         grid-template-columns: 1fr 1fr;
         justify-content: space-between;
@@ -270,24 +270,23 @@ header h1 {
         }
     }
     .dot_amount {
-        font-size: 2.5vh;
+        font-size: 2rem;
         display: grid;
         grid-template-columns: 50% 50%;
         select {
             margin: 1rem;
-            font-size: 2vh;
+            font-size: 2rem;
             min-width: 6rem;
         }
     }
 
     .dot_color {
-        font-size: 2.5vh;
+        font-size: 2rem;
         display: flex;
         justify-content: right;
-        p{margin-right: 10px;}
         input {
             margin: 1rem;
-            font-size: 2vh;
+            font-size: 2rem;
             width: 3rem;
         }
         
@@ -454,7 +453,7 @@ header h1 {
     /*grid-template-columns: repeat(auto-fit,minmax(75rem,1fr)); /* Two equal-width columns */
     grid-gap: 1rem;
     /* Optional: space between items */
-    max-width: 100rem;
+    max-width: 100%;
     min-width: 65rem;
 
     h2 {
@@ -581,7 +580,7 @@ header h1 {
         /*grid-template-columns: repeat(auto-fit,minmax(75rem,1fr)); /* Two equal-width columns */
         grid-gap: 1rem;
         /* Optional: space between items */
-        max-width: 100rem;
+        max-width: 100%;
         min-width: 65rem;
 
         h2 {

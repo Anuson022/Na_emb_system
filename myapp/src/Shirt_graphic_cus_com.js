@@ -609,7 +609,7 @@ function Shirt_graphic_cus_com({
                   </div>
 
                   <div className="dot_color" onChange={handledot}>
-                    <p>สีของจุด</p>
+                    <h2>สีของจุด</h2>
                     <input
                       type="color"
                       name="color_dot"

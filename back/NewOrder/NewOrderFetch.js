@@ -15,7 +15,7 @@ fetchRouter.post('/api/NewOrder',(req,res)=>
                     if (results.length === 0)
                         {
                             console.log("not found")
-                            return res.send("notfound")
+                            return res.send(null)
                         }
                     console.log('tes')
                     res.json(results);

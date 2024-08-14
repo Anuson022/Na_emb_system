@@ -1,33 +1,57 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ShirtOrder from "./ShirtOrder";
+import { useNavigate } from "react-router-dom";
 
 const OrderApprovePage = () => {
   const [order, setOrder] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 1; // Number of orders to show per page
-
-  const FetchNewOrder = async () => {
-    const response = await axios.post("/api/NewOrder");
-    console.log(response.data);
-    setOrder(response.data);
-    
+  const [NewOrder, setNewOrder] = useState();
+  const fetchNewOrder = async () => {
+    try {
+      const response = await axios.post("/api/NewOrder");
+      console.log(response.data);
+      setOrder(response.data);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
   };
 
-  useEffect(() => {
-    FetchNewOrder();
-  }, [currentPage]);
 
-  const handleApprove = (index) => {
-    const updatedOrders = [...order];
-    updatedOrders[index].status = "Approved";
-    setOrder(updatedOrders);
+
+  const navigate = useNavigate();
+
+  const handleAddOrder = () => {
+    navigate("/FullOrderAdd");
   };
 
-  const handleReject = (index) => {
-    const updatedOrders = [...order];
-    updatedOrders[index].status = "Rejected";
-    setOrder(updatedOrders);
+  const handleApprove = (cus_id, info, parent_name, phone_number, status) => {
+    const cus_data = { cus_id, info, parent_name, phone_number, status };
+    navigate("/test-com", { state: { cus_data } });
+  };
+
+  const [popup_delete, setPopupDelete] = useState(null);
+  const [showPopupDelete, setShowPopupDelete] = useState(false);
+
+  const handleShowPopupDelete = (cus_id) => {
+    setPopupDelete(cus_id);
+    setShowPopupDelete(true);
+  };
+
+  const handleNo = () => {
+    setShowPopupDelete(false);
+  };
+
+  const handleYesDelete = async () => {
+    try {
+      const response = await axios.delete(`/delete_cusdata/${popup_delete}`);
+      console.log("Data deleted successfully:", response.data);
+      fetchNewOrder(); // Refresh the orders list
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
+    setShowPopupDelete(false);
   };
 
   const indexOfLastOrder = currentPage * ordersPerPage;
@@ -35,7 +59,10 @@ const OrderApprovePage = () => {
   const currentOrders = order.slice(indexOfFirstOrder, indexOfLastOrder);
 
   const totalPages = Math.ceil(order.length / ordersPerPage);
-
+  
+  useEffect(() => {
+    fetchNewOrder();
+  }, []);
   const nextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -45,15 +72,13 @@ const OrderApprovePage = () => {
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      
     }
   };
-
   return (
     <div style={{ padding: "20px" }}>
-      <h1>อนุมัติออเดอร์</h1>      
+      <h1>อนุมัติออเดอร์</h1>
       <button
-        onClick={handleReject}
+        onClick={handleAddOrder}
         style={{
           padding: "10px 20px",
           borderRadius: "5px",
@@ -72,24 +97,41 @@ const OrderApprovePage = () => {
       <div
         style={{
           gap: "10px",
-          border: "1px solid #ccc",
-          padding: "10px",
           borderRadius: "5px",
           maxWidth: "100%",
         }}
       >
-        {currentOrders.length > 0 ? (
-          currentOrders.map((order, index) => (
-            <div key={index}>
-              <ShirtOrder
-                cus_id={order.cus_id}
-                parent_name={order.parent_name}
-                phone_number={order.phone_number}
-                status={order.status}
-              />
+        {order ?(
+          order.map((order, index) => (
+            <>
+            <div key={index} className="div-border">
+                <p>
+                  <strong>ลำดับออเดอร์:</strong>
+                  <span>{order.cus_id}</span>
+                </p>
+                <p>
+                  <strong>ชื่อผู้สั่ง:</strong>
+                  <span>{order.parent_name}</span>
+                </p>
+                <p>
+                  <strong>เบอร์โทร:</strong>
+                  <span>{order.phone_number}</span>
+                </p>
+                <p>
+                  <strong>สถานะ:</strong>
+                  <span>{order.status}</span>
+                </p>
               <>
                 <button
-                  onClick={() => handleApprove(indexOfFirstOrder + index)}
+                  onClick={() =>
+                    handleApprove(
+                      order.cus_id,
+                      order.info,
+                      order.parent_name,
+                      order.phone_number,
+                      order.status
+                    )
+                  }
                   style={{
                     padding: "10px 20px",
                     borderRadius: "5px",
@@ -104,7 +146,7 @@ const OrderApprovePage = () => {
                   อนุมัติ
                 </button>
                 <button
-                  onClick={() => handleReject(indexOfFirstOrder + index)}
+                  onClick={() => handleShowPopupDelete(order.cus_id)}
                   style={{
                     padding: "10px 20px",
                     borderRadius: "5px",
@@ -120,49 +162,26 @@ const OrderApprovePage = () => {
                 </button>
               </>
             </div>
-          ))
-        ) : (
-          <p>No new orders available.</p>
-        )}
+            <br />
+            </>
+            
+          ))) : 
+          <>
+          <p>No data</p>
+          </>
+        }
+
       </div>
       
-      <div style={{ marginTop: "20px", textAlign: "center" }}>
-        <button
-          onClick={prevPage}
-          disabled={currentPage === 1}
-          style={{
-            padding: "10px 20px",
-            borderRadius: "5px",
-            border: "none",
-            cursor: "pointer",
-            marginRight: "10px",
-            fontSize: "16px",
-            backgroundColor: currentPage === 1 ? "#ccc" : "#405cf5",
-            color: "#fff",
-          }}
-        >
-          Previous
-        </button>
-        <span style={{ fontSize: "16px", margin: "0 10px" }}>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={nextPage}
-          disabled={currentPage === totalPages}
-          style={{
-            padding: "10px 20px",
-            borderRadius: "5px",
-            border: "none",
-            cursor: "pointer",
-            fontSize: "16px",
-            backgroundColor:
-              currentPage === totalPages ? "#ccc" : "#405cf5",
-            color: "#fff",
-          }}
-        >
-          Next
-        </button>
-      </div>
+      {showPopupDelete && (
+        <div className="popup">
+          <div className="popup-inner">
+            <p>Do you want to proceed? {popup_delete}</p>
+            <button onClick={handleYesDelete}>Yes</button>
+            <button onClick={handleNo}>No</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

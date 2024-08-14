@@ -200,13 +200,13 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status })
     SSchool: {
       name: "",
       color1: "#0000FF",
-      position_s:"ชื่อโรงเรียนด้านขวา"
+      position_s:""
     },
     SLogo:
     {
       school_name:"",
       image_path:"",
-      position_l:"โลโก้ด้านขวา"},
+      position_l:""},
     dot: {
       type: "",
       position: "",
@@ -331,35 +331,47 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status })
     }, [formdata.SName]);
     
     //school position
-    useEffect(() => {
-      if(formdata.SSchool.position_s === "ชื่อโรงเรียนด้านขวา")
-        {
-          SetSSchoolPositionClass(data=>(
-            {
-              ...data,
-              right: "School-right",
-              left: "hidden",
-            }))
-        }
-      else if(formdata.SSchool.position_s === "ชื่อโรงเรียนด้านซ้าย")
-        {
-          SetSSchoolPositionClass(data=>(
-            {
-              ...data,
-              right: "hidden",
-              left: "School-left",
-            }))
-        }
-      else
-      {
-        SetSSchoolPositionClass(data=>(
-          {
-            ...data,
-            right: "hidden",
-            left: "hidden",
-          }))
+  //school position
+  useEffect(() => {
+    if (formdata.SSchool.position_s === "ชื่อโรงเรียนด้านขวา") {
+      SetSSchoolPositionClass((data) => ({
+        ...data,
+        right: "School-right",
+        left: "hidden",
+      }));
+      if (checkbox_logo === true) {
+        SetSLogoPositionClass((data) => ({
+          ...data,
+          right: "logo-right",
+          left: "hidden",
+        }));
       }
-    }, [formdata.SSchool]);
+    } else if (formdata.SSchool.position_s === "ชื่อโรงเรียนด้านซ้าย") {
+      SetSSchoolPositionClass((data) => ({
+        ...data,
+        right: "hidden",
+        left: "School-left",
+      }));
+      if (checkbox_logo === true) {
+        SetSLogoPositionClass((data) => ({
+          ...data,
+          right: "hidden",
+          left: "logo-left",
+        }));
+      }
+    } else {
+      SetSSchoolPositionClass((data) => ({
+        ...data,
+        right: "hidden",
+        left: "hidden",
+      }));
+      SetSLogoPositionClass((data) => ({
+        ...data,
+        right: "hidden",
+        left: "hidden",
+      }));
+    }
+  }, [formdata.SSchool]);
   
       //logo position
     useEffect(() => {
@@ -390,6 +402,14 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status })
             left: "hidden",
           }))
       }
+      if(checkbox_logo === false)
+        {
+          SetSLogoPositionClass((data) => ({
+            ...data,
+            right: "hidden",
+            left: "hidden",
+          }));
+        }
     }, [formdata.SLogo]);
 
   useEffect(() => {
@@ -716,24 +736,7 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status })
           </div>
         </div>
 
-        <div>
-      <p>
-        <strong>ลำดับออเดอร์:</strong>
-        <span>{cus_id}</span>
-      </p>
-      <p>
-        <strong>ชื่อผู้สั่ง:</strong>
-        <span>{parent_name}</span>
-      </p>
-      <p>
-        <strong>เบอร์โทร:</strong>
-        <span>{phone_number}</span>
-      </p>
-      <p>
-        <strong>สถานะ:</strong>
-        <span>{status}</span>
-      </p>
-    </div>
+
     </>
   );
 }

@@ -53,13 +53,13 @@ const Customer_table = () => {
   };
   const handleYes_delete = async () => {
     try {
-      const response = await axios.post("/delete_cusdata", { popup_delete });
-      setpopup_delete(response.data);
-      fetching_data();
-      //alert(popup_delete)
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    }
+      const response = await axios.delete(`/delete_cusdata/${popup_delete}`);
+      console.log('Data deleted successfully:', response.data);
+      // Handle success, update state or UI accordingly
+  } catch (error) {
+      console.error('Error deleting data:', error);
+      // Handle error, show an error message to the user
+  }
     setshowpopup_delete(false);
   };
   const handleNo = () => {

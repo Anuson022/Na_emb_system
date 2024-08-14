@@ -250,6 +250,70 @@ adm_update = (cus_input, formdata, order ,SumPrice,IsPaid) => {
     }
   );
 };
+adm_FullInsert = (cus_input, formdata, order, SumPrice, IsPaid) => {
+  const json_form = JSON.stringify(formdata);
+  const json_order = JSON.stringify(order);
+  const PricePaidValue = [cus_input.cus_id, SumPrice, IsPaid];
+  const insert_cus =
+    "INSERT INTO customer_data (info, parent_name, phone_number, status) VALUES (?, ?, ?, ?)";
+  const insert_form = "INSERT INTO customer_data (shirt) VALUES (?)";
+  const insert_order = "INSERT INTO customer_data (cus_order) VALUES (?)";
+  const insert_Paid_Price = "INSERT INTO customer_data (price, is_paid) VALUES (?, ?)";
+  
+  // First insert query
+  pool.query(
+    insert_cus,
+    [
+      cus_input.cus_id,
+      cus_input.info,
+      cus_input.parent_name,
+      cus_input.phone_number,
+      cus_input.status,
+    ],
+    (error, result) => {
+      if (error) {
+        return console.log(error);
+      }
+
+      // Second insert query within the callback of the first query
+      pool.query(
+        insert_form,
+        [cus_input.cus_id, json_form],
+        (error, result) => {
+          if (error) {
+            return console.log(error);
+          }
+        }
+      );
+
+      // Third insert query within the callback of the second query
+      pool.query(
+        insert_order,
+        [cus_input.cus_id, json_order],
+        (error, result) => {
+          if (error) {
+            return console.log(error);
+          }
+          console.log(json_order);
+          console.log("success");
+        }
+      );
+
+      // Fourth insert query within the callback of the third query
+      pool.query(
+        insert_Paid_Price,
+        PricePaidValue,
+        (error, result) => {
+          if (error) {
+            return console.log(error);
+          }
+          console.log(result);
+          console.log("success");
+        }
+      );
+    }
+  );
+};
 
 const data_queing = async () => {
   await pool.query("SET  @num := 0;");
@@ -298,7 +362,18 @@ app1.post("/cus_input", async (req, res) => {
   res.send('Success');
   //customer input
 });
+app1.post("/insert_customdata", async (req, res) => {
+  await console.log();
+  const cus_data = req.body.formdata_cus;
+  const shirt = req.body.Combine_shirt;
+  const orders = req.body.orders;
+  const Sumprice = req.body.SumPrice;
+  const IsPaid = req.body.IsPaid
 
+  await adm_FullInsert(cus_data, shirt, orders ,Sumprice,IsPaid);
+  res.json();
+  //storefront input
+});
 app1.post("/update_customdata", async (req, res) => {
   await console.log();
   const cus_data = req.body.formdata_cus;

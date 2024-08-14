@@ -123,10 +123,7 @@ function Shirt_graphic_cus() {
         }));
       }
     }
-    document.body.classList.add("body_of_edit");
-    return () => {
-      document.body.classList.remove("body_of_edit");
-    };
+
   }, [formdata.dot, checkbox_dot]);
 
   useEffect(() => {

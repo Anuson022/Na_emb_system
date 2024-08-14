@@ -8,11 +8,13 @@ body
 
 .body_of_edit
 {
-    padding: 1rem;
-    max-width: fit-content;
-    margin-inline: auto;
+    box-sizing: border-box;
+    width: 99%;
+    /*max-width: fit-content;
+    margin-inline: auto;*/
     margin: 0 auto;
-    fieldset{width: 100%;max-width: 90rem;min-width: 70rem;}
+    font-family: 'RSU_regular';
+    fieldset{width: 100%;max-width: 100%;min-width: 70rem;}
 }
 .Shirt_com
 {
@@ -25,33 +27,54 @@ body
 }
 .customer_edit_content
 {
+
+  *{font-family: 'RSU_regular';}
+  
     .grid_cus {
+      background-color: #FAF9F6;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
+        div
+        {
+          margin-top: -1em;
+        }
       }
       
       .grid_cus_item {
+        
         display: flex;
         flex-direction: column;
+        
       }
       
       .grid_cus_item label {
-        margin-bottom: 5px;
+        margin-bottom: -1em;
       }
       .grid_cus_item select,.grid_cus_item option {
-        font-size: large;
+        font-size: 2rem;
         width: 100%;
-        height: 3.1rem;
-
+        height: 5rem;
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
       }
       .grid_cus_item input,
       .grid_cus_item textarea {
         padding: 5px;
         border: 1px solid #ccc;
         border-radius: 4px;
-        font-size: 1.5rem;
+        font-size: 2rem;
         margin-bottom: 1rem;
+        margin-top: 0.5rem;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        resize:vertical;
       }
       .grid_cus_item textarea
       {
@@ -72,11 +95,11 @@ body
 .order_sum
 {
   min-width: 40rem;
+  *{font-family: "RSU_regular";}
     table {
-        font-family: arial, sans-serif;
+        font-size: 1.5rem;
         border-collapse: collapse;
         border: 1px solid #dddddd;
-
             .order_info {
                 width: 50%;
                 border: 1px solid black;
@@ -99,12 +122,51 @@ body
 
         td, th {
             padding: 0.5rem;
-            input{width:90%;}
+            input{width:100%;border-radius: 3px;}
           }
         tr:nth-child(even) {
             background-color: #dddddd;
         }
+        th:nth-child(1) {
+        }
+        th:nth-child(2) {
+          width: 5%;
+        }
+        th:nth-child(3) {
+          width: 5%;
+        }
+        th:nth-child(4) {
+          width: 10%;
+        }
+        th:nth-child(5) {
+          width: 10%;
+        }
+
       }
-    
+  .grid_order
+  {
+    input{font-size: 2rem;padding: 1rem;height: 3rem;}
+  }
 }
 
+.Ispaid-check
+{
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  [type=checkbox] {
+    -ms-transform: scale(2);
+    /* IE */
+    -moz-transform: scale(2);
+    /* FF */
+    -webkit-transform: scale(2);
+    /* Safari and Chrome */
+    -o-transform: scale(2);
+    /* Opera */
+    transform: scale(2);
+    margin: 1.3rem;
+}
+}

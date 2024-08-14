@@ -1,96 +1,36 @@
 import React, { useEffect, useState, Component } from "react";
 import { useLocation } from "react-router-dom";
-import "./css1.css";
-import Shirt_graphic_cus_com from "./Shirt_graphic_cus_com";
+import "../css1.css";
+import Shirt_graphic_cus_com from "../Shirt_graphic_cus_com";
 import axios from "axios";
 
 const Recheck = () => {
-  const location = useLocation();
-  const { cus_data } = location.state;
   const [formdata_cus, setformdata_cus] = useState({
-    cus_id: cus_data.cus_id,
-    info: cus_data.info,
-    parent_name: cus_data.parent_name,
-    phone_number: cus_data.phone_number,
-    status: cus_data.status,
+    cus_id: "",
+    info: "",
+    parent_name: "",
+    phone_number: "",
+    status: "",
   });
   const [FetchData, SetFetchData] = useState({});
   const Fetch_graphic = async () => {
     try {
-      const response = await axios.get("/get_cusID", {
-        params: {
-          id: formdata_cus.cus_id,
-        },
-      });
-      //console.log(response.data[0])
-      const object = JSON.parse(response.data[0].shirt);
-      await SetFetchData(object);
-
-      const billOrder = JSON.parse(response.data[0].cus_order);
-      const IsCusPaid = parseInt(response.data[0].is_paid);
-      if (billOrder) {
-        setOrders(billOrder);
-      }
-      if (IsCusPaid) {
-        SetIsPaid(IsCusPaid);
-      }
+      const response = await axios.post("/api/GetMaxID");
+      console.log(response.data)
+      const GetMaxID = (response.data['MAX(cus_id)'])+1;
+      console.log(GetMaxID)
+      setformdata_cus((prevData) => ({
+        ...prevData,
+        cus_id: GetMaxID,
+      }));
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  useEffect(() => {
-    Fetch_graphic();
-  }, []);
-  useEffect(() => {
-    if (FetchData.SName) {
-      setformdata((prevFormData) => ({
-        ...prevFormData,
-        SName: {
-          ...prevFormData.SName,
-          fullname: FetchData.SName.fullname || "",
-          color: FetchData.SName.color || "",
-          position_n: FetchData.SName.position_n || "",
-        },
-        SUndername: {
-          ...prevFormData.SUndername,
-          under_name: FetchData.SUndername.under_name || "",
-          color0: FetchData.SUndername.color0 || "",
-        },
-        SSchool: {
-          ...prevFormData.SSchool,
-          name: FetchData.SSchool.name || "",
-          color1: FetchData.SSchool.color1 || "",
-          position_s: FetchData.SSchool.position_s || "",
-        },
-        SLogo: {
-          ...prevFormData.SLogo,
-          school_name: FetchData.SLogo.school_name || "",
-          image_path: FetchData.SLogo.image_path || "",
-          position_l: FetchData.SLogo.position_l || "",
-        },
-        dot: {
-          ...prevFormData.dot,
-          type: FetchData.dot.type || "",
-          position: FetchData.dot?.position || "",
-          amount_dot: FetchData.dot?.amount_dot || "",
-          color_dot: FetchData.dot?.color_dot || "",
-        },
-      }));
-    }
-    if (FetchData.dot?.type) {
-      setcheck_dot(true);
-    }
-    if (FetchData.SLogo?.image_path) {
-      setcheck_logo(true);
-      setSelectedLogo({
-        label: FetchData.SLogo.school_name,
-        image: FetchData.SLogo.image_path,
-      });
-    }
-    if (FetchData.SUndername?.under_name) {
-      setcheck_undername(true);
-    }
-  }, [FetchData]);
+  useEffect(()=>
+    {
+      Fetch_graphic();
+    },[])
 
   const [formdata, setformdata] = useState({
     SName: {
@@ -105,7 +45,7 @@ const Recheck = () => {
     SSchool: {
       name: "",
       color1: "#0000FF",
-      position_s: "",
+      position_s: "ชื่อโรงเรียนด้านขวา",
     },
     SLogo: {
       school_name: "",
@@ -237,43 +177,43 @@ const Recheck = () => {
   //school position
   useEffect(() => {
     if (formdata.SSchool.position_s === "ชื่อโรงเรียนด้านขวา") {
-      SetSSchoolPositionClass((data) => ({
-        ...data,
-        right: "School-right",
-        left: "hidden",
-      }));
-      if (checkbox_logo === true) {
-        SetSLogoPositionClass((data) => ({
-          ...data,
-          right: "logo-right",
-          left: "hidden",
-        }));
-      }
+        SetSSchoolPositionClass((data) => ({
+            ...data,
+            right: "School-right",
+            left: "hidden",
+          }));
+          if (checkbox_logo === true) {
+            SetSLogoPositionClass((data) => ({
+              ...data,
+              right: "logo-right",
+              left: "hidden",
+            }));
+          }
     } else if (formdata.SSchool.position_s === "ชื่อโรงเรียนด้านซ้าย") {
-      SetSSchoolPositionClass((data) => ({
-        ...data,
-        right: "hidden",
-        left: "School-left",
-      }));
-      if (checkbox_logo === true) {
-        SetSLogoPositionClass((data) => ({
-          ...data,
-          right: "hidden",
-          left: "logo-left",
-        }));
-      }
+        SetSSchoolPositionClass((data) => ({
+            ...data,
+            right: "hidden",
+            left: "School-left",
+          }));
+          if (checkbox_logo === true) {
+            SetSLogoPositionClass((data) => ({
+              ...data,
+              right: "hidden",
+              left: "logo-left",
+            }));
+          }
     } else {
-      SetSSchoolPositionClass((data) => ({
-        ...data,
-        right: "hidden",
-        left: "hidden",
-      }));
-      SetSLogoPositionClass((data) => ({
-        ...data,
-        right: "hidden",
-        left: "hidden",
-      }));
-    }
+        SetSSchoolPositionClass((data) => ({
+            ...data,
+            right: "hidden",
+            left: "hidden",
+          }));
+          SetSLogoPositionClass((data) => ({
+            ...data,
+            right: "hidden",
+            left: "hidden",
+          }));
+        }
   }, [formdata.SSchool]);
 
   //logo position
@@ -291,13 +231,6 @@ const Recheck = () => {
         left: "logo-left",
       }));
     } else {
-      SetSLogoPositionClass((data) => ({
-        ...data,
-        right: "hidden",
-        left: "hidden",
-      }));
-    }
-    if (checkbox_logo === false) {
       SetSLogoPositionClass((data) => ({
         ...data,
         right: "hidden",
@@ -325,7 +258,7 @@ const Recheck = () => {
   //order varible
 
   const addInput = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     setOrders([
       ...orders,
       { id: orders.length + 1, value1: "", value2: "", value3: "", value4: "" },
@@ -360,9 +293,8 @@ const Recheck = () => {
       0
     );
   };
-  const HandlePaidCheck = (event) => {
-    SetIsPaid(event.target.checked);
-  };
+  const HandlePaidCheck = (event) =>
+    {SetIsPaid(event.target.checked);}
   //order varible
 
   const handle_submit = (e) => {
@@ -375,12 +307,12 @@ const Recheck = () => {
       0
     );
     try {
-      axios.post("/update_customdata", {
+      axios.post("/insert_customdata", {
         formdata_cus,
         Combine_shirt,
         orders,
         SumPrice,
-        IsPaid,
+        IsPaid
       });
     } catch (error) {
       console.log(error);
@@ -416,7 +348,7 @@ Price: int*/
     <div className="">
       <br />
       <form className="cus_insert">
-        <fieldset className="" style={{ backgroundColor: "#FAF9F6" ,paddingBottom:'2rem'}}>
+        <fieldset className="">
           <legend style={{}}>
             <h1>ข้อมูลสำหรับแสดงกราฟิค</h1>
           </legend>
@@ -452,104 +384,88 @@ Price: int*/
       </form>
 
       <form className="cus_edit">
-        <fieldset style={{ backgroundColor: "#FAF9F6" ,paddingBottom:'2rem'}}>
+        <fieldset>
           <legend style={{}}>
             <h1>ข้อมูลลูกค้า</h1>
           </legend>
-          <div className="div-border">
-            <div className="customer_edit_content">
-              <div className="grid_cus">
-                <div className="grid_cus_item">
-                  <label htmlFor="cus_id">
-                    <h2>รหัสลูกค้า</h2>
-                  </label>
-                  <input
-                    type="text"
-                    name="cus_id"
-                    value={formdata_cus.cus_id}
-                    readOnly
-                  />
-                </div>
-                <div
-                  className="grid_cus_item"
-                  style={{ marginBottom: "1.5rem" }}
-                >
-                  <label htmlFor="status">
-                    <h2 style={{ marginBottom: "1.7rem" }}>สถานะ</h2>
-                  </label>
-                  <select
-                    name="status"
-                    value={formdata_cus.status}
-                    onChange={handle_cuschange}
-                  >
-                    <option value="ยังไม่ตรวจสอบ">ยังไม่ตรวจสอบ</option>
-                    <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
-                    <option value="การปักเสร็จสิ้น">การปักเสร็จสิ้น</option>
-                  </select>
-                </div>
-              </div>
 
-              <div className="grid_cus_item" style={{ marginTop: "-2em" }}>
-                <label htmlFor="info">
-                  <h2>รายละเอียด</h2>
-                </label>
-                <textarea
-                  name="info"
-                  value={formdata_cus.info}
+          <div className="customer_edit_content">
+            <div className="grid_cus">
+              <div className="grid_cus_item">
+                <label htmlFor="cus_id">รหัสลูกค้า</label>
+                <input
+                  type="text"
+                  name="cus_id"
+                  value={formdata_cus.cus_id}
+                />
+              </div>
+              <div className="grid_cus_item">
+                <label htmlFor="status">สถานะ</label>
+                <select
+                  name="status"
+                  value={formdata_cus.status}
+                  onChange={handle_cuschange}
+                >
+                  <option value="ยังไม่ตรวจสอบ">ยังไม่ตรวจสอบ</option>
+                  <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
+                  <option value="การปักเสร็จสิ้น">การปักเสร็จสิ้น</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid_cus_item">
+              <label htmlFor="info">รายละเอียด</label>
+              <textarea
+                name="info"
+                value={formdata_cus.info}
+                onChange={handle_cuschange}
+              />
+            </div>
+
+            <div className="grid_cus">
+              <div className="grid_cus_item">
+                <label htmlFor="parent_name">ชื่อผู้สั่ง</label>
+                <input
+                  type="text"
+                  id="parent_name"
+                  name="parent_name"
+                  value={formdata_cus.parent_name}
                   onChange={handle_cuschange}
                 />
               </div>
-
-              <div className="grid_cus" style={{ marginTop: "1em" }}>
-                <div className="grid_cus_item">
-                  <label htmlFor="parent_name">
-                    <h2>ชื่อผู้สั่ง</h2>
-                  </label>
-                  <input
-                    type="text"
-                    id="parent_name"
-                    name="parent_name"
-                    value={formdata_cus.parent_name}
-                    onChange={handle_cuschange}
-                  />
-                </div>
-                <div className="grid_cus_item">
-                  <label htmlFor="phone_number">
-                    <h2>เบอร์โทร</h2>
-                  </label>
-                  <input
-                    type="text"
-                    id="phone_number"
-                    name="phone_number"
-                    value={formdata_cus.phone_number}
-                    onChange={handle_cuschange}
-                  />
-                </div>
+              <div className="grid_cus_item">
+                <label htmlFor="phone_number">เบอร์โทร</label>
+                <input
+                  type="text"
+                  id="phone_number"
+                  name="phone_number"
+                  value={formdata_cus.phone_number}
+                  onChange={handle_cuschange}
+                />
               </div>
             </div>
           </div>
         </fieldset>
       </form>
 
+      <br />
       <form>
-        <fieldset className="order_sum" style={{ backgroundColor: "#FAF9F6" ,paddingBottom:'2rem'}}>
+        <fieldset className="order_sum">
           <legend>
             <h1>สรุปรายการ</h1>
           </legend>
-          <div className="div-border">
           <table>
             <tr>
               <th style={{ textAlign: "left" }}>รายการ</th>
               <th style={{ textAlign: "center" }}>จำนวน</th>
               <th style={{ textAlign: "center" }}>ราคา/หน่วย</th>
               <th style={{ textAlign: "center" }}>จำวนเงิน</th>
-              <th style={{ textAlign: "center" }}></th>
             </tr>
 
             {orders.map((input, index) => (
               <tr key={input.id} className="grid_order">
                 <td className="order_info">
-                  <input
+                  <textarea
                     style={{ width: "100%" }}
                     type="text"
                     value={input.value1}
@@ -588,54 +504,27 @@ Price: int*/
                     }
                   />
                 </td>
-                <td style={{ textAlign: "center" ,backgroundColor:'white'}}>
-                  <button
-                    style={{
-                      padding: "10px 20px",
-                      borderRadius: "5px",
-                      border: "none",
-                      cursor: "pointer",
-                      marginRight: "10px",
-                      fontSize: "1.5rem",
-                      backgroundColor: "#f44336",
-                      color: "#fff",
-                    }}
-                    onClick={() => removeInput(input.id)}
-                  >
+                <td>
+                  <button onClick={() => removeInput(input.id)}>
                     ลบรายการ
                   </button>
                 </td>
               </tr>
             ))}
-            <tr style={{backgroundColor:'white'}}>
+            <tr>
               <td></td>
               <td></td>
               <td style={{ textAlign: "right" }}>
                 <h3>รวม</h3>
               </td>
-              <td style={{ textAlign: "center" ,fontSize:'2.5rem' , fontWeight:'bold'}}>{OrderSum()}</td>
-              <td></td>
+              <td style={{ textAlign: "center" }}>{OrderSum()}</td>
             </tr>
           </table>
-          <br />
-          <button
-            style={{
-              padding: "10px 20px",
-              borderRadius: "5px",
-              border: "none",
-              cursor: "pointer",
-              marginRight: "10px",
-              fontSize: "1rem",
-              backgroundColor: "gray",
-              color: "white",
-            }}
-            onClick={addInput}
-          >
-            เพิ่มรายการ
-          </button>
+          <button onClick={addInput}>Add Input</button>
+
           <div className="Ispaid-check">
             <label>
-              ชำระเงินแล้วหรือไม่
+            ชำระเงินแล้วหรือไม่
               <input
                 type="checkbox"
                 checked={IsPaid}
@@ -643,14 +532,9 @@ Price: int*/
               />
             </label>
           </div>
-          </div>
         </fieldset>
       </form>
-      <div className="Cus-submit">
-      <button 
-      onClick={handle_submit}>ยืนยันข้อมูล</button>
-      </div>
-
+      <button onClick={handle_submit}>Test_submit</button>
     </div>
   );
 };
