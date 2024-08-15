@@ -1,8 +1,10 @@
 import React, { useEffect, useState, Component } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./css1.css";
 import Shirt_graphic_cus_com from "./Shirt_graphic_cus_com";
 import axios from "axios";
+import SweetAlert from "react-bootstrap-sweetalert";
+
 
 const Recheck = () => {
   const location = useLocation();
@@ -142,7 +144,6 @@ const Recheck = () => {
     right: "hidden",
     left: "hidden",
   });
-
   const [Image, Setimage] = useState([]);
 
   const [selectedLogo, setSelectedLogo] = useState(null);
@@ -154,7 +155,6 @@ const Recheck = () => {
   });
   const fetch_image = async () => {
     const res = await axios.post("/api/files");
-    console.log(res.data);
     Setimage(res.data);
   };
 
@@ -365,8 +365,7 @@ const Recheck = () => {
   };
   //order varible
 
-  const handle_submit = (e) => {
-    e.preventDefault();
+  const HandleSubmit = async(e) => {
     const Combine_shirt = {
       ...formdata,
     };
@@ -374,36 +373,28 @@ const Recheck = () => {
       (total, order) => total + (parseFloat(order.value4) || 0),
       0
     );
+    if(
+      formdata_cus.phone_number === "" ||
+      formdata_cus.phone_number === null ||
+      SumPrice === 0
+    )
+      { return SetShowIncomplete(true) }
     try {
-      axios.post("/update_customdata", {
+      const response = await axios.post("/update_customdata", {
         formdata_cus,
         Combine_shirt,
         orders,
         SumPrice,
         IsPaid,
       });
+      console.log(response.data)
+      SetShowSuccess(true)
     } catch (error) {
       console.log(error);
+      SetShowFail(true)
     }
     //console.log(result);*/
   };
-  /*
-Admin_input
-leftside array [["...","T.B.",],color]
-rightside array [["...","T.B.",],color]
-logo
-dot_position
-
-+
-scout[type]
-P.E uniform
-order
-
-parent_name get from user input
-phone_number get from user input
-que get from cusID
-Paid :truefalse
-Price: int*/
 
   useEffect(() => {
     document.body.classList.add("body_of_edit");
@@ -412,6 +403,30 @@ Price: int*/
     };
   }, []);
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [ShowSuccess,SetShowSuccess] = useState(false);
+  const [ShowIncomplete,SetShowIncomplete] = useState(false);
+  const [ShowFail,SetShowFail] = useState(false);
+  const SweetAlertShow = async() =>
+    {
+      setShowAlert(true)
+    }
+  const StatusCheck = async() =>
+    {
+      setShowAlert(true)
+    }
+  const HandleCancel = async() =>
+    {
+      setShowAlert(false)
+      SetShowSuccess(false)
+      SetShowFail(false)
+      SetShowIncomplete(false)
+    }
+  const GoTo = useNavigate();
+  const HandleNavigate = async() =>
+    {
+      GoTo("/Admin_dashboard")
+    }
   return (
     <div className="">
       <br />
@@ -648,9 +663,61 @@ Price: int*/
       </form>
       <div className="Cus-submit">
       <button 
-      onClick={handle_submit}>ยืนยันข้อมูล</button>
+      onClick={SweetAlertShow}>ยืนยันข้อมูล</button>
       </div>
-
+      <div style={{ padding: "15rem" }}>
+            {showAlert && (
+              <SweetAlert
+              info
+                title="ยืนยันการส่งหรือไม่"
+                onConfirm={HandleSubmit}
+                onCancel={HandleCancel}
+                showCancel
+                confirmBtnText="ใช่"
+                cancelBtnText="ไม่"
+                confirmBtnCssClass="btn-custom"
+                cancelBtnCssClass="btn-custom"
+                customClass="custom-sweetalert" // Custom class
+                style={{ display: "flex", minWidth: "15rem", width: "20rem" }}
+              ></SweetAlert>
+            )}
+            {ShowSuccess && (
+              <SweetAlert
+                success
+                title="ส่งข้อมูลสำเร็จ"
+                onConfirm={HandleNavigate}
+                confirmBtnText="ตกลง"
+                confirmBtnCssClass="btn-custom"
+                customClass="custom-sweetalert" // Custom class
+                style={{ display: "flex", minWidth: "15rem", width: "20rem" }}
+              ></SweetAlert>
+            )}
+            {ShowIncomplete && (
+              <SweetAlert
+              warning
+                title="โปรดกรอกข้อมูลให้ครบถ้วน"
+                onConfirm={HandleCancel}
+                confirmBtnText="ตกลง"
+                cancelBtnText="ไม่"
+                confirmBtnCssClass="btn-custom"
+                cancelBtnCssClass="btn-custom"
+                customClass="custom-sweetalert" // Custom class
+                style={{ display: "flex", minWidth: "15rem", width: "22rem" }}
+              ></SweetAlert>
+            )}
+            {ShowFail && (
+              <SweetAlert
+              danger
+                title="บางอย่างผิดพลาดไม่สามารถส่งข้อมูลได้"
+                onConfirm={HandleCancel}
+                confirmBtnText="ตกลง"
+                confirmBtnCssClass="btn-custom"
+                cancelBtnCssClass="btn-custom"
+                customClass="custom-sweetalert" // Custom class
+                style={{ display: "flex", minWidth: "15rem", width: "20rem" }}
+              ></SweetAlert>
+            )}
+          </div>
     </div>
   );
 };

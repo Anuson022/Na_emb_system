@@ -105,7 +105,7 @@ const App = () => {
             }}
           >
             <span style={{color:'white', textAlign: "center",fontSize:'5rem'}}>
-            {CountStatus[0]?.count ?? 0}
+            {CountStatus[1]?.count ?? 0}
             </span>
             <br />
             <span style={{color:'white', textAlign: "center",fontSize:'2rem'}}>
@@ -143,7 +143,7 @@ const App = () => {
             }}
           >
             <span style={{color:'white', textAlign: "center",fontSize:'5rem'}}>
-              {CountStatus[1]?.count ?? 0}
+              {CountStatus[0]?.count ?? 0}
             </span>
             <br />
             <span style={{color:'white', textAlign: "center",fontSize:'2rem'}}>

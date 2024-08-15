@@ -255,62 +255,23 @@ adm_FullInsert = (cus_input, formdata, order, SumPrice, IsPaid) => {
   const json_order = JSON.stringify(order);
   const PricePaidValue = [cus_input.cus_id, SumPrice, IsPaid];
   const insert_cus =
-    "INSERT INTO customer_data (info, parent_name, phone_number, status) VALUES (?, ?, ?, ?)";
-  const insert_form = "INSERT INTO customer_data (shirt) VALUES (?)";
-  const insert_order = "INSERT INTO customer_data (cus_order) VALUES (?)";
-  const insert_Paid_Price = "INSERT INTO customer_data (price, is_paid) VALUES (?, ?)";
+    "INSERT INTO customer_data (info, parent_name, phone_number, status,shirt,cus_order,price, is_paid) VALUES (?, ?, ?, ?,?, ?, ?, ?)";
   
   // First insert query
   pool.query(
     insert_cus,
     [
-      cus_input.cus_id,
       cus_input.info,
       cus_input.parent_name,
       cus_input.phone_number,
       cus_input.status,
+      json_form,json_order,
+      SumPrice,IsPaid
     ],
     (error, result) => {
       if (error) {
         return console.log(error);
       }
-
-      // Second insert query within the callback of the first query
-      pool.query(
-        insert_form,
-        [cus_input.cus_id, json_form],
-        (error, result) => {
-          if (error) {
-            return console.log(error);
-          }
-        }
-      );
-
-      // Third insert query within the callback of the second query
-      pool.query(
-        insert_order,
-        [cus_input.cus_id, json_order],
-        (error, result) => {
-          if (error) {
-            return console.log(error);
-          }
-          console.log(json_order);
-          console.log("success");
-        }
-      );
-
-      // Fourth insert query within the callback of the third query
-      pool.query(
-        insert_Paid_Price,
-        PricePaidValue,
-        (error, result) => {
-          if (error) {
-            return console.log(error);
-          }
-          console.log(result);
-          console.log("success");
-        }
-      );
     }
   );
 };
@@ -406,26 +367,45 @@ app1.post("/search_cus1", async (req, res) => {
   } catch (error) {}
 });
 app1.post("/search_cus2", async (req, res) => {
-  const searchTerm = req.body.search_value;
+  const searchTerm = req.body.searchTerm;
   console.log(searchTerm);
-  const query = `SELECT * FROM customer_data WHERE cus_id LIKE ? AND status = "กำลังดำเนินการ"`;
+  
+  const query = `SELECT * FROM customer_data WHERE (parent_name LIKE ? OR phone_number LIKE ?) AND status = "กำลังดำเนินการ"`;
   try {
-    pool.query(query, [`%${searchTerm}%`], (err, results) => {
+    pool.query(query, [`%${searchTerm}%`, `%${searchTerm}%`], (err, results) => {
       if (err) throw err;
-      res.json(results);
+      
+      if (results.length === 0) {
+        res.json(null);;
+      } else {
+        res.json(results);
+        console.log(results);
+      }
     });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
 });
+
 app1.post("/search_cus3", async (req, res) => {
-  const searchTerm = req.body.search_value;
+  const searchTerm = req.body.searchTerm;
   console.log(searchTerm);
-  const query = `SELECT * FROM customer_data WHERE cus_id LIKE ? AND status = "การปักเสร็จสิ้น"`;
+  
+  const query = `SELECT * FROM customer_data WHERE (parent_name LIKE ? OR phone_number LIKE ?) AND status = "การปักเสร็จสิ้น"`;
   try {
-    pool.query(query, [`%${searchTerm}%`], (err, results) => {
+    pool.query(query, [`%${searchTerm}%`, `%${searchTerm}%`], (err, results) => {
       if (err) throw err;
-      res.json(results);
+      
+      if (results.length === 0) {
+        res.json(null);;
+      } else {
+        res.json(results);
+        console.log(results);
+      }
     });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
 });
 app1.post("/update_status", async (req, res) => {
   const ChangeStatus = req.body.change_status;

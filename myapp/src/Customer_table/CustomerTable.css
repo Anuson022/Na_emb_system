@@ -1,7 +1,44 @@
 .container_customer_table {
   overflow-x: auto;
+  *{font-family: "RSU_regular";font-size: 1rem;}
 }
 
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.search-input {
+  width: 300px;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
 
 
 .table_head tr th,
@@ -21,17 +58,24 @@
   }
 }
 
-
 .table_head tr {
+  th:nth-child(1){width: 10%;}
+  th:nth-child(2){width: 10%;}
+  th:nth-child(3){width: 15%;}
+  th:nth-child(4){width: 15%;}
+  th:nth-child(5){width: 10%;}
+  th:nth-child(6){width: 10%;}
+  th:nth-child(7){width: 10%;}
+  th:nth-child(8){width: 10%;}
+  
   th {
     background-color: #a3ffa1;
-
   }
+
 }
 
-
 .info_text {
-
+  
   div {
     background-color: whitesmoke;
     width: 5rem;
@@ -224,10 +268,7 @@
     font-weight: bold;
   }
   
-  th, td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-  }
+
   
   tbody.table_body tr:nth-child(even) {
     background-color: #f9f9f9;

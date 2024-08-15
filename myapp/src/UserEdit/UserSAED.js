@@ -8,14 +8,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import UserAdd from "./UserAdd";
 import UserEdit from "./UserEdit";
-import UserDelete from "./UserDelete";
 
 function UserSAED() {
   const [FetchUsers, SetFetchUsers] = useState([]);
   const [Search, SetSearch] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 1; // Number of orders to show per page
+  const ordersPerPage = 5; // Number of orders to show per page
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
   const UserLimit = FetchUsers.slice(indexOfFirstOrder, indexOfLastOrder);
@@ -60,7 +59,6 @@ function UserSAED() {
     NavigateUserto("/Admin_dashboard/UserEdit", { state: { UserID } });
   };
   const UserDelete = async () => {
-    alert(EditID);
     await axios.delete(`/user_delete/${EditID}`);
   };
   const User_add = (e) => {

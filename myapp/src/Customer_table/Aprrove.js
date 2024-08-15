@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import ShirtOrder from "./ShirtOrder";
+import './Approve.css'
+import SweetAlert from "react-bootstrap-sweetalert";
 import { useNavigate } from "react-router-dom";
 
 const OrderApprovePage = () => {
   const [order, setOrder] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 1; // Number of orders to show per page
-  const [NewOrder, setNewOrder] = useState();
+  const [DelID, setDelID] = useState("");
   const fetchNewOrder = async () => {
     try {
       const response = await axios.post("/api/NewOrder");
@@ -17,7 +18,6 @@ const OrderApprovePage = () => {
       console.error("Error fetching orders:", error);
     }
   };
-
 
 
   const navigate = useNavigate();
@@ -94,17 +94,12 @@ const OrderApprovePage = () => {
       </button>
       <br />
       <br />
-      <div
-        style={{
-          gap: "10px",
-          borderRadius: "5px",
-          maxWidth: "100%",
-        }}
-      >
+      <div className="order-grid">
         {order ?(
           order.map((order, index) => (
             <>
-            <div key={index} className="div-border">
+            <div key={index}>
+                <div className="div-border">
                 <p>
                   <strong>ลำดับออเดอร์:</strong>
                   <span>{order.cus_id}</span>
@@ -121,7 +116,6 @@ const OrderApprovePage = () => {
                   <strong>สถานะ:</strong>
                   <span>{order.status}</span>
                 </p>
-              <>
                 <button
                   onClick={() =>
                     handleApprove(
@@ -160,9 +154,8 @@ const OrderApprovePage = () => {
                 >
                   ไม่อนุมัติ
                 </button>
-              </>
+                </div>
             </div>
-            <br />
             </>
             
           ))) : 
@@ -174,13 +167,23 @@ const OrderApprovePage = () => {
       </div>
       
       {showPopupDelete && (
-        <div className="popup">
-          <div className="popup-inner">
-            <p>Do you want to proceed? {popup_delete}</p>
-            <button onClick={handleYesDelete}>Yes</button>
-            <button onClick={handleNo}>No</button>
-          </div>
-        </div>
+        <SweetAlert
+          warning
+          title="ลบออเดอร์หรือไม่"
+          onConfirm={() => {
+            handleYesDelete();
+          }}
+          onCancel={() => {
+            setShowPopupDelete(false);
+          }}
+          confirmBtnText="ใช่"
+          cancelBtnText="ไม่"
+          showCancel
+          confirmBtnCssClass="btn-custom"
+          cancelBtnCssClass="btn-custom"
+          customClass="custom-sweetalert" // Custom class
+          style={{ display: "flex", minWidth: "15rem", width: "22rem" }}
+        ></SweetAlert>
       )}
     </div>
   );

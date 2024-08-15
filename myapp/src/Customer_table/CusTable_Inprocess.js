@@ -9,6 +9,7 @@ import {
   faFileInvoice,
   faRectangleXmark,
   faXmark,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import ShirtOrder from "./ShirtOrder";
 
@@ -19,7 +20,8 @@ const Customer_table = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data ? data.slice(indexOfFirstItem, indexOfLastItem) : [];
+  const totalPages = data ? Math.ceil(data.length / ITEMS_PER_PAGE) : [];
   const [Status, SetStatus] = useState();
 
   const [popup_delete, setpopup_delete] = useState(null);
@@ -54,12 +56,12 @@ const Customer_table = () => {
   const handleYes_delete = async () => {
     try {
       const response = await axios.delete(`/delete_cusdata/${popup_delete}`);
-      console.log('Data deleted successfully:', response.data);
+      console.log("Data deleted successfully:", response.data);
       // Handle success, update state or UI accordingly
-  } catch (error) {
-      console.error('Error deleting data:', error);
+    } catch (error) {
+      console.error("Error deleting data:", error);
       // Handle error, show an error message to the user
-  }
+    }
     setshowpopup_delete(false);
   };
   const handleNo = () => {
@@ -68,23 +70,37 @@ const Customer_table = () => {
     setshowpopup_bill(false);
   };
 
-  const Check_verify = (verify) => {
-    return verify ? "ยืนยันแล้ว" : "ยังไม่ยืนยัน";
-  };
   useEffect(() => {
+    
     fetching_data(currentPage);
+    handleSearch();
+    setCurrentPage(1)
   }, [currentPage]);
+  useEffect(() => {
+    if(searchTerm.length === 0)
+      {
+        handleSearch();
+        setCurrentPage(1)
+      }
+  }, [searchTerm]);
 
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
   const fetching_data = async (page) => {
-    const search_value = "";
     const response = await axios
-      .post("/search_cus2", { search_value })
+      .post("/search_cus2", { searchTerm })
       .then((response) => {
         setData(response.data);
         // Extract column headers from the data keys
-        /*if (response.data.length > 0) {
-          setColumns(Object.keys(response.data[0]));
-        }*/
       })
       .catch((error) => {
         console.error("There was an error fetching the data!", error);
@@ -93,22 +109,14 @@ const Customer_table = () => {
     }
   };
   const handleSearch = async (e) => {
-    setSearchTerm(e.target.value);
-    const search_value = e.target.value;
     try {
-      const response = await axios.post("/search_cus2", { search_value });
+      const response = await axios.post("/search_cus2", { searchTerm });
       setData(response.data);
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
   };
 
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
   const navigate = useNavigate();
 
   const handleClick = (cus_id, info, parent_name, phone_number, status) => {
@@ -137,7 +145,14 @@ const Customer_table = () => {
   };
   return (
     <div class="container_customer_table">
-      <div></div>
+<div class="search-container">
+  <input type="text" placeholder="Search..." class="search-input" 
+  value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
+  />
+  <button class="search-button" onClick={handleSearch}>
+    <FontAwesomeIcon icon={faSearch} />
+  </button>
+</div>
       <table>
         <thead className="table_head">
           <tr>
@@ -152,83 +167,127 @@ const Customer_table = () => {
           </tr>
         </thead>
         <tbody className="table_body">
-          {currentItems.map((item) => {
-            const shirtDetails = JSON.parse(item.shirt);
-            const Order_obj = JSON.parse(item.cus_order);
-            const Order_sum = item.price;
-            const Order_paid = item.is_paid;
-            return (
-              <tr key={item.cus_id}>
-                <td className="td_nowarp">{item.cus_id}</td>
-                <td className="info_text">
-                  <div
-                    onClick={() =>
-                      handleShowPopup_view(item.cus_id, shirtDetails)
-                    }
-                  >
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                  </div>
-                </td>
-                <td className="td_nowarp">{item.parent_name}</td>
-                <td className="td_nowarp">{item.phone_number}</td>
-                <td className="td_nowarp">
-                  <select
-                    value={item.status}
-                    onChange={(event) =>
-                      HandleStatus(item.cus_id, event.target.value)
-                    }
-                  >
-                    <option value="การปักเสร็จสิ้น">การปักเสร็จสิ้น</option>
-                    <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
-                    <option value="ยังไม่ตรวจสอบ">ยังไม่ตรวจสอบ</option>
-                  </select>
-                </td>
-                {/*<td className="td_nowarp"><button class="fa fa-info" aria-hidden="true" 
+          {data ? (
+            currentItems.map((item) => {
+              const shirtDetails = JSON.parse(item.shirt);
+              const Order_obj = JSON.parse(item.cus_order);
+              const Order_sum = item.price;
+              const Order_paid = item.is_paid;
+              return (
+                <tr key={item.cus_id}>
+                  <td className="td_nowarp">{item.cus_id}</td>
+                  <td className="info_text">
+                    <div
+                      onClick={() =>
+                        handleShowPopup_view(item.cus_id, shirtDetails)
+                      }
+                    >
+                      <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    </div>
+                  </td>
+                  <td className="td_nowarp">{item.parent_name}</td>
+                  <td className="td_nowarp">{item.phone_number}</td>
+                  <td className="td_nowarp">
+                    <select
+                      value={item.status}
+                      onChange={(event) =>
+                        HandleStatus(item.cus_id, event.target.value)
+                      }
+                    >
+                      <option value="การปักเสร็จสิ้น">การปักเสร็จสิ้น</option>
+                      <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
+                      <option value="ยังไม่ตรวจสอบ">ยังไม่ตรวจสอบ</option>
+                    </select>
+                  </td>
+                  {/*<td className="td_nowarp"><button class="fa fa-info" aria-hidden="true" 
              onClick={() => handleShowPopup_view(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}></button></td>*/}
-                <td className="td_nowarp">
-                  <div
-                    className="view-order"
-                    onClick={() =>
-                      handleShowPopup_bill(Order_obj, Order_sum, Order_paid)
-                    }
-                  >
-                    <FontAwesomeIcon icon={faFileInvoice} />
-                  </div>{" "}
+                  <td className="td_nowarp">
+                    <div
+                      className="view-order"
+                      onClick={() =>
+                        handleShowPopup_bill(Order_obj, Order_sum, Order_paid)
+                      }
+                    >
+                      <FontAwesomeIcon icon={faFileInvoice} />
+                    </div>{" "}
+                  </td>
+                  <td className="td_nowarp">
+                    <button
+                      onClick={() =>
+                        handleClick(
+                          item.cus_id,
+                          item.info,
+                          item.parent_name,
+                          item.phone_number,
+                          item.status
+                        )
+                      }
+                      style={{backgroundColor:'#007bff'}}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td className="td_nowarp">
+                    <button onClick={() => handleShowPopup_delete(item.cus_id)}
+                      style={{backgroundColor:'red'}}
+                      >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })
+          ) : (
+            <>
+              <tr>
+                <td colSpan="8" className="text-center">
+                  No data
                 </td>
-                <td className="td_nowarp">
-                  <button
-                    onClick={() =>
-                      handleClick(
-                        item.cus_id,
-                        item.info,
-                        item.parent_name,
-                        item.phone_number,
-                        item.status
-                      )
-                    }
-                  >
-                    Edit
-                  </button>
-                </td>
-                <td className="td_nowarp">
-                  <button onClick={() => handleShowPopup_delete(item.cus_id)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
+              </tr>{" "}
+            </>
+          )}
         </tbody>
       </table>
-      <button onClick={handlePrevPage} disabled={currentPage === 1}>
-        Previous
-      </button>
-      <button
-        onClick={handleNextPage}
-        disabled={indexOfLastItem >= data.length}
-      >
-        Next
-      </button>
+      {data && 
+      (
+        <div style={{ marginTop: "20px", textAlign: "center" }}>
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          style={{
+            padding: "10px 20px",
+            borderRadius: "5px",
+            border: "none",
+            cursor: "pointer",
+            marginRight: "10px",
+            fontSize: "16px",
+            backgroundColor: currentPage === 1 ? "#ccc" : "#405cf5",
+            color: "#fff",
+          }}
+        >
+          Previous
+        </button>
+        <span style={{ fontSize: "16px", margin: "0 10px" }}>
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={nextPage}
+          disabled={currentPage === totalPages}
+          style={{
+            padding: "10px 20px",
+            borderRadius: "5px",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "16px",
+            backgroundColor: currentPage === totalPages ? "#ccc" : "#405cf5",
+            color: "#fff",
+          }}
+        >
+          Next
+        </button>
+      </div>
+      )}
+
       {showpopup_delete && (
         <div className="popup">
           <div className="popup-inner">
@@ -273,7 +332,7 @@ const Customer_table = () => {
                   <span>{ShirtData.dot.type} </span>
                   <span>{ShirtData.dot.position} </span>
                 </p>
-              )}  
+              )}
             </div>
           </div>
         </div>

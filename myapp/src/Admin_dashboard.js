@@ -65,9 +65,6 @@ function Admin_dashboard() {
 
         {isOpen && <div className="accordion-content">
           <div className="div-cus-dit">
-            <p>
-              <Link to="/Admin_dashboard/RecheckTable">ที่ต้องตรวจสอบ</Link>
-            </p>
 
             <p>
               <Link to="/Admin_dashboard/CustomerTable">ที่ต้องดำเนินการ</Link>

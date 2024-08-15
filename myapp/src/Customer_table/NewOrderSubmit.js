@@ -1,8 +1,10 @@
 import React, { useEffect, useState, Component } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../css1.css";
 import Shirt_graphic_cus_com from "../Shirt_graphic_cus_com";
 import axios from "axios";
+import SweetAlert from "react-bootstrap-sweetalert";
+
 
 const Recheck = () => {
   const [formdata_cus, setformdata_cus] = useState({
@@ -10,7 +12,7 @@ const Recheck = () => {
     info: "",
     parent_name: "",
     phone_number: "",
-    status: "",
+    status: "ยังไม่ตรวจสอบ",
   });
   const [FetchData, SetFetchData] = useState({});
   const Fetch_graphic = async () => {
@@ -60,6 +62,11 @@ const Recheck = () => {
     },
   });
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [ShowSuccess,SetShowSuccess] = useState(false);
+  const [ShowIncomplete,SetShowIncomplete] = useState(false);
+
+  const [ShowFail,SetShowFail] = useState(false);
   const [checkbox_dot, setcheck_dot] = useState(false);
   const [checkbox_logo, setcheck_logo] = useState(false);
   const [checkbox_undername, setcheck_undername] = useState(false);
@@ -297,8 +304,7 @@ const Recheck = () => {
     {SetIsPaid(event.target.checked);}
   //order varible
 
-  const handle_submit = (e) => {
-    e.preventDefault();
+  const HandleSubmit = (e) => {
     const Combine_shirt = {
       ...formdata,
     };
@@ -306,6 +312,12 @@ const Recheck = () => {
       (total, order) => total + (parseFloat(order.value4) || 0),
       0
     );
+    if(
+      formdata_cus.phone_number === "" ||
+      formdata_cus.phone_number === null ||
+      SumPrice === 0
+    )
+      { return SetShowIncomplete(true) }
     try {
       axios.post("/insert_customdata", {
         formdata_cus,
@@ -314,29 +326,29 @@ const Recheck = () => {
         SumPrice,
         IsPaid
       });
+      SetShowSuccess(true)
     } catch (error) {
       console.log(error);
+      SetShowFail(true)
     }
     //console.log(result);*/
   };
-  /*
-Admin_input
-leftside array [["...","T.B.",],color]
-rightside array [["...","T.B.",],color]
-logo
-dot_position
-
-+
-scout[type]
-P.E uniform
-order
-
-parent_name get from user input
-phone_number get from user input
-que get from cusID
-Paid :truefalse
-Price: int*/
-
+  const SweetAlertShow = async() =>
+    {
+      setShowAlert(true)
+    }
+  const HandleCancel = async() =>
+    {
+      setShowAlert(false)
+      SetShowSuccess(false)
+      SetShowFail(false)
+      SetShowIncomplete(false)
+    }
+  const GoTo = useNavigate();
+  const HandleNavigate = async() =>
+    {
+      GoTo("/Admin_dashboard")
+    }
   useEffect(() => {
     document.body.classList.add("body_of_edit");
     return () => {
@@ -348,7 +360,7 @@ Price: int*/
     <div className="">
       <br />
       <form className="cus_insert">
-        <fieldset className="">
+        <fieldset className="" style={{ backgroundColor: "#FAF9F6" ,paddingBottom:'2rem'}}>
           <legend style={{}}>
             <h1>ข้อมูลสำหรับแสดงกราฟิค</h1>
           </legend>
@@ -384,88 +396,104 @@ Price: int*/
       </form>
 
       <form className="cus_edit">
-        <fieldset>
+        <fieldset style={{ backgroundColor: "#FAF9F6" ,paddingBottom:'2rem'}}>
           <legend style={{}}>
             <h1>ข้อมูลลูกค้า</h1>
           </legend>
-
-          <div className="customer_edit_content">
-            <div className="grid_cus">
-              <div className="grid_cus_item">
-                <label htmlFor="cus_id">รหัสลูกค้า</label>
-                <input
-                  type="text"
-                  name="cus_id"
-                  value={formdata_cus.cus_id}
-                />
-              </div>
-              <div className="grid_cus_item">
-                <label htmlFor="status">สถานะ</label>
-                <select
-                  name="status"
-                  value={formdata_cus.status}
-                  onChange={handle_cuschange}
+          <div className="div-border">
+            <div className="customer_edit_content">
+              <div className="grid_cus">
+                <div className="grid_cus_item">
+                  <label htmlFor="cus_id">
+                    <h2>รหัสลูกค้า</h2>
+                  </label>
+                  <input
+                    type="text"
+                    name="cus_id"
+                    value={formdata_cus.cus_id}
+                    readOnly
+                  />
+                </div>
+                <div
+                  className="grid_cus_item"
+                  style={{ marginBottom: "1.5rem" }}
                 >
-                  <option value="ยังไม่ตรวจสอบ">ยังไม่ตรวจสอบ</option>
-                  <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
-                  <option value="การปักเสร็จสิ้น">การปักเสร็จสิ้น</option>
-                </select>
+                  <label htmlFor="status">
+                    <h2 style={{ marginBottom: "1.7rem" }}>สถานะ</h2>
+                  </label>
+                  <select
+                    name="status"
+                    value={formdata_cus.status}
+                    onChange={handle_cuschange}
+                  >
+                    <option value="ยังไม่ตรวจสอบ">ยังไม่ตรวจสอบ</option>
+                    <option value="กำลังดำเนินการ">กำลังดำเนินการ</option>
+                    <option value="การปักเสร็จสิ้น">การปักเสร็จสิ้น</option>
+                  </select>
+                </div>
               </div>
-            </div>
 
-            <div className="grid_cus_item">
-              <label htmlFor="info">รายละเอียด</label>
-              <textarea
-                name="info"
-                value={formdata_cus.info}
-                onChange={handle_cuschange}
-              />
-            </div>
-
-            <div className="grid_cus">
-              <div className="grid_cus_item">
-                <label htmlFor="parent_name">ชื่อผู้สั่ง</label>
-                <input
-                  type="text"
-                  id="parent_name"
-                  name="parent_name"
-                  value={formdata_cus.parent_name}
+              <div className="grid_cus_item" style={{ marginTop: "-2em" }}>
+                <label htmlFor="info">
+                  <h2>รายละเอียด</h2>
+                </label>
+                <textarea
+                  name="info"
+                  value={formdata_cus.info}
                   onChange={handle_cuschange}
                 />
               </div>
-              <div className="grid_cus_item">
-                <label htmlFor="phone_number">เบอร์โทร</label>
-                <input
-                  type="text"
-                  id="phone_number"
-                  name="phone_number"
-                  value={formdata_cus.phone_number}
-                  onChange={handle_cuschange}
-                />
+
+              <div className="grid_cus" style={{ marginTop: "1em" }}>
+                <div className="grid_cus_item">
+                  <label htmlFor="parent_name">
+                    <h2>ชื่อผู้สั่ง</h2>
+                  </label>
+                  <input
+                    type="text"
+                    id="parent_name"
+                    name="parent_name"
+                    value={formdata_cus.parent_name}
+                    onChange={handle_cuschange}
+                  />
+                </div>
+                <div className="grid_cus_item">
+                  <label htmlFor="phone_number">
+                    <h2>เบอร์โทร</h2>
+                  </label>
+                  <input
+                    type="text"
+                    id="phone_number"
+                    name="phone_number"
+                    value={formdata_cus.phone_number}
+                    onChange={handle_cuschange}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </fieldset>
       </form>
 
-      <br />
       <form>
-        <fieldset className="order_sum">
+        <fieldset className="order_sum" style={{ backgroundColor: "#FAF9F6" ,paddingBottom:'2rem'}}>
           <legend>
             <h1>สรุปรายการ</h1>
           </legend>
+          <div className="div-border">
           <table>
             <tr>
               <th style={{ textAlign: "left" }}>รายการ</th>
               <th style={{ textAlign: "center" }}>จำนวน</th>
               <th style={{ textAlign: "center" }}>ราคา/หน่วย</th>
               <th style={{ textAlign: "center" }}>จำวนเงิน</th>
+              <th style={{ textAlign: "center" }}></th>
             </tr>
 
             {orders.map((input, index) => (
               <tr key={input.id} className="grid_order">
                 <td className="order_info">
-                  <textarea
+                  <input
                     style={{ width: "100%" }}
                     type="text"
                     value={input.value1}
@@ -504,27 +532,54 @@ Price: int*/
                     }
                   />
                 </td>
-                <td>
-                  <button onClick={() => removeInput(input.id)}>
+                <td style={{ textAlign: "center" ,backgroundColor:'white'}}>
+                  <button
+                    style={{
+                      padding: "10px 20px",
+                      borderRadius: "5px",
+                      border: "none",
+                      cursor: "pointer",
+                      marginRight: "10px",
+                      fontSize: "1.5rem",
+                      backgroundColor: "#f44336",
+                      color: "#fff",
+                    }}
+                    onClick={() => removeInput(input.id)}
+                  >
                     ลบรายการ
                   </button>
                 </td>
               </tr>
             ))}
-            <tr>
+            <tr style={{backgroundColor:'white'}}>
               <td></td>
               <td></td>
               <td style={{ textAlign: "right" }}>
                 <h3>รวม</h3>
               </td>
-              <td style={{ textAlign: "center" }}>{OrderSum()}</td>
+              <td style={{ textAlign: "center" ,fontSize:'2.5rem' , fontWeight:'bold'}}>{OrderSum()}</td>
+              <td></td>
             </tr>
           </table>
-          <button onClick={addInput}>Add Input</button>
-
+          <br />
+          <button
+            style={{
+              padding: "10px 20px",
+              borderRadius: "5px",
+              border: "none",
+              cursor: "pointer",
+              marginRight: "10px",
+              fontSize: "1rem",
+              backgroundColor: "gray",
+              color: "white",
+            }}
+            onClick={addInput}
+          >
+            เพิ่มรายการ
+          </button>
           <div className="Ispaid-check">
             <label>
-            ชำระเงินแล้วหรือไม่
+              ชำระเงินแล้วหรือไม่
               <input
                 type="checkbox"
                 checked={IsPaid}
@@ -532,9 +587,66 @@ Price: int*/
               />
             </label>
           </div>
+          </div>
         </fieldset>
       </form>
-      <button onClick={handle_submit}>Test_submit</button>
+      <div className="Cus-submit">
+      <button 
+      onClick={SweetAlertShow}>ยืนยันข้อมูล</button>
+      </div>
+      <div style={{ padding: "15rem" }}>
+            {showAlert && (
+              <SweetAlert
+              info
+                title="ยืนยันการส่งหรือไม่"
+                onConfirm={HandleSubmit}
+                onCancel={HandleCancel}
+                showCancel
+                confirmBtnText="ใช่"
+                cancelBtnText="ไม่"
+                confirmBtnCssClass="btn-custom"
+                cancelBtnCssClass="btn-custom"
+                customClass="custom-sweetalert" // Custom class
+                style={{ display: "flex", minWidth: "15rem", width: "20rem" }}
+              ></SweetAlert>
+            )}
+            {ShowSuccess && (
+              <SweetAlert
+                success
+                title="ส่งข้อมูลสำเร็จ"
+                onConfirm={HandleNavigate}
+                confirmBtnText="ตกลง"
+                confirmBtnCssClass="btn-custom"
+                customClass="custom-sweetalert" // Custom class
+                style={{ display: "flex", minWidth: "15rem", width: "20rem" }}
+              ></SweetAlert>
+            )}
+            {ShowIncomplete && (
+              <SweetAlert
+              warning
+                title="โปรดกรอกข้อมูลให้ครบถ้วน"
+                onConfirm={HandleCancel}
+                confirmBtnText="ตกลง"
+                cancelBtnText="ไม่"
+                confirmBtnCssClass="btn-custom"
+                cancelBtnCssClass="btn-custom"
+                customClass="custom-sweetalert" // Custom class
+                style={{ display: "flex", minWidth: "15rem", width: "22rem" }}
+              ></SweetAlert>
+            )}
+            {ShowFail && (
+              <SweetAlert
+              danger
+                title="บางอย่างผิดพลาดไม่สามารถส่งข้อมูลได้"
+                onConfirm={HandleCancel}
+                confirmBtnText="ตกลง"
+                confirmBtnCssClass="btn-custom"
+                cancelBtnCssClass="btn-custom"
+                customClass="custom-sweetalert" // Custom class
+                style={{ display: "flex", minWidth: "15rem", width: "20rem" }}
+              ></SweetAlert>
+            )}
+          </div>
     </div>
   );
 };

@@ -1,0 +1,28 @@
+.order-grid
+{
+    gap: 10px;
+    border-radius: 5px;
+    max-width: 100%;
+    display: grid;
+}
+/*.order-grid > div
+{
+    background-color: lightblue;
+    padding: 20px;
+    border: 1px solid #ccc;
+    text-align: center;
+}*/
+.order-grid:only-child
+{
+    background-color: aqua;
+}
+.order-grid
+{
+    grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 1380px) {
+    .order-grid
+    {
+        grid-template-columns: 1fr;
+    }
+}
