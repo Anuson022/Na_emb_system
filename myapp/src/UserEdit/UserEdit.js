@@ -31,7 +31,10 @@ function UserEdit({ID}) {
     },[])
 
     const HandleSubmit = async (e) => {
-      e.preventDefault();
+      if(!AccountData.username || !AccountData.password || !AccountData.role)
+        {
+          return alert('ไม่สามารถแก้ไขได้')
+        }
       const formData = new FormData();
       formData.append("file", Profile);
       formData.append("AccountData", JSON.stringify(AccountData));
@@ -90,7 +93,7 @@ function UserEdit({ID}) {
             </div>
           </fieldset>
           <br />
-          <button type="submit">Submit</button>
+          <button type="submit">ยืนยัน</button>
         </form>
     </div>
   )

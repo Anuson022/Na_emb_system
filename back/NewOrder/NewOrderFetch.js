@@ -33,4 +33,13 @@ fetchRouter.get('/api/customer-status', (req, res) => {
   });
 });
 
+fetchRouter.get('/api/customerTimeStamp', (req, res) => {
+    const query = 'SELECT cus_id,parent_name,phone_number,status,date_time from customer_data ORDER BY cus_id DESC';
+    pool.query(query, (err, results) => {
+      if (err) throw err;
+      res.json(results);
+      console.log(results)
+    });
+  });
+
 module.exports = fetchRouter;

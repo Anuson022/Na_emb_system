@@ -14,13 +14,15 @@ const MonthlyGraph = () => {
                 setChartData({
                     labels: labels,
                     datasets: [
-                        {
-                            label: 'Daily Data This Month',
-                            data: data,
-                            fill: false,
-                            borderColor: 'green',
-                        }
-                    ]
+                      {
+                          label: 'จำนวนลูกค้า',
+                          data: data, // This is the array of counts per day
+                          fill: false,
+                          borderColor: '#EA6A47',
+                          tension: 0.1,
+                          pointRadius: 5
+                      }
+                  ],
                 });
             })
             .catch(error => {
@@ -31,49 +33,46 @@ const MonthlyGraph = () => {
     if (!chartData) return <div>Loading...</div>;
 
     return (
-        <div>
-            <Line data={chartData} 
-                  options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      scales: {
+        <div style={{minWidth:'20rem', margin: '0 auto' }}>
+            <Line data={chartData}
+                    options={{
+                        responsive: true,
+                        maintainAspectRatio: true, 
+                        scales: {
                           y: {
-                              beginAtZero: true,
-                              ticks: {
-                                  callback: function(value) {
-                                      return Number.isInteger(value) ? value : null; // Remove decimals
-                                  },
-                                  font: {
-                                      size: 24 // Adjust font size of y-axis labels
-                                  }
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return Number.isInteger(value) ? value : null; // Remove decimals
+                                },
+                              font: {
+                                family:'RSU_regular',
+                                size: 24,
+            
                               }
+                            }
                           },
                           x: {
-                              ticks: {
-                                  font: {
-                                      size: 24 // Adjust font size of x-axis labels
-                                  }
+                            ticks: {
+                              font: {                    
+                                family:'RSU_regular',
+                                size: 24 // Adjusts the font size of the x-axis labels
                               }
+                            }
                           }
-                      },
-                      plugins: {
+                        },
+                        plugins: {
                           legend: {
-                              labels: {
-                                  font: {
-                                      size: 26 // Adjust font size of legend labels
-                                  }
-                              }
-                          },
-                          title: {
-                              display: true,
-                              text: 'Daily Data for This Month',
+                            labels: {
                               font: {
-                                  size: 18 // Adjust font size of chart title
+                                family:'RSU_regular',
+                                size: 24
                               }
-                          }
-                      }
-                  }}
-                  style={{ height: "40rem" }}  // Set a specific height to ensure responsiveness
+                            }
+                          },
+                        }
+                      }}
+            style={{ height: "30rem" }}
             />
         </div>
     );

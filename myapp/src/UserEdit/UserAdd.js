@@ -18,7 +18,10 @@ function UserAdd() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const HandleSubmit = async (e) => {
-    e.preventDefault();
+    if(!Profile || !AccountData.username || !AccountData.password || !AccountData.role)
+      {
+        return alert('ไม่สามารถแก้ไขได้')
+      }
     const formData = new FormData();
     formData.append("file", Profile);
     formData.append("AccountData", JSON.stringify(AccountData));
@@ -26,7 +29,7 @@ function UserAdd() {
     console.log(AccountData);
     const res = await axios.post("/AcountCreate", formData);
     console.log(res.data);
-    setModalIsOpen(false); // Close the modal after submission
+    setModalIsOpen(false);
   };
 
   const HandleChange = async (e) => {
@@ -77,8 +80,9 @@ function UserAdd() {
             </div>
           </fieldset>
           <br />
-          <button type="submit">Submit</button>
+          <button type="submit">ยืนยัน</button>
         </form>
+        
     </div>
   );
 }

@@ -60,19 +60,22 @@ function UserSAED() {
   };
   const UserDelete = async () => {
     await axios.delete(`/user_delete/${EditID}`);
+    setShowDelete(false)
+    FetchingUser();
   };
   const User_add = (e) => {
     NavigateUserto("/Admin_dashboard/UserAdd");
   };
   return (
+    <>
+    <div style={{backgroundColor:'#0091D5',color:'white',padding:'0.1rem 1rem'}}><h2>จัดการข้อมูลพนักงาน</h2></div>
     <div className="User-form">
-      <h1>ข้อมูลพนักงาน</h1>
-      <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-        <p style={{ fontSize: "1rem" }}>ค้นหา</p>
+      <div style={{ display: "flex", justifyContent:'center', alignItems: "center" }}>
         <input
           onChange={HandleSearch}
-          style={{ width: "100%", height: "2rem", fontSize: "1rem" }}
-          type="text"
+          className="search-input"
+          style={{ width: "80%", fontSize: "1.5rem",padding:'1rem' }}
+          type="text" placeholder="ค้นหา..."
         />
       </div>
       <div>
@@ -80,13 +83,12 @@ function UserSAED() {
           <table className="styled-table">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Profile</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Role</th>
-                <th></th>
-                <th></th>
+                <th>รหัสพนักงาน</th>
+                <th>รูปโปรไฟล์</th>
+                <th>ขื่อผู้ใช้งาน</th>
+                <th>รหัสผ่าน</th>
+                <th>ตำแหน่ง</th>
+                <th>Actions</th>
                 
               </tr>
             </thead>
@@ -100,8 +102,20 @@ function UserSAED() {
                     <td>{item.username}</td>
                     <td>{item.password}</td>
                     <td>{item.role}</td>
-                    <td><button onClick={() => {setModalEdit(true); setEditID(item.id);}}>แก้ไข</button></td>
-                    <td><button onClick={() => {setShowDelete(true); setEditID(item.id);}}>ลบ</button></td>
+                    <td>
+                      <div style={{display:'flex',gap:'1rem'}}>
+                      <button 
+                      onClick={() => {setModalEdit(true); setEditID(item.id);}}
+                      className="UserEditbtn"
+                      >
+                        แก้ไข</button>
+                      <button onClick={() => {setShowDelete(true); setEditID(item.id);}}
+                        className="UserEditbtn"
+                        style={{backgroundColor:'red',color:'white'}}
+                        >ลบ</button>
+                      </div>
+
+                    </td>
                     
                     
                   </tr>
@@ -169,7 +183,7 @@ function UserSAED() {
         isOpen={modalEdit}
         onRequestClose={() => setModalEdit(false)}
         contentLabel="User Add Modal"
-        className="UserAdd-modal"
+        className="UserEdit-modal"
         overlayClassName="UserAdd-overlay"
       >
         <UserEdit ID={EditID} />
@@ -195,6 +209,7 @@ function UserSAED() {
         ></SweetAlert>
       )}
     </div>
+    </>
   );
 }
 

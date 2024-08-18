@@ -1,6 +1,7 @@
 .container_customer_table {
+  padding: 1rem;
+  *{font-family: "RSU_regular";}
   overflow-x: auto;
-  *{font-family: "RSU_regular";font-size: 1rem;}
 }
 
 .search-container {
@@ -8,15 +9,15 @@
   align-items: center;
   justify-content: center;
   margin: 20px;
+  input
+  {font-size: 1.5rem;}
 }
 
 .search-input {
   width: 300px;
   padding: 10px;
-  border: 2px solid #ddd;
   border-radius: 4px 0 0 4px;
   outline: none;
-  font-size: 16px;
   transition: all 0.3s ease;
 }
 
@@ -32,7 +33,7 @@
   border: none;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
   transition: background-color 0.3s ease;
 }
 
@@ -43,24 +44,24 @@
 
 .table_head tr th,
 .table_body tr td {
-  padding: 1.7rem;
+  padding: 1rem;
   background-color: rgba(255, 255, 255, 0.2);
-  border: black solid 1px;
+  border: 1px solid #ddd;  
   color: #000000;
   vertical-align: center;
-
-  text-align: center;
+  font-size: 1.5rem;
+  text-align: left;
 
 
   button {
-    padding: auto;
-    font-size: 1vw;
+    padding: 0rem 1rem;
+    font-size: 1.5rem;
   }
 }
 
 .table_head tr {
   th:nth-child(1){width: 10%;}
-  th:nth-child(2){width: 10%;}
+  th:nth-child(2){width: 11%;}
   th:nth-child(3){width: 15%;}
   th:nth-child(4){width: 15%;}
   th:nth-child(5){width: 10%;}
@@ -70,36 +71,37 @@
   
   th {
     background-color: #a3ffa1;
+    padding: 1rem;
   }
 
 }
 
 .info_text {
-  
   div {
     background-color: whitesmoke;
     width: 5rem;
-    height: 2rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border: #000000 solid 1px;
     border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
   }
 
-  div:hover {
-    background-color: grey;
-  }
+
 }
 .view-order
 {
   background-color: whitesmoke;
   width: 5rem;
-  height: 2rem;
+  height: 2.5rem;
+  font-size: 1.5rem;
   display: flex;
-  margin: 0 auto;
   border: #000000 solid 1px;
-  border-radius: 3px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
 }
 .popup {
   position: fixed;
@@ -127,26 +129,30 @@
 }
 
 .popup-shirt {
-  width: 70rem;
-  height: auto;
+  width: 60%;
+  height: 80%;
   border-radius: 5px;
   background-color: white;
-  
+  overflow-x: auto;
+  .button-close{
     button
     {
-      margin: 0em 81.5em;
-    }
+      float: right;
+    }}
 
   .Shirt-data
   {  
     background-color: white;
     border-radius: 5px;
-    height: 50rem;
+    height: auto;
     padding: 1rem;
     border: #000000 solid 1px;
-    font-size: clamp(1.5rem,2vw,2rem);
-    overflow-y:auto;
-
+    font-size: clamp(3rem,2vw,2rem);
+    p
+    {
+      strong{font-size: clamp(3rem,2vw,2rem);}
+      span{font-size: clamp(3rem,2vw,2rem);}
+    }
     
   }
   .Name-data
@@ -196,23 +202,23 @@
 }
 
 .popup-bill {
-  display: flex;
   background-color: white;
-  width: 50rem;
+  width: 50%;
+  height: auto;
   min-width: 1rem;
   max-width: 100rem;
-  height: 50rem;
   border-radius: 5px;
   padding: 2rem;
   
+  .button-close
+  {
+    button{float: right;}
+  }
 
 }
 .bill-data
 {
-  display: flex;
   width: 100%;
-
-  
 }
 .bill-table {
   width: 100%;
@@ -220,7 +226,6 @@
   border-collapse: collapse;
   overflow-x: auto;
 
-  font-family: Arial, sans-serif;
   th:nth-child(1) {
     width: 10%; /* Adjust the width as needed */}
   th:nth-child(2) {
@@ -254,12 +259,13 @@
 .bill-table td{text-align: left;}
 .sumprice{ td{ border: solid black 0px; background-color: lightgray;}}
 
+
 .container_customer_table {
   table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
-    font-size: 16px;
+    font-size: 1rem;
     text-align: left;
   }
   
@@ -267,8 +273,6 @@
     background-color: #f2f2f2;
     font-weight: bold;
   }
-  
-
   
   tbody.table_body tr:nth-child(even) {
     background-color: #f9f9f9;
@@ -284,9 +288,8 @@
   }
   
   td.info_text div {
-    margin: 0 auto;
     cursor: pointer;
-    color: #007bff;
+    color: #000000;
     transition: color 0.3s ease;
   }
   
@@ -296,6 +299,8 @@
   
   /* Status dropdown styling */
   select {
+    color: black;
+    font-size: 1.5rem;
     padding: 5px 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
@@ -305,8 +310,9 @@
   
   /* Button styles */
   button {
-    padding: 8px 12px;
+    
     border-radius: 4px;
+    font-size: 1.5rem;    
     border: none;
     background-color: #007bff;
     color: #fff;
@@ -330,7 +336,7 @@
   }
   
   button + button {
-    margin-left: 10px;
+    margin-left: 1rem;
   }
   
   /* FontAwesome icons styling */

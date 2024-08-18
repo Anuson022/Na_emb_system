@@ -7,13 +7,32 @@ import './HomeComponent.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckToSlot, faCircleCheck, faLink, faListCheck } from "@fortawesome/free-solid-svg-icons";
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
-ChartJS.register(Title, Tooltip, Legend, ArcElement);
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
+ChartJS.register(Title, Tooltip, Legend, ArcElement);
+ChartJS.register(ChartDataLabels);
 const App = () => {
   const [chartData, setChartData] = useState(null);
   const [CountStatus, SetCountStatus] = useState({});
-  const [isHovered, setIsHovered] = useState(false);
+  const [TimeData,SetTimeData] = useState([])
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 5; // Number of orders to show per page
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const UserLimit = TimeData.slice(indexOfFirstOrder, indexOfLastOrder);
+  const totalPages = Math.ceil(TimeData.length / ordersPerPage);
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
   useEffect(() => {
     axios
       .get("/api/customer-status")
@@ -34,57 +53,76 @@ const App = () => {
 
         setChartData({
           labels: status,
+          
           datasets: [
             {
               label: "Data Count",
               data: statusCounts, // Use the computed status counts
               backgroundColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(255, 206, 86, 0.2)",
+                "red",
+                "blue",
+                "green",
               ],
               borderColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
+                "gray",
+                "gray",
+                "gray",
               ],
-              borderWidth: 1,
+              borderWidth: 2,
             },
           ],
         });
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-  const HoverDiv = styled.div
-  `color:white;
-    background-color: coral;
-    &:hover {
-      background-color: blue;
-    }`;
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await axios.get('/api/customerTimeStamp'); // Replace with your API endpoint
+        SetTimeData(response.data);
+      } catch (error) {
+        console.error(error);
+      }}
+      fetchCustomers();
+  }, []);
+
+      
   if (!chartData) {
     return <div>Loading...</div>;
   }
-
+// Chart options
+const chartOptions = {
+  plugins: {
+    datalabels: {
+      formatter: (value, context) => {
+        const total = context.dataset.data.reduce((acc, curr) => acc + curr, 0);
+        const percentage = ((value / total) * 100).toFixed(2);
+        return `${percentage}%`;
+      },
+      color: 'white',
+      font: {
+        size: 16,
+      },
+    },
+    legend: {
+      labels: {
+        font: {
+          family:'RSU_regular',
+          size: 24,
+          weight: 'bold'
+        },
+      },
+    },
+  },
+};
   return (
     <div>
-      <h2>หน้าแรก</h2>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
-          gap: "1rem",
-        }}
-      >
-        <div className="order-check"
-          style={{
-            backgroundColor: "red",
-            width: "100%",
-            height: "15rem",
-            display: "flex",
-            cursor:'pointer',
-            padding:'1rem'
-          }}
-        >
+      <div style={{backgroundColor:'#D32D41',color:'white',padding:'0.1rem 1rem'}}><h2>หน้าแรก</h2></div>
+      <br />
+      <div className="HomeGridWarper">
+      <div className="HomeGridContainer">
+      
+        <div className="HomeGrid">
           <div
             style={{
               display: "flex",
@@ -93,109 +131,120 @@ const App = () => {
               width: "50%",
             }}
           >
-            <FontAwesomeIcon icon={faCheckToSlot} style={{fontSize:'10rem',color:'white'}} />
+            <FontAwesomeIcon icon={faCheckToSlot} className="HomeIcon" />
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "50%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <span style={{color:'white', textAlign: "center",fontSize:'5rem'}}>
-            {CountStatus[1]?.count ?? 0}
+          <div>
+            <span className="HomeFont">
+            {CountStatus[2]?.count ?? 0}
             </span>
-            <br />
-            <span style={{color:'white', textAlign: "center",fontSize:'2rem'}}>
+            <span className="HomeFont1">
               ยังไม่ตรวจสอบ
             </span>
           </div>
         </div>
-        <div className="order-check"
-          style={{
-            backgroundColor: "blue",
-            width: "100%",
-            height: "15rem",
-            display: "flex",
-            cursor:'pointer',
-            padding:'1rem'
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "50%",
-            }}
-          >
-            <FontAwesomeIcon icon={faListCheck} style={{fontSize:'10rem',color:'white'}} />
+        <div className="HomeGrid"
+          style={{ backgroundColor: "blue",}}>
+          <div>
+            <FontAwesomeIcon icon={faListCheck} className="HomeIcon" />
           </div>
           <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "50%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
           >
-            <span style={{color:'white', textAlign: "center",fontSize:'5rem'}}>
-              {CountStatus[0]?.count ?? 0}
+            <span className="HomeFont">
+              {CountStatus[1]?.count ?? 0}
             </span>
-            <br />
-            <span style={{color:'white', textAlign: "center",fontSize:'2rem'}}>
+            <span className="HomeFont1">
               กำลังดำเนินการ
             </span>
           </div>
         </div>
-        <div className="order-check"
-          style={{
-            backgroundColor: "green",
-            width: "100%",
-            height: "15rem",
-            display: "flex",
-            cursor:'pointer',
-            padding:'1rem'
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "50%",
-            }}
-          >
-            <FontAwesomeIcon icon={faCircleCheck} style={{fontSize:'10rem',color:'white'}} />
+        <div className="HomeGrid"
+          style={{ backgroundColor: "green",}}>
+          <div>
+            <FontAwesomeIcon icon={faCircleCheck} className="HomeIcon" />
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "50%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <span style={{color:'white', textAlign: "center",fontSize:'5rem'}}>
-                {CountStatus[2]?.count ?? 0}
+          <div>
+            <span className="HomeFont">
+                {CountStatus[0]?.count ?? 0}
             </span>
-            <br />
-            <span style={{color:'white', textAlign: "center",fontSize:'2rem'}}>
+            <span className="HomeFont1">
               การปักเสร็จสิ้น
             </span>
           </div>
         </div>
       </div>
-      
-      <br /><br />
-      <div style={{ width: '1000px', height: '1000px' }}>
-        <Pie data={chartData} />
       </div>
-      
+      <br /><br />
+      <div>
+
+      </div>
+      <div className="GridHomePie">
+      <div style={{ width: '30rem'}}>
+        <Pie data={chartData} options={chartOptions}/>
+      </div>
+      <div className="TimeTableContainer">
+        
+      <table className="TimeTable">
+      <thead>
+        <tr>
+          <th>ลำดับลูกค้า</th>
+          <th>ชื่อผู้สั่ง</th>
+          <th>เบอร์โทร</th>
+          <th>สถานะ</th>
+          <th>เวลา</th>
+        </tr>
+      </thead>
+      <tbody>
+      {UserLimit.map((item, index) => (
+          <tr key={index}>
+            <td>{item.cus_id}</td>
+            <td>{item.parent_name}</td>
+            <td>{item.phone_number}</td>
+            <td>{item.status}</td>
+            <td>{item.date_time}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <div style={{ marginTop: "20px", textAlign: "center" }}>
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          style={{
+            padding: "10px 20px",
+            borderRadius: "5px",
+            border: "none",
+            cursor: "pointer",
+            marginRight: "10px",
+            fontSize: "16px",
+            backgroundColor: currentPage === 1 ? "#ccc" : "#405cf5",
+            color: "#fff",
+          }}
+        >
+          Previous
+        </button>
+        <span style={{ fontSize: "16px", margin: "0 10px" }}>
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={nextPage}
+          disabled={currentPage === totalPages}
+          style={{
+            padding: "10px 20px",
+            borderRadius: "5px",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "16px",
+            backgroundColor:
+              currentPage === totalPages ? "#ccc" : "#405cf5",
+            color: "#fff",
+          }}
+        >
+          Next
+        </button>
+      </div>
+      </div>
+      </div>
+
     </div>
   );
 };

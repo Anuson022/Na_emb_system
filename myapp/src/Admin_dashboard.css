@@ -1,29 +1,41 @@
-/* Basic styling for the navbar */
+.Main-Dashboard
+{
+  font-size: clamp(1rem,1vw,2rem);
+  font-family: 'RSU_regular';
+  min-width: 20rem;
+}
+
+
 .navbar_header {
-  img{border-radius: 50%; background-color: #ffffff; width: clamp(30px, 5vw, 50em); height: auto;; margin: 1rem;}
   display: flex;
   align-items: center;
-  background-color: #a3ffa1;
+  background-color: #0091D5;
   top: 0px;
   width: 100%;
   min-width: 20rem;
   height: clamp(60px, 7vw, 15rem);
+  border-bottom: black solid 5px;
   box-sizing: border-box;
+  img{border-radius: 50%; background-color: #ffffff; width: clamp(30px, 5vw, 50em); height: auto;; margin: 1rem;}
 }
 
 .navbar-logo {
   color: rgb(0, 0, 0);
   padding: 1rem;
-  font-size: clamp(10px, 2vw, 2em);
+  font-size: clamp(10px, 2vw, 2em);color: white;
 }
 .profile
 {
   display: flex;
-  background-color: lightgreen;
+  background-color: #DBAE58;
   flex-direction: column;
   align-items: center;
   width: clamp(100%, 3vw, 110rem);
-  img{border-radius: 50%; width: clamp(10px, 6vw, 50em); height: clamp(10px, 6vw, 50em); margin-top: 1rem;}
+  font-size: xx-large;
+  color: #ffffff;
+  border-start-start-radius: 10px;border-start-end-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  img{border-radius: 50%; width: 8rem; height: 8rem; margin-top: 1rem;}
   .logout-button {
     background-color: #ff4b5c; /* Red color */
     color: white;
@@ -34,6 +46,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: -1.5rem;
     margin-bottom: 1rem;
   }
   
@@ -58,46 +71,68 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  height: 5rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+.div-awesome1
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  height: 5rem;
+}
+.div-awesome:hover
+{
+  background-color: #0091D5;
+  color: white;
 }
 .div-cus-dit
 {
-  transform: translateX(1.6rem);
+  transform: translateX(3rem);
+  p:hover{ color: white; }
+}
+.div-cus-dit:hover
+{
+  
 }
 .main_dash
 { 
   display: grid;
   grid-template-columns: 20rem auto;
   align-items: flex-start;
+  gap: 1rem;
   .sidebar_button
   { 
-    background-color: lightpink; padding: 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 3px;
     width: clamp(100%, 3vw, 10rem);
-    border: 1px rgb(0, 255, 110) solid;
     .close-open{
       display: none;
       font-size: clamp(15px, 2vw, 2em);color: rgb(0, 0, 0);}
   }
   .sidebar_button p
   {
-    
+    margin-top: 0rem;
   }
   .sidebar {
-    padding: 1rem;
-    background-color: #a3ffa1;
+    background-color: #f1f1f1;
+    a{
+      text-decoration: none;
+      color: black;
+    }
   }
   }
   .sidebar_close {
     width: 0vw;
     height: 0;
-    background-color: #a3ffa1;
     overflow-x: hidden;
   }
   .display_function
   { 
-    width: 98%;
+    width: 100%;
     min-width: 20rem;
-    padding: 1rem;
-    border: 1px saddlebrown solid;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;    
     margin: 0 auto;
     /*justify-content: center; /* Centers children vertically */
     /*align-items: center; /* Centers children horizontally 
@@ -110,10 +145,9 @@
   .profile
   {
     display: flex;
-    background-color: lightgreen;
     flex-direction: column;
     align-items: center;
-    img{border-radius: 50%; width: clamp(100px, 20vw, 50em); height: auto;; margin: 1rem;}
+    img{border-radius: 50%; width: 8rem; height: 8rem;; margin: 1rem;}
     button
     {padding: auto; font-size: 1vw;}
   }
@@ -124,7 +158,7 @@
   .sidebar_button
     { 
     width: 100%;
-    background-color: lightpink; padding: 1rem;border: 1px rgb(0, 255, 110) solid;
+    padding:2.5rem;
     .close-open{
       display: block;
       }
@@ -138,10 +172,9 @@
   .profile
   {
     display: flex;
-    background-color: lightgreen;
     flex-direction: column;
     align-items: center;
-    img{border-radius: 50%; width: clamp(100px, 20vw, 50em); height: auto;; margin: 1rem;}
+    img{border-radius: 50%; width: 8rem; height: 8rem; margin: 1rem;}
     button
     {padding: auto; font-size: 1vw;}
   }
@@ -151,8 +184,7 @@
   flex-direction: column;
   .sidebar_button
     { 
-      
-    background-color: lightpink; padding: 1rem;border: 1px rgb(0, 255, 110) solid;
+    padding:2.5rem;
     .close-open{
       display: block;
       }
@@ -167,10 +199,9 @@
   .profile
   {
     display: flex;
-    background-color: lightgreen;
     flex-direction: column;
     align-items: center;
-    img{border-radius: 50%; width: clamp(100px, 20vw, 50em); height: auto;; margin: 1rem;}
+    img{border-radius: 50%; width: 8rem; height: 8rem;; margin: 1rem;}
     button
     {padding: auto; font-size: 1vw;}
   }
@@ -180,7 +211,7 @@
   flex-direction: column;
   .sidebar_button
     { 
-    background-color: lightpink; padding: 1rem;border: 1px rgb(0, 255, 110) solid;
+    padding:2.5rem;
     .close-open{
       display: block;
       }
@@ -194,10 +225,9 @@
   .profile
   {
     display: flex;
-    background-color: lightgreen;
     flex-direction: column;
     align-items: center;
-    img{border-radius: 50%; width: clamp(100px, 20vw, 50em); height: auto;; margin: 1rem;}
+    img{border-radius: 50%; width: 8rem; height: 8rem;; margin: 1rem;}
     button
     {padding: auto; font-size: 1vw;}
   }
@@ -207,8 +237,7 @@
   flex-direction: column;
   .sidebar_button
     { 
-    background-color: lightpink; 
-    padding: 1rem;border: 1px rgb(0, 255, 110) solid;
+      padding:2.5rem;
     min-width: 20rem;
     .close-open{
       display: block;

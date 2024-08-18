@@ -79,16 +79,23 @@
   }
 
   .accordion {
+    cursor: pointer;
+    padding-bottom: 1rem;
   }
-  
+  .accordion:hover {
+    background-color: #0091D5;
+    cursor: pointer;
+  }
   .accordion-header {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.6rem;
   }
   
   .accordion-content {
+    margin-bottom: -1.2rem;
   }
   
 /* App.css */

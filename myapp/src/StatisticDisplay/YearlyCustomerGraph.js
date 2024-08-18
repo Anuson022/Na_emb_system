@@ -16,15 +16,15 @@ const App = () => {
                 setChartData({
                     labels: monthsOfYear,
                     datasets: [
-                        {
-                            label: 'จำนวนลูกค้า',
-                            data: data, // Array of counts per month
-                            fill: false,
-                            borderColor: 'rgb(75, 192, 192)',
-                            tension: 0.1,
-                            pointRadius: 5
-                        }
-                    ],
+                      {
+                          label: 'จำนวนลูกค้า',
+                          data: data, // This is the array of counts per day
+                          fill: false,
+                          borderColor: '#EA6A47',
+                          tension: 0.1,
+                          pointRadius: 5
+                      }
+                  ],
                 });
             })
             .catch(error => console.error('Error fetching data:', error));
@@ -35,49 +35,46 @@ const App = () => {
     }
 
     return (
-        <div style={{ minWidth: '20rem', margin: '0 auto' }}>
-            <Line data={chartData} 
-                options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
+        <div style={{minWidth:'20rem', margin: '0 auto' }}>
+            <Line data={chartData}
+                    options={{
+                        responsive: true,
+                        maintainAspectRatio: true, 
+                        scales: {
+                          y: {
                             beginAtZero: true,
                             ticks: {
                                 callback: function(value) {
-                                    return Number.isInteger(value) ? value : null;
+                                    return Number.isInteger(value) ? value : null; // Remove decimals
                                 },
-                                font: {
-                                    size: 24
-                                }
+                              font: {
+                                family:'RSU_regular',
+                                size: 24,
+            
+                              }
                             }
-                        },
-                        x: {
+                          },
+                          x: {
                             ticks: {
-                                font: {
-                                    size: 24
-                                }
+                              font: {                    
+                                family:'RSU_regular',
+                                size: 24 // Adjusts the font size of the x-axis labels
+                              }
                             }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                font: {
-                                    size: 26
-                                }
-                            }
+                          }
                         },
-                        title: {
-                            display: true,
-                            text: 'รายปี',
-                            font: {
-                                size: 18
+                        plugins: {
+                          legend: {
+                            labels: {
+                              font: {
+                                family:'RSU_regular',
+                                size: 24
+                              }
                             }
+                          },
                         }
-                    }
-                }}
-                style={{ height: "40rem" }}
+                      }}
+            style={{ height: "30rem" }}
             />
         </div>
     );

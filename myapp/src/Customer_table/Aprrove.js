@@ -19,7 +19,6 @@ const OrderApprovePage = () => {
     }
   };
 
-
   const navigate = useNavigate();
 
   const handleAddOrder = () => {
@@ -57,49 +56,37 @@ const OrderApprovePage = () => {
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
   const currentOrders = order.slice(indexOfFirstOrder, indexOfLastOrder);
-
   const totalPages = Math.ceil(order.length / ordersPerPage);
   
   useEffect(() => {
     fetchNewOrder();
   }, []);
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
 
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+  const ContainerStyle = () =>
+    {
+      if(order.length === 1){return "1fr"}
+      if(order.length === 2){return "1fr 1fr"}
+      if(order.length >= 3){return "1fr 1fr 1fr"}
     }
-  };
+
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>อนุมัติออเดอร์</h1>
-      <button
+    <div>
+      <div style={{backgroundColor:'blue',color:'white',padding:'0.1rem 1rem'}}><h2>อนุมัติออเดอร์</h2></div>
+      <div style={{padding:'1rem'}}>
+      <button className="AddOrderBtn"
         onClick={handleAddOrder}
-        style={{
-          padding: "10px 20px",
-          borderRadius: "5px",
-          border: "none",
-          cursor: "pointer",
-          marginRight: "10px",
-          fontSize: "16px",
-          backgroundColor: "#405cf5",
-          color: "#fff",
-        }}
       >
         เพิ่มออร์เดอร์
       </button>
       <br />
       <br />
-      <div className="order-grid">
+      <div className="order-grid" style={{gridTemplateColumns: ContainerStyle()}}>
         {order ?(
           order.map((order, index) => (
             <>
-            <div key={index}>
+            <div key={index} >
                 <div className="div-border">
+                <div></div>
                 <p>
                   <strong>ลำดับออเดอร์:</strong>
                   <span>{order.cus_id}</span>
@@ -116,6 +103,7 @@ const OrderApprovePage = () => {
                   <strong>สถานะ:</strong>
                   <span>{order.status}</span>
                 </p>
+                <div style={{display:'flex',gap:'2rem'}}>
                 <button
                   onClick={() =>
                     handleApprove(
@@ -126,13 +114,8 @@ const OrderApprovePage = () => {
                       order.status
                     )
                   }
+                  className="ActionOrderBtn"
                   style={{
-                    padding: "10px 20px",
-                    borderRadius: "5px",
-                    border: "none",
-                    cursor: "pointer",
-                    marginRight: "10px",
-                    fontSize: "16px",
                     backgroundColor: "#4CAF50",
                     color: "#fff",
                   }}
@@ -141,19 +124,15 @@ const OrderApprovePage = () => {
                 </button>
                 <button
                   onClick={() => handleShowPopupDelete(order.cus_id)}
+                  className="ActionOrderBtn"
                   style={{
-                    padding: "10px 20px",
-                    borderRadius: "5px",
-                    border: "none",
-                    cursor: "pointer",
-                    marginRight: "10px",
-                    fontSize: "16px",
                     backgroundColor: "#f44336",
                     color: "#fff",
                   }}
                 >
                   ไม่อนุมัติ
                 </button>
+                </div>
                 </div>
             </div>
             </>
@@ -165,7 +144,7 @@ const OrderApprovePage = () => {
         }
 
       </div>
-      
+      </div>
       {showPopupDelete && (
         <SweetAlert
           warning

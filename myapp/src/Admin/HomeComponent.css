@@ -1,3 +1,130 @@
-.order-check:hover
+.order-check:hover {}
+
+.HomeGridWarper {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+
+}
+
+.HomeGridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5rem;
+}
+
+.HomeGrid {
+    display: flex;
+    background-color: red;
+    cursor: pointer;
+    padding: 1rem;
+    width: 100%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        flex-direction: column;
+    }
+
+}
+
+.HomeIcon {
+    font-size: clamp(5rem, 8vw, 15rem);
+    color: white;
+}
+
+.HomeFont {
+    font-size: clamp(3rem, 5vw, 20rem);
+    color: white;
+    text-align: center;
+
+}
+
+.HomeFont1 {
+    font-size: clamp(2rem, 1.9vw, 10rem);
+    color: white;
+    text-align: center;
+}
+
+.GridHomePie {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2rem;
+    justify-content: center;
+}
+.TimeTableContainer
 {
+    overflow-x: auto;
+    margin-top: 5rem;
+}
+.TimeTable {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    table-layout:fixed;
+    overflow-x: auto;
+    min-width: 35rem;
+    
+}
+.TimeTable th:nth-child(1)
+{
+    width: 20%;
+}
+.TimeTable th:nth-child(5)
+{
+    width: 25%;
+}
+.TimeTable th {
+    background-color: #f2f2f2;
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+.TimeTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/*Extra Small Devices (phones):*/
+@media (max-width: 1050px) {
+    .HomeGridWarper {
+        display: grid;
+
+    }
+
+    .HomeGridContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex-direction: column;
+        }
+    }
+
+    .GridHomePie {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+        gap: 2rem;
+    }
+    .TimeTable {
+        min-width: 1rem;
+        overflow-x: auto;
+    }
 }

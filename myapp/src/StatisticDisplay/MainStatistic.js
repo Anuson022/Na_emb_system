@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './MainStatistic.css'
 import WeeklyCustomerGraph from "./WeeklyCustomerGraph";
 import DailyCustomerGraph from "./DailyCustomerGraph";
 import MonthlyCustomerGraph from "./MonthlyCustomerGraph";
@@ -21,6 +22,9 @@ function MainStatistic() {
     console.log("Selected value:", event.target.value);
   };
   return (
+    <>
+      <div style={{backgroundColor:'#EA6A47',color:'white',padding:'0.1rem 1rem'}}><h2>ข้อมูลเชิงสถิติ</h2></div>
+      <div style={{padding:'1rem'}}>
     <div>
       <div className="Cus-statistic">
       <div
@@ -31,7 +35,7 @@ function MainStatistic() {
         }}
       >
         <h2>จำนวนลูกค้าที่มาใช้บริการปักผ้า</h2>
-        <div>
+        <div className="Select-time">
           <select id="mySelect" value={GraphRange} onChange={handleGraph}>
             <option value="รายวัน">รายวัน</option>
             <option value="รายสัปดาห์">รายสัปดาห์</option>
@@ -72,6 +76,7 @@ function MainStatistic() {
       </div>
       </div>
       <div className="Price-statistic">
+        <br /><br />
       <div
         style={{
           display: "flex",
@@ -80,7 +85,7 @@ function MainStatistic() {
         }}
       >
         <h2>รายได้</h2>
-        <div>
+        <div className="Select-time">
           <select id="mySelect" value={BarRange} onChange={handleBar}>
             <option value="รายวัน">รายวัน</option>
             <option value="รายสัปดาห์">รายสัปดาห์</option>
@@ -125,6 +130,8 @@ function MainStatistic() {
       
       
     </div>
+    </div>
+    </>
   );
 }
 

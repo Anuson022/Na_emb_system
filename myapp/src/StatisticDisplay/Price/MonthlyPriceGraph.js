@@ -24,72 +24,74 @@ const MonthlyDataChart = () => {
         labels: days,
         datasets: [
             {
-                label: 'Count',
-                data: data.map(item => item.count),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                label: 'ยังไม่ชำระเงิน',
+                data: data.map(item => item.not_paid),
+                backgroundColor: '#FAA0A0',
+                borderColor: '#FF0000',
                 borderWidth: 1,
-                yAxisID: 'y1',
             },
             {
-                label: 'Total Price',
-                data: data.map(item => item.total_price),
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                label: 'ชำระเงินแล้ว',
+                data: data.map(item => item.paided),
+                backgroundColor: '#ECFFDC',
+                borderColor: '#50C878',
                 borderWidth: 1,
-                yAxisID: 'y2',
+            },
+            {
+                label: 'รวมทั้งหมด',
+                data: data.map(item => item.total_price),
+                backgroundColor: '#F0FFFF',
+                borderColor: '#6495ED',
+                borderWidth: 1,
             }
         ]
     };
 
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top',
-            },
-            tooltip: {
-                callbacks: {
-                    label: function(tooltipItem) {
-                        const datasetLabel = tooltipItem.dataset.label || '';
-                        const value = tooltipItem.raw;
-                        return `${datasetLabel}: ${value}`;
-                    }
-                }
-            }
-        },
-        scales: {
-            y1: {
-                type: 'linear',
-                display: true,
-                position: 'left',
-                title: {
-                    display: true,
-                    text: 'Count'
-                },
-                beginAtZero: true,
-            },
-            y2: {
-                type: 'linear',
-                display: true,
-                position: 'right',
-                title: {
-                    display: true,
-                    text: 'Total Price'
-                },
-                beginAtZero: true,
-                grid: {
-                    drawOnChartArea: false,
-                }
-            }
-        }
-    };
+
 
     return (
-        <div>
-            <h2>Monthly Data Chart</h2>
-            <Bar data={chartData} options={options} />
-        </div>
+        <div style={{minWidth:'20rem', margin: '0 auto' }}>
+        <Bar
+          data={chartData}
+          options={{
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function (value) {
+                    return Number.isInteger(value) ? value : null; // Remove decimals
+                  },
+                  font: {
+                    family: "RSU_regular",
+                    size: 24,
+                  },
+                },
+              },
+              x: {
+                ticks: {
+                  font: {
+                    family: "RSU_regular",
+                    size: 24, // Adjusts the font size of the x-axis labels
+                  },
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  font: {
+                    family: "RSU_regular",
+                    size: 24,
+                  },
+                },
+              },
+            },
+          }}
+          style={{ height: "40rem" }}
+        />
+      </div>
     );
 };
 

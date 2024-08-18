@@ -6,7 +6,10 @@ const fetchRouter = express.Router();
 
 fetchRouter.get('/api/yearly-price', (req, res) => {
     const query = `
-        SELECT MONTH(date_time) AS month, COUNT(*) AS count, SUM(price) AS total_price
+        SELECT MONTH(date_time) AS month, COUNT(*) AS count,       
+        SUM(IF(is_paid = false, price, 0)) AS not_paid,
+        SUM(IF(is_paid = true, price, 0)) AS paided,
+        SUM(price) AS total_price
         FROM customer_data
         WHERE YEAR(date_time) = YEAR(CURDATE())
         GROUP BY MONTH(date_time)
@@ -18,9 +21,9 @@ fetchRouter.get('/api/yearly-price', (req, res) => {
         }
 
         // Initialize an array for 12 months
-        const yearlyData = Array(12).fill({ count: 0, total_price: 0 });
+        const yearlyData = Array(12).fill({ count: 0,not_paid:0,paided:0, total_price: 0 });
         results.forEach(row => {
-            yearlyData[row.month - 1] = { count: row.count, total_price: row.total_price };
+            yearlyData[row.month - 1] = { count: row.count, not_paid:row.not_paid, paided:row.paided, total_price: row.total_price };
         });
 
         res.json(yearlyData);
@@ -28,14 +31,20 @@ fetchRouter.get('/api/yearly-price', (req, res) => {
 });
 // Route to fetch daily data and total price for the current month
 fetchRouter.get('/api/monthly-price', (req, res) => {
-    const query = `
-        SELECT DAY(date_time) AS day_of_month, COUNT(*) AS count, SUM(price) AS total_price
-        FROM customer_data
-        WHERE date_time >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
-          AND date_time < DATE_FORMAT(CURDATE() + INTERVAL 1 MONTH, '%Y-%m-01')
-        GROUP BY DAY(date_time)
-        ORDER BY day_of_month;
-    `;
+  const query = `
+  SELECT 
+      DAY(date_time) AS day_of_month, 
+      COUNT(*) AS count, 
+      SUM(IF(is_paid = false, price, 0)) AS not_paid,
+      SUM(IF(is_paid = true, price, 0)) AS paided,
+      SUM(price) AS total_price
+  FROM customer_data
+  WHERE date_time >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
+    AND date_time < DATE_FORMAT(CURDATE() + INTERVAL 1 MONTH, '%Y-%m-01')
+  GROUP BY DAY(date_time)
+  ORDER BY day_of_month;
+`;
+
 
     pool.query(query, (error, results) => {
         if (error) {
@@ -44,18 +53,22 @@ fetchRouter.get('/api/monthly-price', (req, res) => {
         }
 
         // Prepare data for the frontend
-        const monthlyData = Array.from({ length: 31 }, () => ({ count: 0, total_price: 0 })); // Assuming up to 31 days in the month
+        const monthlyData = Array.from({ length: 31 }, () => ({ count: 0,not_paid:0,paided:0, total_price: 0 })); // Assuming up to 31 days in the month
         results.forEach(row => {
-            monthlyData[row.day_of_month - 1] = { count: row.count, total_price: row.total_price };
+            monthlyData[row.day_of_month - 1] = 
+            { count: row.count, not_paid:row.not_paid, paided:row.paided, total_price: row.total_price };
         });
-
+        console.log(monthlyData)
         res.json(monthlyData);
     });
 });
 
 fetchRouter.get('/api/weekly-price', (req, res) => {
     const query = `
-        SELECT DAYOFWEEK(date_time) AS day_of_week, COUNT(*) AS count, SUM(price) AS total_price
+        SELECT DAYOFWEEK(date_time) AS day_of_week, COUNT(*) AS count, 
+      SUM(IF(is_paid = false, price, 0)) AS not_paid,
+      SUM(IF(is_paid = true, price, 0)) AS paided,
+      SUM(price) AS total_price
         FROM customer_data
         WHERE date_time >= CURDATE() - INTERVAL WEEKDAY(CURDATE()) + 6 DAY
         GROUP BY DAYOFWEEK(date_time)
@@ -66,10 +79,10 @@ fetchRouter.get('/api/weekly-price', (req, res) => {
             return res.status(500).json({ error: error.message });
         }
 
-        const weeklyData = Array(7).fill({ count: 0, total_price: 0 });
+        const weeklyData = Array(7).fill({ count: 0,not_paid:0,paided:0, total_price: 0 });
         results.forEach(row => {
             const adjustedDay = row.day_of_week === 1 ? 7 : row.day_of_week - 1;
-            weeklyData[adjustedDay - 1] = { count: row.count, total_price: row.total_price };
+            weeklyData[adjustedDay - 1] = { count: row.count, not_paid:row.not_paid, paided:row.paided, total_price: row.total_price };
         });
 
         res.json(weeklyData);
@@ -79,7 +92,10 @@ fetchRouter.get('/api/weekly-price', (req, res) => {
 // Route to fetch hourly data and total price for today
 fetchRouter.get('/api/hourly-price', (req, res) => {
     const query = `
-        SELECT HOUR(date_time) AS hour, COUNT(*) AS count, SUM(price) AS total_price
+        SELECT HOUR(date_time) AS hour, COUNT(*) AS count,
+              SUM(IF(is_paid = false, price, 0)) AS not_paid,
+      SUM(IF(is_paid = true, price, 0)) AS paided,
+      SUM(price) AS total_price
         FROM customer_data
         WHERE date_time >= CURDATE() AND date_time < CURDATE() + INTERVAL 1 DAY
         GROUP BY HOUR(date_time)
@@ -93,10 +109,10 @@ fetchRouter.get('/api/hourly-price', (req, res) => {
         }
 
         // Prepare data for the frontend
-        const hourlyData = Array.from({ length: 13 }, () => ({ count: 0, total_price: 0 }));
+        const hourlyData = Array.from({ length: 13 }, () => ({ count: 0,not_paid:0,paided:0, total_price: 0 }));
         results.forEach(row => {
             if (row.hour >= 8 && row.hour < 21) {
-                hourlyData[row.hour - 8] = { count: row.count, total_price: row.total_price };
+                hourlyData[row.hour - 8] = { count: row.count, not_paid:row.not_paid, paided:row.paided, total_price: row.total_price };
             }
         });
         res.json(hourlyData);

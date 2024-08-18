@@ -4,6 +4,7 @@
     border-radius: 5px;
     max-width: 100%;
     display: grid;
+    font-size: clamp(2rem,1vw,5rem);
 }
 /*.order-grid > div
 {
@@ -18,7 +19,31 @@
 }
 .order-grid
 {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.AddOrderBtn
+{
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    font-family: 'RSU_regular';
+    background-color: #405cf5;
+    color: white;
+    font-weight: bold;
+}
+.ActionOrderBtn
+{
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    font-family: 'RSU_regular';
+    background-color: #405cf5;
+    color: white;
+    font-weight: bold;
 }
 @media (max-width: 1380px) {
     .order-grid

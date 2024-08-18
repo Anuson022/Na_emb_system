@@ -10,7 +10,7 @@ const App = () => {
         axios.get('/api/weekly-data')
             .then(response => {
                 const data = response.data;
-
+                console.log(data)
                 const daysOfWeek = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
 
                 setChartData({
@@ -20,7 +20,7 @@ const App = () => {
                             label: 'จำนวนลูกค้า',
                             data: data, // This is the array of counts per day
                             fill: false,
-                            borderColor: 'rgb(75, 192, 192)',
+                            borderColor: '#EA6A47',
                             tension: 0.1,
                             pointRadius: 5
                         }
@@ -39,8 +39,8 @@ const App = () => {
         <div style={{minWidth:'20rem', margin: '0 auto' }}>
             <Line data={chartData} 
         options={{
-            responsive: true,  // Enable responsiveness
-            maintainAspectRatio: false,  // Allow the chart to fill the parent container
+            responsive: true,
+            maintainAspectRatio: false, 
             scales: {
               y: {
                 beginAtZero: true,
@@ -49,13 +49,16 @@ const App = () => {
                         return Number.isInteger(value) ? value : null; // Remove decimals
                     },
                   font: {
-                    size: 24 // Adjusts the font size of the y-axis labels
+                    family:'RSU_regular',
+                    size: 24,
+
                   }
                 }
               },
               x: {
                 ticks: {
-                  font: {
+                  font: {                    
+                    family:'RSU_regular',
                     size: 24 // Adjusts the font size of the x-axis labels
                   }
                 }
@@ -64,19 +67,12 @@ const App = () => {
             plugins: {
               legend: {
                 labels: {
-                    
                   font: {
-                    size: 26 // Adjusts the font size of the legend labels
+                    family:'RSU_regular',
+                    size: 24
                   }
                 }
               },
-              title: {
-                display: true,
-                text: 'รายสัปดาห์',
-                font: {
-                  size: 18 // Adjusts the font size of the chart title
-                }
-              }
             }
           }}
           style={{ height: "40rem" }}  // Set a specific height to ensure responsiveness

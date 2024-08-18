@@ -576,83 +576,12 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status })
       }));
     }
   };
-  const HandleName_position = (event) =>
-    {
-      setformdata((prevData) => ({
-        ...prevData,
-        SName: {
-          ...prevData.SName,
-          position_n: event.target.value,
-        },
-      }));
-    }
-  const HandleSchool_position = (event) =>
-    {
-      setformdata((prevData) => ({
-        ...prevData,
-        SSchool: {
-          ...prevData.SSchool,
-          position_s: event.target.value,
-        },
-      }));
-    }
-  const HandleLogo_position = (event) =>
-    {
-      setformdata((prevData) => ({
-        ...prevData,
-        SLogo: {
-          ...prevData.SLogo,
-          position_l: event.target.value,
-        },
-      }));
-    }
-  const Option_select = [
-     /*{
-      label: "ไม่มี",
-      image: "",
-    },*/
-    ...Image.map((item) => ({
-      label: item.name,
-      image: `/uploads/${item.path.split("/").pop()}`,
-    })),
-  ];
-  const Custom_option = (props) => {
-    const { innerRef, innerProps, data } = props;
-    const null_check = (null_data) => 
-      {if(null_data == "ไม่มี"){}return null}
-    return (
-      <>
-        <div ref={innerRef} {...innerProps} className="custom-option">
-          <img
-            src={data.image}
-            alt={null_check(data.label)}
-            style={{ width: 20, height: 20, marginRight: 10, marginTop: 10 }}
-          />
-          {data.label}
-        </div>
-      </>
-    );
-  };
-
-  const handlechange_logo = (selectedOption) =>
-    {
-      console.log(selectedOption)
-      setSelectedLogo(selectedOption)
-      setformdata((prevData) => ({
-        ...prevData,
-        SLogo: {
-          ...prevData.SLogo,
-          school_name: selectedOption.label,
-          image_path: selectedOption.image,
-        },
-      }));
-    }
 
   
   return (
     <>
 
-        <div className="body_shirt">
+        <div className="body_shirt" style={{width:'10rem'}}>
           <div className="shirt_design" style={{margin:'-0.5rem'}}>
             <img className="shirt_img" src="/image_folder/S_Shirt.png" alt="" />
             <div className="grid_dot">

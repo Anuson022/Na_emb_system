@@ -16,8 +16,8 @@ fetchRouter.post('/users_account', (req, res) => {
     queryParams = [];
   } 
   else {
-    query = `SELECT * FROM users WHERE username LIKE ?`;
-    queryParams = [`%${searchTerm}%`];
+    query = `SELECT * FROM users WHERE username LIKE ? OR role LIKE ?`;
+    queryParams = [`%${searchTerm}%`, `%${searchTerm}%`];
     console.log('t1r')
   }
   try {

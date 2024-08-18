@@ -18,27 +18,78 @@ const YearlyPriceChart = () => {
             });
     }, []);
 
-    const months = [
-        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 
-        'September', 'October', 'November', 'December'
-    ];
+    const months = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
 
     const chartData = {
         labels: months,
-        datasets: [{
-            label: 'Total Price',
-            data: data.map(item => item.total_price),
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-        }]
+        datasets: [
+            {
+                label: 'ยังไม่ชำระเงิน',
+                data: data.map(item => item.not_paid),
+                backgroundColor: '#FAA0A0',
+                borderColor: '#FF0000',
+                borderWidth: 1,
+            },
+            {
+                label: 'ชำระเงินแล้ว',
+                data: data.map(item => item.paided),
+                backgroundColor: '#ECFFDC',
+                borderColor: '#50C878',
+                borderWidth: 1,
+            },
+            {
+                label: 'รวมทั้งหมด',
+                data: data.map(item => item.total_price),
+                backgroundColor: '#F0FFFF',
+                borderColor: '#6495ED',
+                borderWidth: 1,
+            }
+        ]
     };
 
     return (
-        <div>
-            <h2>Yearly Price Chart</h2>
-            <Bar data={chartData} />
-        </div>
+        <div style={{minWidth:'20rem', margin: '0 auto' }}>
+        <Bar
+          data={chartData}
+          options={{
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function (value) {
+                    return Number.isInteger(value) ? value : null; // Remove decimals
+                  },
+                  font: {
+                    family: "RSU_regular",
+                    size: 24,
+                  },
+                },
+              },
+              x: {
+                ticks: {
+                  font: {
+                    family: "RSU_regular",
+                    size: 24, // Adjusts the font size of the x-axis labels
+                  },
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  font: {
+                    family: "RSU_regular",
+                    size: 24,
+                  },
+                },
+              },
+            },
+          }}
+          style={{ height: "40rem" }}
+        />
+      </div>
     );
 };
 

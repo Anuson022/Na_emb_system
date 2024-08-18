@@ -1,0 +1,10 @@
+.Select-time select {
+    font-family: 'RSU_regular';
+    font-size: 2rem;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 11rem;
+    margin-right: 5rem;
+    background-color: #fff;
+  }
