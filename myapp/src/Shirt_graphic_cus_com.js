@@ -106,6 +106,8 @@ function Shirt_graphic_cus_com({
   checkbox_logo,
   setcheck_undername,
   checkbox_undername,
+  setcheck_underschool,
+  checkbox_underschool,
   formdata,
   setformdata,
   set_dot_position,
@@ -177,16 +179,7 @@ function Shirt_graphic_cus_com({
         },
       }));
     } //remove input dot1
-    /*
-    setformdata((prevFormdata) => ({
-      ...prevFormdata,
-      SUndername: {
-        ...prevFormdata.SUndername,
-        under_name: "",
-        color0: "#0000FF",
-      },
-    }));
-    */
+
   };
   const HandleCheckboxUndername = (event) => {
     setcheck_undername(event.target.checked);
@@ -211,6 +204,29 @@ function Shirt_graphic_cus_com({
       }));
     }
   };
+  const HandleCheckboxUnderSchool = (event) => {
+    setcheck_underschool(event.target.checked);
+    if (event.target.checked === true) {
+      setformdata((prevFormdata) => ({
+        ...prevFormdata,
+        SUnderschool: {
+          ...prevFormdata.SUnderschool,
+          under_school: "",
+          color01: "#0000FF",
+        },
+      }));
+    } //auto input dot1
+    else if (event.target.checked === false) {
+      setformdata((prevFormdata) => ({
+        ...prevFormdata,
+        SUnderschool: {
+          ...prevFormdata.SUnderschool,
+          under_school: "",
+          color01: "#0000FF",
+        },
+      }));
+    }
+  };
 
   const handle_text = (e) => {
     const { name, value } = e.target;
@@ -228,7 +244,12 @@ function Shirt_graphic_cus_com({
         ...prevData.SSchool,
         [name]: value,
       },
+      SUnderschool: {
+        ...prevData.SUnderschool,
+        [name]: value,
+      }
     }));
+    
   };
   const handledot = (event) => {
     const { name, value } = event.target;
@@ -461,8 +482,33 @@ function Shirt_graphic_cus_com({
                   placeholder="ตัวย่อโรงเรียน"
                 />
               </div>
+              {checkbox_underschool ? (
+                  <>
+                    <div className="textarea_input_right">
+                      <textarea
+                        value={formdata.SUnderschool.under_school}
+                        name="under_school"
+                        onChange={handle_text}
+                        placeholder="การปักใต้โรงเรียน"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+                
               <div className="checkbox-color">
-                <div></div>
+              <div className="dot_checkbox">
+                    <div style={{ display: "flex" }}>
+                      <h2>การปักใต้โรงเรียน เช่น รหัสนักเรียน</h2>
+                      <input
+                        style={{}}
+                        type="checkbox"
+                        checked={checkbox_underschool}
+                        onChange={HandleCheckboxUnderSchool}
+                      />
+                    </div>
+                  </div>
                 <div className="color_container_right">
                   <h2>สีของด้าย</h2>
                   <input
@@ -474,7 +520,7 @@ function Shirt_graphic_cus_com({
                   />
                 </div>
               </div>
-              <div style={{ marginTop: "-2em" }}>
+              <div style={{ marginTop: "-0em" }}>
               <div className="dot_checkbox">
                 <div style={{ display: "flex" }}>
                   <h2>มีโลโก้หรือไม่</h2>
@@ -630,7 +676,7 @@ function Shirt_graphic_cus_com({
         <div className="body_shirt">
           <h2 style={{fontSize:'2rem'}}>รูปแบบกราฟิค</h2>
           <div className="shirt_design">
-            <img className="shirt_img" src="image_folder/S_Shirt.png" alt="" />
+            <img className="shirt_img" src="/image_folder/S_Shirt.png" alt="" />
             <div className="grid_dot">
               <div
                 className={dot_position_class.dot_left}
@@ -669,6 +715,7 @@ function Shirt_graphic_cus_com({
                   style={{ color: formdata.SSchool.color1 }}
                 >
                   {render_school(formdata.SSchool.name)}
+                  {render_h1(formdata.SUnderschool.under_school)}
                 </div>
                 <div
                   className={SNamePositionClass.fullname_right}
@@ -699,6 +746,7 @@ function Shirt_graphic_cus_com({
                   style={{ color: formdata.SSchool.color1 }}
                 >
                   {render_school(formdata.SSchool.name)}
+                  {render_h1(formdata.SUnderschool.under_school)}
                 </div>
                 <div
                   className={SNamePositionClass.fullname_left}

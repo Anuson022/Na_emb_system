@@ -636,7 +636,7 @@ function ShirtBill({cus_id})
         <div className="body_shirt">
           <h1>รูปแบบกราฟิค</h1>
           <div className="shirt_design">
-            <img className="shirt_img" src="image_folder/S_Shirt.png" alt="" />
+            <img className="shirt_img" src="/image_folder/S_Shirt.png" alt="" />
             <div className="grid_dot">
               <div
                 className={dot_position_class.dot_left}

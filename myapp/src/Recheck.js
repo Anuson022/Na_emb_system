@@ -64,6 +64,11 @@ const Recheck = () => {
           color1: FetchData.SSchool.color1 || "",
           position_s: FetchData.SSchool.position_s || "",
         },
+        SUnderschool: {
+          ...prevFormData.SUnderschool,
+          under_school: FetchData.SUnderschool.under_school || "",
+          color01: FetchData.SUnderschool.color01 || "",
+        },
         SLogo: {
           ...prevFormData.SLogo,
           school_name: FetchData.SLogo.school_name || "",
@@ -92,6 +97,9 @@ const Recheck = () => {
     if (FetchData.SUndername?.under_name) {
       setcheck_undername(true);
     }
+    if (FetchData.SUnderschool?.under_school) {
+      setcheck_underschool(true);
+    }
   }, [FetchData]);
 
   const [formdata, setformdata] = useState({
@@ -107,7 +115,11 @@ const Recheck = () => {
     SSchool: {
       name: "",
       color1: "#0000FF",
-      position_s: "",
+      position_s: "ชื่อโรงเรียนด้านขวา",
+    },
+    SUnderschool:{
+      under_school:"",
+      color01: "#0000FF",
     },
     SLogo: {
       school_name: "",
@@ -125,6 +137,7 @@ const Recheck = () => {
   const [checkbox_dot, setcheck_dot] = useState(false);
   const [checkbox_logo, setcheck_logo] = useState(false);
   const [checkbox_undername, setcheck_undername] = useState(false);
+  const [checkbox_underschool, setcheck_underschool] = useState(false);
 
   const [dot_position_class, set_dot_position] = useState({
     onschool: "hidden",
@@ -444,6 +457,8 @@ const Recheck = () => {
                 checkbox_logo={checkbox_logo}
                 setcheck_undername={setcheck_undername}
                 checkbox_undername={checkbox_undername}
+                setcheck_underschool = {setcheck_underschool}
+                checkbox_underschool = {checkbox_underschool}
                 formdata={formdata}
                 setformdata={setformdata}
                 set_dot_position={set_dot_position}
