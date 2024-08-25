@@ -1,0 +1,46 @@
+.image-selector {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .custom-select {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .custom-select-display {
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .custom-select-option {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .custom-select-option img {
+    max-width: 100px;
+    height: auto;
+  }
+  
+  .custom-select-option span {
+    display: block;
+    margin-top: 5px;
+  }
+  
+  .selected-image-preview {
+    margin-top: 20px;
+  }
+  
+  .preview-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  

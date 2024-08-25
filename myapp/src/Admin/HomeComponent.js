@@ -40,17 +40,14 @@ const App = () => {
         const data = response.data;
 
         const status = ["ยังไม่ตรวจสอบ", "กำลังดำเนินการ", "การปักเสร็จสิ้น"];
-        console.log(data[0]?.count);
-        console.log(data[1]?.count);
-        console.log(data[2]?.count);
-        SetCountStatus(data);
-        console.log(data);
         const statusCounts = status.map((s) => {
           const statusData = data.find((item) => item.status === s);
           
           return statusData ? statusData.count : 0;
         });
-
+        SetCountStatus(statusCounts);
+        console.log(statusCounts);
+        
         setChartData({
           labels: status,
           
@@ -135,7 +132,7 @@ const chartOptions = {
           </div>
           <div>
             <span className="HomeFont">
-            {CountStatus[2]?.count ?? 0}
+            {CountStatus[0] ?? 0}
             </span>
             <span className="HomeFont1">
               ยังไม่ตรวจสอบ
@@ -150,7 +147,7 @@ const chartOptions = {
           <div
           >
             <span className="HomeFont">
-              {CountStatus[1]?.count ?? 0}
+              {CountStatus[1] ?? 0}
             </span>
             <span className="HomeFont1">
               กำลังดำเนินการ
@@ -164,7 +161,7 @@ const chartOptions = {
           </div>
           <div>
             <span className="HomeFont">
-                {CountStatus[0]?.count ?? 0}
+                {CountStatus[2] ?? 0}
             </span>
             <span className="HomeFont1">
               การปักเสร็จสิ้น

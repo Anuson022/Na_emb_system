@@ -14,6 +14,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SweetAlert from "react-bootstrap-sweetalert";
 import ShirtOrder from "./ShirtOrder";
+import ShirtOrderPE from "./ShirtOrderPE";
+import ShirtOrderScout from "./ShirtOrderScout";
 
 const ITEMS_PER_PAGE = 5;
 const Customer_table = () => {
@@ -41,11 +43,18 @@ const Customer_table = () => {
   const [popup_delete, setPopupDelete] = useState(null);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
 
-  const handleShowPopup_view = async (cus_id, shirtInfo) => {
+  const handleShowPopup_view = async (
+    cus_id,
+    shirtInfo,
+    shirt_PE,
+    shirt_scout
+  ) => {
     await setpopup_view(cus_id);
-    await SetShirtData(shirtInfo);
-    await console.log(shirtInfo.SName.fullname);
-    console.log(shirtInfo);
+    await SetShirtData({
+      shirt: shirtInfo,
+      PE: shirt_PE,
+      scout: shirt_scout,
+    });
     console.log();
     setshowpopup_view(true);
   };
@@ -53,13 +62,14 @@ const Customer_table = () => {
     BillInfo,
     Order_sum,
     Order_paid,
-    Date_time
+    Date_time,
+    Approve_by
   ) => {
     await setpopup_bil(BillInfo);
     const NewDate = new Date(Date_time);
     const formattedDate = NewDate.toLocaleDateString();
     const formattedTime = NewDate.toLocaleTimeString();
-    await SetPricePaid({ Order_sum, Order_paid, formattedDate });
+    await SetPricePaid({ Order_sum, Order_paid, formattedDate, formattedTime ,Approve_by});
     //await console.log(popup_view.shirtInfo.SName.fullname)
     setshowpopup_bill(true);
   };
@@ -68,7 +78,7 @@ const Customer_table = () => {
     setPopupDelete(cus_id);
     setShowPopupDelete(true);
   };
-  
+
   const handleYesDelete = async () => {
     try {
       const response = await axios.delete(`/delete_cusdata/${popup_delete}`);
@@ -124,17 +134,15 @@ const Customer_table = () => {
   };
   const handleSearch = async (e) => {
     if (e && e.target) {
-      const searchTerm = e.target.value
-      setSearchTerm(e.target.value)
+      const searchTerm = e.target.value;
+      setSearchTerm(e.target.value);
       try {
         const response = await axios.post("/search_cus2", { searchTerm });
         setData(response.data);
-        
       } catch (error) {
         console.error("Error fetching search results:", error);
       }
     }
-
   };
 
   const navigate = useNavigate();
@@ -156,9 +164,9 @@ const Customer_table = () => {
   const IsPaidReturn = (is_paid) => {
     const test = parseInt(is_paid);
     if (test === 0) {
-      return <h1>ยังไม่ชำระเงิน</h1>;
+      return <h1>สถานะ : ยังไม่ชำระเงิน</h1>;
     } else if (test === 1) {
-      return <h1>ชำระเงินแล้ว</h1>;
+      return <h1>สถานะ : ชำระเงินแล้ว</h1>;
     } else {
       return null;
     }
@@ -174,7 +182,7 @@ const Customer_table = () => {
       >
         <h2>จัดการข้อมูลลูกค้า (สถานะกำลังดำเนินการ)</h2>
       </div>
-      <div class="search-container" style={{marginBottom:'-1rem'}}>
+      <div class="search-container" style={{ marginBottom: "-1rem" }}>
         <input
           type="text"
           placeholder="ค้นหา..."
@@ -182,7 +190,6 @@ const Customer_table = () => {
           value={searchTerm}
           onChange={handleSearch}
         />
-
       </div>
       <div class="container_customer_table">
         <table>
@@ -201,17 +208,25 @@ const Customer_table = () => {
             {data ? (
               currentItems.map((item) => {
                 const shirtDetails = JSON.parse(item.shirt);
+                const shirt_PE = JSON.parse(item.PE);
+                const shirt_scout = JSON.parse(item.scout);
                 const Order_obj = JSON.parse(item.cus_order);
                 const Order_sum = item.price;
                 const Order_paid = item.is_paid;
                 const Date_time = item.date_time;
+                const Approve_by = item.approve_by
                 return (
                   <tr key={item.cus_id}>
                     <td className="td_nowarp">{item.cus_id}</td>
                     <td className="info_text">
                       <div
                         onClick={() =>
-                          handleShowPopup_view(item.cus_id, shirtDetails)
+                          handleShowPopup_view(
+                            item.cus_id,
+                            shirtDetails,
+                            shirt_PE,
+                            shirt_scout
+                          )
                         }
                       >
                         <FontAwesomeIcon icon={faFileContract} />
@@ -239,7 +254,8 @@ const Customer_table = () => {
                             Order_obj,
                             Order_sum,
                             Order_paid,
-                            Date_time
+                            Date_time,
+                            Approve_by
                           )
                         }
                       >
@@ -263,7 +279,8 @@ const Customer_table = () => {
                       </button>
                       <button
                         onClick={() => handleShowPopupDelete(item.cus_id)}
-                        style={{ backgroundColor: "red" }}>
+                        style={{ backgroundColor: "red" }}
+                      >
                         ลบ
                       </button>
                     </td>
@@ -288,38 +305,115 @@ const Customer_table = () => {
               <div className="button-close">
                 <button onClick={handleNo}>
                   {<FontAwesomeIcon icon={faXmark} />}
+                  <span>ปิดหน้าแสดงข้อมูลการปัก</span>
+                  {<FontAwesomeIcon icon={faXmark} />}
                 </button>
                 <br></br>
                 <br></br>
               </div>
+              <div>
+
+              </div>
               <div className="Shirt-data">
-                <ShirtOrder cus_id={popup_view} />
-                {ShirtData.SName.fullname && (
+                <h6 style={{margin:"0 0rem",textAlign:'center'}}>เสื้อนักเรียน</h6>
+                <div>
+                  <ShirtOrder cus_id={popup_view} />
+                  {ShirtData.shirt?.SName.fullname && (
+                    <p>
+                      <strong>ชื่อ-นามสกุล : </strong>
+                      <span>{ShirtData.shirt?.SName.fullname}</span>
+                    </p>
+                  )}
+                  {ShirtData.shirt.SSchool.name && (
+                    <p>
+                      <strong>ตัวย่อโรงเรียน : </strong>
+                      <span>{ShirtData.shirt?.SSchool.name}</span>
+                    </p>
+                  )}
+                  {ShirtData.shirt?.SLogo.school_name && (
+                    <p>
+                      <strong>โลโก้โรงเรียน : </strong>
+                      <span>{ShirtData.shirt?.SLogo.school_name}</span>
+                    </p>
+                  )}
+                  {ShirtData.shirt?.dot.type && (
+                    <p>
+                      <strong>ปักเพิ่มเติม : </strong>
+                      <span>{ShirtData.shirt?.dot.amount_dot} </span>
+                      <span>{ShirtData.shirt?.dot.type} </span>
+                      <span>{ShirtData.shirt?.dot.position} </span>
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="Shirt-data">
+              <h6 style={{margin:"0 0rem" ,textAlign:'center'}}>เสื้อพละ</h6>
+                <div>
+                  <ShirtOrderPE cus_id={popup_view} />
+
+                  {ShirtData.PE?.SName.fullname && (
+                    <p>
+                      <strong>ชื่อ-นามสกุล : </strong>
+                      <span>{ShirtData.PE?.SName.fullname}</span>
+                    </p>
+                  )}
+                  {ShirtData.PE?.dot.type && (
+                    <p>
+                      <strong>ปักเพิ่มเติม : </strong>
+                      <span>{ShirtData.PE?.dot.amount_dot} </span>
+                      <span>{ShirtData.PE?.dot.type} </span>
+                      <span>{ShirtData.PE?.dot.position} </span>
+                    </p>
+                  )}
+                </div>
+              
+              </div>
+              
+              <div className="Shirt-data">
+              <h6 style={{margin:"0 0rem", textAlign:'center'}}>เสื้อลูกเสือ&เนตรนารี&ยุวกาชาติ</h6>
+              <div>
+                <ShirtOrderScout cus_id={popup_view} />
+                {ShirtData.scout?.SName.fullname && (
                   <p>
                     <strong>ชื่อ-นามสกุล : </strong>
-                    <span>{ShirtData.SName.fullname}</span>
+                    <span>{ShirtData.scout?.SName.fullname}</span>
                   </p>
                 )}
-                {ShirtData.SSchool.name && (
+                {ShirtData.scout?.SName && (
                   <p>
-                    <strong>ตัวย่อโรงเรียน : </strong>
-                    <span>{ShirtData.SSchool.name}</span>
+                    <strong>รูปแบบการปัก : </strong>
+                    <span>
+                      {(() => {
+                        const [frameColor, clothColor, textColor] = [
+                          ShirtData.scout.SName.color_border,
+                          ShirtData.scout.SName.cloth, 
+                          ShirtData.scout.SName.color, 
+                        ];
+                        const combinedValue = `${frameColor}_${clothColor}_${textColor.toLowerCase()}`;
+                        let translatedText = "";
+                        switch (combinedValue) {
+                          case "#FCF5E5_white_blue":
+                            translatedText = "กรอบสีขาว ผ้าสีขาว ชื่อสีน้ำเงิน";
+                            break;
+                          case "#FCF5E5_white_black":
+                            translatedText = "กรอบสีขาว ผ้าสีขาว ชื่อสีดำ";
+                            break;
+                          case "red_lightcoral_yellow":
+                            translatedText = "กรอบสีแดง ผ้าสีแดง ชื่อสีเหลือง";
+                            break;
+                          case "black_#36454F_yellow":
+                            translatedText = "กรอบสีดำ ผ้าสีดำ ชื่อสีเหลือง";
+                            break;
+                          default:
+                            translatedText = "Unknown combination";
+                        }
+
+                        return translatedText;
+                      })()}
+                    </span>
                   </p>
                 )}
-                {ShirtData.SLogo.school_name && (
-                  <p>
-                    <strong>โลโก้โรงเรียน : </strong>
-                    <span>{ShirtData.SLogo.school_name}</span>
-                  </p>
-                )}
-                {ShirtData.dot.type && (
-                  <p>
-                    <strong>ปักเพิ่มเติม : </strong>
-                    <span>{ShirtData.dot.amount_dot} </span>
-                    <span>{ShirtData.dot.type} </span>
-                    <span>{ShirtData.dot.position} </span>
-                  </p>
-                )}
+              </div>
               </div>
             </div>
           </div>
@@ -333,8 +427,11 @@ const Customer_table = () => {
                 </button>
               </div>
               <div className="bill-data">
-                <h2>{PricePaid.formattedDate}</h2>
-                <div className="bill-table">
+                <div style={{ display: "flex", gap: "1rem" }}>
+                  <h2>วัน/เดือน/ปี : {PricePaid.formattedDate}</h2>
+                  <h2>เวลา : {PricePaid.formattedTime}</h2>
+                </div>
+                <div className="bill-table" style={{ marginTop: "-2rem" }}>
                   <table>
                     <thead>
                       <tr>
@@ -365,7 +462,11 @@ const Customer_table = () => {
                       <td>{PricePaid.Order_sum}</td>
                     </tr>
                   </table>
+                  <div style={{display:'flex',justifyContent:"space-evenly"}}>
                   {IsPaidReturn(PricePaid.Order_paid)}
+                  <span><h1>ผู้อนุมัติ : {PricePaid.Approve_by}</h1></span>
+                  </div>
+                  
                 </div>
               </div>
             </div>

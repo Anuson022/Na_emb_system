@@ -26,5 +26,26 @@ fetchRouter.post('/api/GetCusQue',(req,res)=>
             console.log("not found")
         }
     })
-
+fetchRouter.post('/api/GetCusQue_Finished',(req,res)=>
+    {
+        const data = req.body.SearchData
+        console.log(data)
+         const SearchQue = "SELECT * FROM customer_data WHERE phone_number = ? AND status = 'การปักเสร็จสิ้น'"
+        try {
+            pool.query(SearchQue,[data],(err,results)=>
+                {
+                    if (err)
+                        {console.log(err)}
+                    if (results.length === 0)
+                        {
+                            console.log("not found")
+                            return res.send("notfound")
+                        }
+                    res.json(results);
+                })
+        } catch (error) 
+        {
+            console.log("not found")
+        }
+    })
 module.exports = fetchRouter;

@@ -1,6 +1,6 @@
 .container_customer_table {
   padding: 1rem;
-  *{font-family: "RSU_regular";}
+  font-family: "RSU_regular";
   overflow-x: auto;
 }
 
@@ -113,6 +113,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: auto;
 
 }
 
@@ -135,18 +136,26 @@
   background-color: white;
   overflow-x: auto;
   .button-close{
+    min-width: 70rem;
+    
     button
     {
-      float: right;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 1rem;
+      font-size: 2rem;
     }}
 
   .Shirt-data
-  {  
+  { 
     background-color: white;
     border-radius: 5px;
+    min-width: 70rem;
     height: auto;
     padding: 1rem;
-    border: #000000 solid 1px;
+    border-bottom: #000000 solid 5px;
     font-size: clamp(3rem,2vw,2rem);
     p
     {
@@ -205,14 +214,13 @@
   background-color: white;
   width: 50%;
   height: auto;
-  min-width: 1rem;
+  min-width: 20rem;
   max-width: 100rem;
   border-radius: 5px;
   padding: 2rem;
-  
   .button-close
   {
-    button{float: right;}
+    button{float: right; width: 3rem;}
   }
 
 }
@@ -245,6 +253,7 @@
 
 .bill-table th,
 .bill-table td {
+  font-size: 2rem;
   border: 1px solid #ddd;
   padding: 1rem;
   text-align: left;
@@ -306,11 +315,12 @@
     border: 1px solid #ccc;
     background-color: #fff;
     cursor: pointer;
+    font-family: 'RSU_regular';
   }
   
   /* Button styles */
   button {
-    
+    font-family: 'RSU_regular';
     border-radius: 4px;
     font-size: 1.5rem;    
     border: none;

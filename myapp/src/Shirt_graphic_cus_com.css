@@ -172,10 +172,41 @@ header h1 {
     padding: 1.6vh;
     width: 100%;
     text-align: center;
-    font-size: 1vh;
     box-sizing: border-box;
-    
-
+    button
+    {
+        background: #FF4742;
+        border: 1px solid #FF4742;
+        border-radius: 6px;
+        box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+        box-sizing: border-box;
+        color: #FFFFFF;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "RSU_regular";
+        font-size: 1.5rem;
+        font-weight: 800;
+        line-height: 16px;
+        min-height: 40px;
+        outline: 0;
+        padding: 1rem 2rem;
+        text-align: center;
+        text-rendering: geometricprecision;
+        text-transform: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+    }
+    button:hover,
+    button:active {
+      background-color: initial;
+      background-position: 0 0;
+      color: #FF4742;
+    }
+    button:active {
+      opacity: .5;
+    }
 }
 
 .shirt_design {
@@ -187,7 +218,6 @@ header h1 {
     top: 1vh;
     /* Distance from the top of the viewport */
     display: inline-block;
-    margin-top: 4rem;
     height: 50rem;
     max-height: 40rem;
     align-items: center;
@@ -242,7 +272,6 @@ header h1 {
 
     .dot_position {
         font-size: 2rem;
-        ;
         display: grid;
         grid-template-columns: 25% 75%;
         align-items: center;
@@ -273,9 +302,10 @@ header h1 {
         font-size: 2rem;
         display: grid;
         grid-template-columns: 50% 50%;
+        align-items: center;
         select {
             margin: 1rem;
-            font-size: 2rem;
+            font-size: 1.5rem;
             min-width: 6rem;
         }
     }
@@ -387,7 +417,7 @@ header h1 {
 }
 
 .on_right {
-    border: 1px solid #000000;
+
 }
 
 .on_right h1 {
@@ -399,7 +429,7 @@ header h1 {
 }
 
 .on_left {
-    border: 1px solid #000;
+
 }
 
 .on_left h1 {
@@ -419,7 +449,6 @@ header h1 {
 .custom-option-logo {
     display: flex;
     align-items: center;
-
     p {
         margin-left: 10px;
         display: flex;
@@ -427,15 +456,12 @@ header h1 {
         font-size: 2rem;
         vertical-align: middle;
     }
-
     img {
-
     }
 }
 
 .logo-right,
 .logo-left {
-    border: #000 solid 1px;
     margin-top: -3em;
     width: 100px;
     height: 70px;
@@ -446,7 +472,48 @@ header h1 {
         margin-top: 0em;
     }
 }
+.Add-Shirt-Type
+{
+    display: flex; justify-content: center; align-items: center; 
+    padding: 2rem;
+    min-width: 65rem;
+    button
+    {
+        background-color: #FCF5E5;
+        border-radius: 4px;
+        border: 0;
+        box-shadow: rgba(1,60,136,.5) 0 -1px 3px 0 inset,rgba(0,44,97,.1) 0 3px 6px 0;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: inherit;
+        font-family: "RSU_regular";
+        font-size: 2rem;
+        font-weight: 700;
+        padding: 1rem 2rem;
+        position: relative;
+        text-align: center;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: baseline;
+        transition: all .2s cubic-bezier(.22, .61, .36, 1);
+    }
+    button:hover {
+        background-color: rgb(255, 226, 137);
+        transform: translateY(-2px);
+      }
+}
+.Shirt-Select
+{
+    select
+    {font-family: 'RSU_regular';
+    padding: 1rem 2rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+    }
 
+}
 .info_container {
     margin: 0 auto;
     display: grid;
@@ -467,9 +534,7 @@ header h1 {
     background-color: #f4f4f4;
     border-radius: 8px;    
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
     width: 100%;
-
     div {
         div {
             align-items: center;
@@ -581,7 +646,7 @@ header h1 {
         grid-gap: 1rem;
         /* Optional: space between items */
         max-width: 100%;
-        min-width: 65rem;
+        min-width: 30rem;
 
         h2 {
             font-size: 1.5rem;

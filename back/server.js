@@ -171,13 +171,15 @@ app1.delete('/queue/:id', (req, res) => {
 
 
 
-cus_insert = (shirt_data, obj) => {
+cus_insert = (shirt_data,PE_data,Scout_data, obj) => {
   return new Promise((resolve, reject) => {
     const json_data = [JSON.stringify(shirt_data)];
+    const json_data1 = [JSON.stringify(PE_data)];
+    const json_data2 = [JSON.stringify(Scout_data)];
     const cus_array = Object.values(obj);
-    const insert_value = [...cus_array, json_data];
+    const insert_value = [...cus_array, json_data,json_data1,json_data2];
     const insert_sql =
-      "INSERT INTO customer_data (`info`, `parent_name`, `phone_number`,`status`,`shirt`) VALUES (?);";
+      "INSERT INTO customer_data (`info`, `parent_name`, `phone_number`,`status`,`shirt`,`PE`,`scout`) VALUES (?);";
     pool.query(insert_sql, [insert_value], (error, result, fields) => {
       if (error) {
         return console.log(error);
@@ -189,15 +191,17 @@ cus_insert = (shirt_data, obj) => {
   });
 };
 
-adm_update = (cus_input, formdata, order ,SumPrice,IsPaid) => {
-  const json_form = [JSON.stringify(formdata)];
+adm_update = (cus_input, formdata,PE,scout, order ,SumPrice,IsPaid,username) => {
+  const json_shirt = [JSON.stringify(formdata)];
+  const json_PE = [JSON.stringify(PE)];
+  const json_scout = [JSON.stringify(scout)];
   const json_order = [JSON.stringify(order)];
-  const PricePaidValue = [SumPrice,IsPaid,cus_input.cus_id];
+  const PricePaidValue = [SumPrice,IsPaid,username,cus_input.cus_id];
   const update_cus =
     "UPDATE customer_data SET info=?,parent_name=?,phone_number=?,status=? WHERE cus_id = ?";
-  const update_form = "UPDATE customer_data SET shirt=? WHERE cus_id = ?";
+  const update_form = "UPDATE customer_data SET shirt=?,PE=?,scout=? WHERE cus_id = ?";
   const update_order = "UPDATE customer_data SET cus_order=? WHERE cus_id = ?";
-  const update_Paid_Price = "UPDATE customer_data SET price = ?, is_paid = ? WHERE cus_id = ?";
+  const update_Paid_Price = "UPDATE customer_data SET price = ?, is_paid = ?,approve_by = ? WHERE cus_id = ?";
   // First update query
   pool.query(
     update_cus,
@@ -216,7 +220,7 @@ adm_update = (cus_input, formdata, order ,SumPrice,IsPaid) => {
       // Second update query within the callback of the first query
       pool.query(
         update_form,
-        [json_form, cus_input.cus_id],
+        [json_shirt,json_PE,json_scout, cus_input.cus_id],
         (error, result) => {
           if (error) {
             return console.log(error);
@@ -250,13 +254,18 @@ adm_update = (cus_input, formdata, order ,SumPrice,IsPaid) => {
     }
   );
 };
-adm_FullInsert = (cus_input, formdata, order, SumPrice, IsPaid) => {
+adm_FullInsert = (cus_input, formdata, PE, scout, order, SumPrice, IsPaid) => {
   const json_form = JSON.stringify(formdata);
+  const json_form1 = JSON.stringify(PE);
+  const json_form2 = JSON.stringify(scout);
   const json_order = JSON.stringify(order);
-  const PricePaidValue = [cus_input.cus_id, SumPrice, IsPaid];
-  const insert_cus =
-    "INSERT INTO customer_data (info, parent_name, phone_number, status,shirt,cus_order,price, is_paid) VALUES (?, ?, ?, ?,?, ?, ?, ?)";
-  
+
+  const insert_cus = `
+    INSERT INTO customer_data 
+    (info, parent_name, phone_number, status, shirt, PE, scout, cus_order, price, is_paid) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
   // First insert query
   pool.query(
     insert_cus,
@@ -265,16 +274,23 @@ adm_FullInsert = (cus_input, formdata, order, SumPrice, IsPaid) => {
       cus_input.parent_name,
       cus_input.phone_number,
       cus_input.status,
-      json_form,json_order,
-      SumPrice,IsPaid
+      json_form,
+      json_form1,
+      json_form2,
+      json_order,
+      SumPrice,
+      IsPaid
     ],
     (error, result) => {
       if (error) {
-        return console.log(error);
+        console.log(error);
+        return;
       }
+      console.log("Data inserted successfully:", result);
     }
   );
 };
+
 
 const data_queing = async () => {
   await pool.query("SET  @num := 0;");
@@ -315,35 +331,41 @@ app1.get("/", (req, res) => {
   res.end();
 });
 app1.post("/cus_input", async (req, res) => {
-  const Shirt_data = req.body.Combine_shirt;
+  const Shirt_data = req.body.formdata;
+  const PE_data = req.body.PEdata;
+  const Scout_data = req.body.Scoutdata;
   const Cus_info = req.body.formdata_info;
   //await console.log(req.body);
   //await console.log(typeof(req.body))
-  await cus_insert(Shirt_data, Cus_info);
+  await cus_insert(Shirt_data,PE_data,Scout_data,Cus_info);
   res.send('Success');
   //customer input
 });
 app1.post("/insert_customdata", async (req, res) => {
   await console.log();
   const cus_data = req.body.formdata_cus;
-  const shirt = req.body.Combine_shirt;
+  const Shirt_data = req.body.formdata;
+  const PE_data = req.body.PEdata;
+  const Scout_data = req.body.Scoutdata;  
   const orders = req.body.orders;
   const Sumprice = req.body.SumPrice;
   const IsPaid = req.body.IsPaid
 
-  await adm_FullInsert(cus_data, shirt, orders ,Sumprice,IsPaid);
+  await adm_FullInsert(cus_data, Shirt_data, PE_data, Scout_data, orders ,Sumprice,IsPaid);
   res.json();
   //storefront input
 });
 app1.post("/update_customdata", async (req, res) => {
   await console.log();
   const cus_data = req.body.formdata_cus;
-  const shirt = req.body.Combine_shirt;
+  const Shirt_data = req.body.formdata;
+  const PE_data = req.body.PEdata;
+  const Scout_data = req.body.Scoutdata;
   const orders = req.body.orders;
   const Sumprice = req.body.SumPrice;
   const IsPaid = req.body.IsPaid
-
-  await adm_update(cus_data, shirt, orders ,Sumprice,IsPaid);
+  const username = req.body.username
+  await adm_update(cus_data, Shirt_data, PE_data, Scout_data, orders ,Sumprice,IsPaid,username);
   res.json();
   //storefront input
 });

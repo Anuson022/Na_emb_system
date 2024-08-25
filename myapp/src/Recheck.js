@@ -2,9 +2,12 @@ import React, { useEffect, useState, Component } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./css1.css";
 import Shirt_graphic_cus_com from "./Shirt_graphic_cus_com";
+import Shirt_graphic_cus_PE from "./Shirt_graphic_cus_PE";
+import Shirt_graphic_cus_Scout from "./Shirt_graphic_cus_Scout";
 import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShirt } from "@fortawesome/free-solid-svg-icons";
 
 const Recheck = () => {
   const location = useLocation();
@@ -26,8 +29,14 @@ const Recheck = () => {
       });
       //console.log(response.data[0])
       const object = JSON.parse(response.data[0].shirt);
-      await SetFetchData(object);
-
+      const object_pe = JSON.parse(response.data[0].PE);
+      const object_scout = JSON.parse(response.data[0].scout);
+      await SetFetchData({
+        shirt: object,
+        PE: object_pe,
+        scout: object_scout,
+      });
+      
       const billOrder = JSON.parse(response.data[0].cus_order);
       const IsCusPaid = parseInt(response.data[0].is_paid);
       if (billOrder) {
@@ -36,6 +45,8 @@ const Recheck = () => {
       if (IsCusPaid) {
         SetIsPaid(IsCusPaid);
       }
+      console.log(FetchData.shirt.SName.fullname)
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -44,65 +55,113 @@ const Recheck = () => {
     Fetch_graphic();
   }, []);
   useEffect(() => {
-    if (FetchData.SName) {
+    if (FetchData.shirt?.SName) {
       setformdata((prevFormData) => ({
         ...prevFormData,
+        Selected:FetchData.shirt.Selected,
         SName: {
           ...prevFormData.SName,
-          fullname: FetchData.SName.fullname || "",
-          color: FetchData.SName.color || "",
-          position_n: FetchData.SName.position_n || "",
+          fullname: FetchData.shirt.SName.fullname || "",
+          color: FetchData.shirt.SName.color || "",
+          position_n: FetchData.shirt.SName.position_n || "",
         },
         SUndername: {
           ...prevFormData.SUndername,
-          under_name: FetchData.SUndername.under_name || "",
-          color0: FetchData.SUndername.color0 || "",
+          under_name: FetchData.shirt.SUndername.under_name || "",
+          color0: FetchData.shirt.SUndername.color0 || "",
         },
         SSchool: {
           ...prevFormData.SSchool,
-          name: FetchData.SSchool.name || "",
-          color1: FetchData.SSchool.color1 || "",
-          position_s: FetchData.SSchool.position_s || "",
+          name: FetchData.shirt.SSchool.name || "",
+          color1: FetchData.shirt.SSchool.color1 || "",
+          position_s: FetchData.shirt.SSchool.position_s || "",
         },
         SUnderschool: {
           ...prevFormData.SUnderschool,
-          under_school: FetchData.SUnderschool.under_school || "",
-          color01: FetchData.SUnderschool.color01 || "",
+          under_school: FetchData.shirt.SUnderschool.under_school || "",
+          color01: FetchData.shirt.SUnderschool.color01 || "",
         },
         SLogo: {
           ...prevFormData.SLogo,
-          school_name: FetchData.SLogo.school_name || "",
-          image_path: FetchData.SLogo.image_path || "",
-          position_l: FetchData.SLogo.position_l || "",
+          school_name: FetchData.shirt.SLogo.school_name || "",
+          image_path: FetchData.shirt.SLogo.image_path || "",
+          position_l: FetchData.shirt.SLogo.position_l || "",
         },
         dot: {
           ...prevFormData.dot,
-          type: FetchData.dot.type || "",
-          position: FetchData.dot?.position || "",
-          amount_dot: FetchData.dot?.amount_dot || "",
-          color_dot: FetchData.dot?.color_dot || "",
+          type: FetchData.shirt.dot.type || "",
+          position: FetchData.shirt.dot?.position || "",
+          amount_dot: FetchData.shirt.dot?.amount_dot || "",
+          color_dot: FetchData.shirt.dot?.color_dot || "",
         },
       }));
     }
-    if (FetchData.dot?.type) {
+    if (FetchData.shirt?.dot?.type) {
       setcheck_dot(true);
     }
-    if (FetchData.SLogo?.image_path) {
+    if (FetchData.shirt?.SLogo?.image_path) {
       setcheck_logo(true);
       setSelectedLogo({
-        label: FetchData.SLogo.school_name,
-        image: FetchData.SLogo.image_path,
+        label: FetchData.shirt.SLogo.school_name,
+        image: FetchData.shirt.SLogo.image_path,
       });
     }
-    if (FetchData.SUndername?.under_name) {
+    if (FetchData.shirt?.SUndername?.under_name) {
       setcheck_undername(true);
     }
-    if (FetchData.SUnderschool?.under_school) {
+    if (FetchData.shirt?.SUnderschool?.under_school) {
       setcheck_underschool(true);
     }
-  }, [FetchData]);
+  }, [FetchData.shirt]);
+  useEffect(() => {
+    if (FetchData.PE?.SName) {
+      setPEdata((prevFormData) => ({
+        ...prevFormData,
+        Selected:FetchData.PE.Selected,
+        SName: {
+          ...prevFormData.SName,
+          fullname: FetchData.PE.SName.fullname || "",
+          color: FetchData.PE.SName.color || "",
+          position_n: FetchData.PE.SName.position_n || "",
+        },
+        SUndername: {
+          ...prevFormData.SUndername,
+          under_name: FetchData.PE.SUndername.under_name || "",
+          color0: FetchData.PE.SUndername.color0 || "",
+        },
+        dot: {
+          ...prevFormData.dot,
+          type: FetchData.PE.dot.type || "",
+          position: FetchData.PE.dot?.position || "",
+          amount_dot: FetchData.PE.dot?.amount_dot || "",
+          color_dot: FetchData.PE.dot?.color_dot || "",
+        },
+      }));
+    }
+    if (FetchData.PE?.dot?.type) {
+      setcheck_dot_PE(true);
+    }
+  }, [FetchData.PE]);
 
+  useEffect(() => {
+    if (FetchData.scout?.SName) {
+      setScoutdata((prevFormData) => ({
+        ...prevFormData,
+        Selected:FetchData.scout.Selected,
+        path:FetchData.scout.path,
+        SName: {
+          ...prevFormData.SName,
+          fullname: FetchData.scout.SName.fullname || "",
+          position_n: FetchData.scout.SName.position_n || "",
+          color: FetchData.scout.SName.color || "",
+          color_border: FetchData.scout.SName.color_border || "",
+          cloth: FetchData.scout.SName.cloth || "",
+        },
+      }));
+    }
+  }, [FetchData.scout]);
   const [formdata, setformdata] = useState({
+    Selected: false,
     SName: {
       fullname: "",
       color: "#0000FF",
@@ -117,8 +176,8 @@ const Recheck = () => {
       color1: "#0000FF",
       position_s: "ชื่อโรงเรียนด้านขวา",
     },
-    SUnderschool:{
-      under_school:"",
+    SUnderschool: {
+      under_school: "",
       color01: "#0000FF",
     },
     SLogo: {
@@ -133,12 +192,109 @@ const Recheck = () => {
       color_dot: "",
     },
   });
+  const [PEdata, setPEdata] = useState({
+    Selected: false,
+    SName: {
+      fullname: "",
+      color: "#0000FF",
+      position_n: "ชื่อด้านขวา",
+    },
+    SUndername: {
+      under_name: "",
+      color0: "#0000FF",
+    },
+    dot: {
+      type: "",
+      position: "",
+      amount_dot: "",
+      color_dot: "",
+    },
+  });
+  const [Scoutdata, setScoutdata] = useState({
+    Selected: false,
+    path:"/image_folder/L_Shirt.png",
+    SName: {
+      fullname: "",
+      position_n: "ชื่อด้านขวา",
+      color: "Blue",
+      color_border: "#FCF5E5",
+      cloth: "White"
+    },
+  });
+  const [Bibdata, setBibdata] = useState({
+    Selected: false,
+    SName: {
+      fullname: "",
+      color: "#0000FF",
+    },
+    SUndername: {
+      under_name: "",
+      color0: "#0000FF",
+    },
+  });
+  const [ShirtOptions, SetShirtOptions] = useState([
+    { label: "เสื้อนักเรียน", selected: formdata.Selected },
+    { label: "เสื้อพละ", selected: PEdata.Selected },
+    { label: "เสื้อลูกเสือ&เนตรนารี", selected: Scoutdata.Selected },
+    /*{ label: "เอี้ยม", selected: Bibdata.Selected },*/
+  ]);
+  useEffect(()=>
+    {
+      if (FetchData) {
+        SetShirtOptions([
+          { label: "เสื้อนักเรียน", selected: FetchData?.shirt?.Selected ?? false },
+          { label: "เสื้อพละ", selected: FetchData?.PE?.Selected ?? false },
+          { label: "เสื้อลูกเสือ&เนตรนารี", selected: FetchData?.scout?.Selected ?? false },
+          /*{ label: "เอี้ยม", selected: FetchData?.bib?.Selected ?? false },*/
+        ]);
+      }
+    },[FetchData])
+  const [selectedItem, setSelectedItem] = useState("");
+  const [ShowTypeAlert, SetShowTypeAlert] = useState(false);
+  const HandleShow = () => {
+    SetShowTypeAlert(true);
+  };
+  const handleSelect = (e) => {
+    setSelectedItem(e.target.value);
+  };
+  const handleSelectChange = (e) => {
+    SetShirtOptions((prevOptions) =>
+      prevOptions.map((option) =>
+        option.label === selectedItem ? { ...option, selected: true } : option
+      )
+    );
+    if (selectedItem === "เสื้อนักเรียน") {
+      setformdata((prev) => ({
+        ...prev,
+        Selected: true,
+      }));
+    }
+    if (selectedItem === "เสื้อพละ") {
+      setPEdata((prev) => ({
+        ...prev,
+        Selected: true,
+      }));
+    }
+    if (selectedItem === "เสื้อลูกเสือ&เนตรนารี") {
+      setScoutdata((prev) => ({
+        ...prev,
+        Selected: true,
+      }));
+    }
+    if (selectedItem === "เอี้ยม") {
+      setBibdata((prev) => ({
+        ...prev,
+        Selected: true,
+      }));
+    }
+    setSelectedItem("")
+    HandleCancel();
+  };
 
   const [checkbox_dot, setcheck_dot] = useState(false);
   const [checkbox_logo, setcheck_logo] = useState(false);
   const [checkbox_undername, setcheck_undername] = useState(false);
   const [checkbox_underschool, setcheck_underschool] = useState(false);
-
   const [dot_position_class, set_dot_position] = useState({
     onschool: "hidden",
     onname: "hidden",
@@ -157,20 +313,38 @@ const Recheck = () => {
     right: "hidden",
     left: "hidden",
   });
-  const [Image, Setimage] = useState([]);
-
   const [selectedLogo, setSelectedLogo] = useState(null);
+  const [Image, Setimage] = useState([]);
   const [formdata_info, setformdata_info] = useState({
     info_data: "",
     parent_name: "",
     phone_number: "",
     status: "ยังไม่ตรวจสอบ",
   });
+
+  const [checkbox_dot_PE, setcheck_dot_PE] = useState(false);
+  const [checkbox_undername_PE, setcheck_undername_PE] = useState(false);
+  const [dot_position_class_PE, set_dot_position_PE] = useState({
+    onschool: "hidden",
+    onname: "hidden",
+    dot_left: "hidden",
+    dot_right: "hidden",
+  });
+  const [SNamePositionClass_PE, SetSNamePositionClass_PE] = useState({
+    fullname_right: "hidden",
+    fullname_left: "hidden",
+  });
+
+  const [SNamePositionClass_Scout, SetSNamePositionClass_Scout] = useState({
+    fullname_right: "hidden",
+    fullname_left: "hidden",
+  });
+
+
   const fetch_image = async () => {
     const res = await axios.post("/api/files");
     Setimage(res.data);
   };
-
   useEffect(() => {
     var dot_star = "";
     var position = "";
@@ -191,7 +365,7 @@ const Recheck = () => {
           dot_right: "hidden",
         }));
       }
-      if (formdata.dot.position === "บนชื่อนักเรียน") {
+      if (formdata.dot.position === "onname_shirt") {
         set_dot_position((data_position) => ({
           ...data_position,
           onschool: "hidden",
@@ -200,7 +374,7 @@ const Recheck = () => {
           dot_right: "hidden",
         }));
       }
-      if (formdata.dot.position === "บนปกขวา") {
+      if (formdata.dot.position === "right_collar") {
         set_dot_position((data_position) => ({
           ...data_position,
           onschool: "hidden",
@@ -209,7 +383,7 @@ const Recheck = () => {
           dot_right: "dot_right",
         }));
       }
-      if (formdata.dot.position === "บนปกซ้าย") {
+      if (formdata.dot.position === "left_collar") {
         set_dot_position((data_position) => ({
           ...data_position,
           onschool: "hidden",
@@ -219,11 +393,12 @@ const Recheck = () => {
         }));
       }
     }
-    document.body.classList.add("body_of_edit");
-    return () => {
-      document.body.classList.remove("body_of_edit");
-    };
   }, [formdata.dot, checkbox_dot]);
+
+  useEffect(() => {
+    fetch_image();
+  }, []);
+
   //name position
   useEffect(() => {
     if (formdata.SName.position_n === "ชื่อด้านขวา") {
@@ -310,18 +485,92 @@ const Recheck = () => {
         left: "hidden",
       }));
     }
-    if (checkbox_logo === false) {
-      SetSLogoPositionClass((data) => ({
-        ...data,
-        right: "hidden",
-        left: "hidden",
-      }));
-    }
   }, [formdata.SLogo]);
 
+  //name position PE
   useEffect(() => {
-    fetch_image();
-  }, []);
+    if (PEdata.SName.position_n === "ชื่อด้านขวา") {
+      SetSNamePositionClass_PE((data) => ({
+        ...data,
+        fullname_right: "nameright",
+        fullname_left: "hidden",
+      }));
+    } else if (PEdata.SName.position_n === "ชื่อด้านซ้าย") {
+      SetSNamePositionClass_PE((data) => ({
+        ...data,
+        fullname_right: "hidden",
+        fullname_left: "nameleft",
+      }));
+    } else {
+      SetSNamePositionClass_PE((data) => ({
+        ...data,
+        fullname_right: "hidden",
+        fullname_left: "hidden",
+      }));
+    }
+  }, [PEdata.SName]);
+
+  useEffect(() => {
+    var dot_star = "";
+    var position = "";
+    var amount = "";
+    if (checkbox_dot_PE === true) {
+      if (PEdata.dot.type === "จุด") {
+        dot_star = "•";
+      }
+      if (PEdata.dot.type === "ดาว") {
+        dot_star = "★";
+      }
+      if (PEdata.dot.position === "บนชื่อนักเรียนด้านขวา") {
+        set_dot_position_PE((data_position) => ({
+          ...data_position,
+          onschool: "onschool",
+          onname: "hidden",
+          dot_left: "hidden",
+          dot_right: "hidden",
+        }));
+      }
+      if (PEdata.dot.position === "บนชื่อนักเรียนด้านซ้าย") {
+        set_dot_position_PE((data_position) => ({
+          ...data_position,
+          onschool: "hidden",
+          onname: "onname",
+          dot_left: "hidden",
+          dot_right: "hidden",
+        }));
+      }
+      if (PEdata.dot.position === "right_collar") {
+        set_dot_position_PE((data_position) => ({
+          ...data_position,
+          onschool: "hidden",
+          onname: "hidden",
+          dot_left: "hidden",
+          dot_right: "dot_right",
+        }));
+      }
+      if (PEdata.dot.position === "left_collar") {
+        set_dot_position_PE((data_position) => ({
+          ...data_position,
+          onschool: "hidden",
+          onname: "hidden",
+          dot_left: "dot_left",
+          dot_right: "hidden",
+        }));
+      }
+    }
+  }, [PEdata.dot, checkbox_dot_PE]);
+
+  //name position Scout
+  useEffect(() => {
+    if (Scoutdata.SName.position_n === "ชื่อด้านขวา") {
+      SetSNamePositionClass_Scout((data) => ({
+        ...data,
+        fullname_right: "nameright",
+        fullname_left: "hidden",
+      }));
+    }
+  }, [Scoutdata.SName]);
+
 
   const handle_cuschange = (e) => {
     const { name, value } = e.target;
@@ -379,13 +628,14 @@ const Recheck = () => {
   //order varible
 
   const HandleSubmit = async(e) => {
-    const Combine_shirt = {
-      ...formdata,
-    };
+    
     const SumPrice = orders.reduce(
       (total, order) => total + (parseFloat(order.value4) || 0),
       0
     );
+    const Token = localStorage.getItem("token");
+    const UserData = JSON.parse(localStorage.getItem("UserData"));
+    const username = UserData.username
     if(
       formdata_cus.phone_number === "" ||
       formdata_cus.phone_number === null ||
@@ -395,10 +645,13 @@ const Recheck = () => {
     try {
       const response = await axios.post("/update_customdata", {
         formdata_cus,
-        Combine_shirt,
+        formdata,
+        PEdata,
+        Scoutdata,
         orders,
         SumPrice,
         IsPaid,
+        username,
       });
       console.log(response.data)
       SetShowSuccess(true)
@@ -434,16 +687,20 @@ const Recheck = () => {
       SetShowSuccess(false)
       SetShowFail(false)
       SetShowIncomplete(false)
+      SetShowTypeAlert(false);
     }
   const GoTo = useNavigate();
   const HandleNavigate = async() =>
     {
       GoTo("/Admin_dashboard")
     }
+    useEffect(() => {
+      window.scrollTo(0, 0)
+    }, [])
   return (
     <div className="">
       <br />
-      <form className="cus_insert">
+      <div className="cus_insert">
         <fieldset className="" style={{ backgroundColor: "#FAF9F6" ,paddingBottom:'2rem'}}>
           <legend style={{}}>
             <h1>ข้อมูลสำหรับแสดงกราฟิค</h1>
@@ -451,21 +708,21 @@ const Recheck = () => {
           <div className="Shirt_com">
             <>
               <Shirt_graphic_cus_com
+                SetShirtOptions={SetShirtOptions}
                 setcheck_dot={setcheck_dot}
                 checkbox_dot={checkbox_dot}
                 setcheck_logo={setcheck_logo}
                 checkbox_logo={checkbox_logo}
                 setcheck_undername={setcheck_undername}
                 checkbox_undername={checkbox_undername}
-                setcheck_underschool = {setcheck_underschool}
-                checkbox_underschool = {checkbox_underschool}
+                setcheck_underschool={setcheck_underschool}
+                checkbox_underschool={checkbox_underschool}
                 formdata={formdata}
                 setformdata={setformdata}
                 set_dot_position={set_dot_position}
                 dot_position_class={dot_position_class}
                 Image={Image}
                 Setimage={Setimage}
-                formdata_info={formdata_info}
                 selectedLogo={selectedLogo}
                 setSelectedLogo={setSelectedLogo}
                 SNamePositionClass={SNamePositionClass}
@@ -474,12 +731,36 @@ const Recheck = () => {
                 SetSSchoolPositionClass={SetSSchoolPositionClass}
                 SLogoPositionClass={SLogoPositionClass}
                 SetSLogoPositionClass={SetSLogoPositionClass}
-                setformdata_info={setformdata_info}
               />
+              <Shirt_graphic_cus_PE
+                SetShirtOptions={SetShirtOptions}
+                setcheck_dot_PE={setcheck_dot_PE}
+                checkbox_dot_PE={checkbox_dot_PE}
+                setcheck_undername_PE={setcheck_undername_PE}
+                checkbox_undername_PE={checkbox_undername_PE}
+                PEdata={PEdata}
+                setPEdata={setPEdata}
+                set_dot_position_PE={set_dot_position_PE}
+                dot_position_class_PE={dot_position_class_PE}
+                SNamePositionClass_PE={SNamePositionClass_PE}
+                SetSNamePositionClass_PE={SetSNamePositionClass_PE}
+              />
+              <Shirt_graphic_cus_Scout
+                SetShirtOptions={SetShirtOptions}
+                Scoutdata={Scoutdata}
+                setScoutdata={setScoutdata}
+                SNamePositionClass_Scout={SNamePositionClass_Scout}
+                SetSNamePositionClass_Scout = {SetSNamePositionClass_Scout}
+              />
+              <div className='Add-Shirt-Type' onClick={HandleShow}>
+                <button style={{display:'flex', alignItems:'center',gap:'1rem'}} 
+                  onClick={HandleShow}>
+                  <FontAwesomeIcon icon={faShirt} />เพิ่มรูปแบบเสื้อ</button>
+              </div>
             </>
           </div>
         </fieldset>
-      </form>
+      </div>
 
       <form className="cus_edit">
         <fieldset style={{ backgroundColor: "#FAF9F6" ,paddingBottom:'2rem'}}>
@@ -733,6 +1014,35 @@ const Recheck = () => {
               ></SweetAlert>
             )}
           </div>
+      <div style={{ padding: "15rem" }}>
+          {ShowTypeAlert && (
+            <SweetAlert
+              title="กรุณาเลือกรูปแบบเสื้อ"
+              onConfirm={handleSelectChange}
+              onCancel={HandleCancel}
+              showCancel
+              confirmBtnText="เพิ่ม"
+              cancelBtnText="ยกเลิก"
+              confirmBtnCssClass="btn-custom"
+              cancelBtnCssClass="btn-custom"
+              customClass="custom-sweetalert" // Custom class
+              
+            >
+              <div className="Shirt-Select">
+                <select value={selectedItem} onChange={handleSelect}>
+                  <option value="" disabled>เลือกรูปแบบเสิ้อ</option>
+                  {ShirtOptions.filter((option) => !option.selected).map(
+                    (option) => (
+                      <option key={option.id} value={option.label}>
+                        {option.label}
+                      </option>
+                    )
+                  )}
+                </select>
+              </div>
+            </SweetAlert>
+          )}
+        </div>
     </div>
   );
 };

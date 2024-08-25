@@ -110,9 +110,26 @@ const render_dot_name = (dot_type, dot_amount) => {
 
 
 
-function ShirtOrder({ cus_id, parent_name, phone_number, status }) 
+function ShirtOrderPE({ cus_id, parent_name, phone_number, status }) 
 {
   const [FetchData,SetFetchData] = useState({})
+  const [checkbox_dot_PE, setcheck_dot_PE] = useState(false);
+  const [checkbox_undername_PE, setcheck_undername_PE] = useState(false);
+  const [dot_position_class_PE, set_dot_position_PE] = useState({
+    onschool: "hidden",
+    onname: "hidden",
+    dot_left: "hidden",
+    dot_right: "hidden",
+  });
+  const [SNamePositionClass_PE, SetSNamePositionClass_PE] = useState({
+    fullname_right: "hidden",
+    fullname_left: "hidden",
+  });
+
+  const [SNamePositionClass_Scout, SetSNamePositionClass_Scout] = useState({
+    fullname_right: "hidden",
+    fullname_left: "hidden",
+  });
   const Fetch_graphic = async() => 
     {
       try {
@@ -215,6 +232,9 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status })
             color_dot: FetchData.PE.dot?.color_dot || "",
           },
         }));
+        if (FetchData.PE?.dot?.type) {
+          setcheck_dot_PE(true);
+        }
       }
 
     }, [FetchData.PE]);
@@ -349,165 +369,78 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status })
 };
 
 
+  //name position PE
   useEffect(() => {
-    var dot_star = ''
-    var position = ''
-    var amount = ''
-    if (checkbox_dot === true) {
-      if(formdata.dot.type === 'จุด')
-        {dot_star = '•';}
-      if(formdata.dot.type ==='ดาว')
-        {dot_star = '★';}
-      if(formdata.dot.position === 'บนชื่อโรงเรียน')
-        {
-          set_dot_position(data_position =>(
-            {...data_position,
-              onschool:"onschool",
-              onname:"hidden",
-              dot_left:"hidden",
-              dot_right:"hidden"}))
-        }
-      if(formdata.dot.position === 'บนชื่อนักเรียน')
-        {
-          set_dot_position(data_position =>(
-            {...data_position,
-              onschool:"hidden",
-              onname:"onname",
-              dot_left:"hidden",
-              dot_right:"hidden"}))
-        }
-      if(formdata.dot.position === 'บนปกขวา')
-        {
-          set_dot_position(data_position =>(
-            {...data_position,
-              onschool:"hidden",
-              onname:"hidden",
-              dot_left:"hidden",
-              dot_right:"dot_right"}))
-        }
-      if(formdata.dot.position === 'บนปกซ้าย')
-        {
-          set_dot_position(data_position =>(
-            {...data_position,
-              onschool:"hidden",
-              onname:"hidden",
-              dot_left:"dot_left",
-              dot_right:"hidden"}))
-        }
-    }
-  }, [formdata.dot, checkbox_dot]);
-    //name position
-    useEffect(() => {
-      if(formdata.SName.position_n === "ชื่อด้านขวา")
-        {
-          SetSNamePositionClass(data=>(
-            {
-              ...data,
-              fullname_right: "nameright",
-              fullname_left: "hidden",
-            }))
-        }
-      else if(formdata.SName.position_n === "ชื่อด้านซ้าย")
-        {
-          SetSNamePositionClass(data=>(
-            {
-              ...data,
-              fullname_right: "hidden",
-              fullname_left: "nameleft",
-            }))
-        }
-      else
-      {
-        SetSNamePositionClass(data=>(
-          {
-            ...data,
-            fullname_right: "hidden",
-            fullname_left: "hidden",
-          }))
-      }
-    }, [formdata.SName]);
-    
-    //school position
-  //school position
-  useEffect(() => {
-    if (formdata.SSchool.position_s === "ชื่อโรงเรียนด้านขวา") {
-      SetSSchoolPositionClass((data) => ({
+    if (PEdata.SName.position_n === "ชื่อด้านขวา") {
+      SetSNamePositionClass_PE((data) => ({
         ...data,
-        right: "School-right",
-        left: "hidden",
+        fullname_right: "nameright",
+        fullname_left: "hidden",
       }));
-      if (checkbox_logo === true) {
-        SetSLogoPositionClass((data) => ({
-          ...data,
-          right: "logo-right",
-          left: "hidden",
-        }));
-      }
-    } else if (formdata.SSchool.position_s === "ชื่อโรงเรียนด้านซ้าย") {
-      SetSSchoolPositionClass((data) => ({
+    } else if (PEdata.SName.position_n === "ชื่อด้านซ้าย") {
+      SetSNamePositionClass_PE((data) => ({
         ...data,
-        right: "hidden",
-        left: "School-left",
+        fullname_right: "hidden",
+        fullname_left: "nameleft",
       }));
-      if (checkbox_logo === true) {
-        SetSLogoPositionClass((data) => ({
-          ...data,
-          right: "hidden",
-          left: "logo-left",
-        }));
-      }
     } else {
-      SetSSchoolPositionClass((data) => ({
+      SetSNamePositionClass_PE((data) => ({
         ...data,
-        right: "hidden",
-        left: "hidden",
-      }));
-      SetSLogoPositionClass((data) => ({
-        ...data,
-        right: "hidden",
-        left: "hidden",
+        fullname_right: "hidden",
+        fullname_left: "hidden",
       }));
     }
-  }, [formdata.SSchool]);
-  
-      //logo position
-    useEffect(() => {
-      if(formdata.SLogo.position_l === "โลโก้ด้านขวา")
-        {
-          SetSLogoPositionClass(data=>(
-            {
-              ...data,
-              right: "logo-right",
-              left: "hidden",
-            }))
-        }
-      else if(formdata.SLogo.position_l === "โลโก้ด้านซ้าย")
-        {
-          SetSLogoPositionClass(data=>(
-            {
-              ...data,
-              right: "hidden",
-              left: "logo-left",
-            }))
-        }
-      else
-      {
-        SetSLogoPositionClass(data=>(
-          {
-            ...data,
-            right: "hidden",
-            left: "hidden",
-          }))
+  }, [PEdata.SName]);
+
+  useEffect(() => {
+    var dot_star = "";
+    var position = "";
+    var amount = "";
+    if (checkbox_dot_PE === true) {
+      if (PEdata.dot.type === "จุด") {
+        dot_star = "•";
       }
-      if(checkbox_logo === false)
-        {
-          SetSLogoPositionClass((data) => ({
-            ...data,
-            right: "hidden",
-            left: "hidden",
-          }));
-        }
-    }, [formdata.SLogo]);
+      if (PEdata.dot.type === "ดาว") {
+        dot_star = "★";
+      }
+      if (PEdata.dot.position === "บนชื่อนักเรียนด้านขวา") {
+        set_dot_position_PE((data_position) => ({
+          ...data_position,
+          onschool: "onschool",
+          onname: "hidden",
+          dot_left: "hidden",
+          dot_right: "hidden",
+        }));
+      }
+      if (PEdata.dot.position === "บนชื่อนักเรียนด้านซ้าย") {
+        set_dot_position_PE((data_position) => ({
+          ...data_position,
+          onschool: "hidden",
+          onname: "onname",
+          dot_left: "hidden",
+          dot_right: "hidden",
+        }));
+      }
+      if (PEdata.dot.position === "right_collar") {
+        set_dot_position_PE((data_position) => ({
+          ...data_position,
+          onschool: "hidden",
+          onname: "hidden",
+          dot_left: "hidden",
+          dot_right: "dot_right",
+        }));
+      }
+      if (PEdata.dot.position === "left_collar") {
+        set_dot_position_PE((data_position) => ({
+          ...data_position,
+          onschool: "hidden",
+          onname: "hidden",
+          dot_left: "dot_left",
+          dot_right: "hidden",
+        }));
+      }
+    }
+  }, [PEdata.dot, checkbox_dot_PE]);
 
   useEffect(() => {
     fetch_image();
@@ -515,90 +448,64 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status })
 
   
   return (
-    <>
-    {formdata.Selected &&
-      <div className="container_form" style={{overflow:'auto'}}>
+    <>{PEdata.Selected &&
+      <div className="container_form" style={{alignItems:'center'}}>
+
 
         <div className="body_shirt">
+
           <div className="shirt_design">
-            <img className="shirt_img" src="/image_folder/S_Shirt.png" alt="" />
-            <div className="grid_dot" >
+            <img className="shirt_img" src="/image_folder/PE1_Shirt.png" alt="" />
+            <div className="grid_dot">
               <div
-                className={dot_position_class.dot_left}
-                style={{ color: formdata.dot.color_dot ,bottom:'34rem'}}
+                className={dot_position_class_PE.dot_left}
+                style={{ color: PEdata.dot.color_dot ,bottom:'34rem'}}
               >
-                {render_dot1(formdata.dot.type, formdata.dot.amount_dot)}
+                {render_dot1(PEdata.dot.type, PEdata.dot.amount_dot)}
               </div>
               <div
-                className={dot_position_class.dot_right}
-                style={{ color: formdata.dot.color_dot ,bottom:'34rem'}}
+                className={dot_position_class_PE.dot_right}
+                style={{ color: PEdata.dot.color_dot ,bottom:'34rem'}}
               >
-                {render_dot1(formdata.dot.type, formdata.dot.amount_dot)}
+                {render_dot1(PEdata.dot.type, PEdata.dot.amount_dot)}
               </div>
             </div>
-            <div className="grid_name" style={{bottom:'24rem'}}>
+            <div className="grid_name" style={{bottom:'31.5rem'}}>
               <div className="on_right">
                 <div
-                  className={dot_position_class.onschool}
-                  style={{ color: formdata.dot.color_dot }}
+                  className={dot_position_class_PE.onschool}
+                  style={{ color: PEdata.dot.color_dot }}
                 >
                   {render_dot_school(
-                    formdata.dot.type,
-                    formdata.dot.amount_dot
+                    PEdata.dot.type,
+                    PEdata.dot.amount_dot
                   )}
                 </div>
-                <div className={SLogoPositionClass.right}>
-                  {formdata.SLogo.image_path && (
-                    <img
-                      src={formdata.SLogo.image_path}
-                      alt={formdata.SLogo.school_name}
-                    />
-                  )}
-                </div>
+
+
                 <div
-                  className={SSchoolPositionClass.right}
-                  style={{ color: formdata.SSchool.color1 }}
+                  className={SNamePositionClass_PE.fullname_right}
+                  style={{ color: PEdata.SName.color }}
                 >
-                  {render_school(formdata.SSchool.name)}
-                  {render_h1(formdata.SUnderschool.under_school)}
-                </div>
-                <div
-                  className={SNamePositionClass.fullname_right}
-                  style={{ color: formdata.SName.color }}
-                >
-                  {render_h1(formdata.SName.fullname)}
-                  {render_h1(formdata.SUndername.under_name)}
+                  {render_h1(PEdata.SName.fullname)}
+                  {render_h1(PEdata.SUndername.under_name)}
                 </div>
               </div>
 
               <div className="on_left">
                 <div
-                  className={dot_position_class.onname}
-                  style={{ color: formdata.dot.color_dot }}
+                  className={dot_position_class_PE.onname}
+                  style={{ color: PEdata.dot.color_dot }}
                 >
-                  {render_dot_name(formdata.dot.type, formdata.dot.amount_dot)}
+                  {render_dot_name(PEdata.dot.type, PEdata.dot.amount_dot)}
                 </div>
-                <div className={SLogoPositionClass.left}>
-                  {formdata.SLogo.image_path && (
-                    <img
-                      src={formdata.SLogo.image_path}
-                      alt={formdata.SLogo.school_name}
-                    />
-                  )}
-                </div>
+
                 <div
-                  className={SSchoolPositionClass.left}
-                  style={{ color: formdata.SSchool.color1 }}
+                  className={SNamePositionClass_PE.fullname_left}
+                  style={{ color: PEdata.SName.color }}
                 >
-                  {render_school(formdata.SSchool.name)}
-                  {render_h1(formdata.SUnderschool.under_school)}
-                </div>
-                <div
-                  className={SNamePositionClass.fullname_left}
-                  style={{ color: formdata.SName.color }}
-                >
-                  {render_h1(formdata.SName.fullname)}
-                  {render_h1(formdata.SUndername.under_name)}
+                  {render_h1(PEdata.SName.fullname)}
+                  {render_h1(PEdata.SUndername.under_name)}
                 </div>
               </div>
             </div>
@@ -607,9 +514,8 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status })
         <br /><br />
       </div>
       }
-      
     </>
   );
 }
 
-export default ShirtOrder;
+export default ShirtOrderPE;

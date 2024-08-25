@@ -1,63 +1,33 @@
-import React, { useEffect, useState,useNavigate } from 'react';
-import './customer_form.css'
-import Shirt_graphic from './Shirt_graphic';
-import Shirt_graphic_cus_const from './Shirt_graphic_cus_const';
-import { Link } from 'react-router-dom'
-import axios from 'axios';
+import React, { useState } from 'react';
 
-function Student_form() {
+const ImageSelector = () => {
+  const [selectedImage, setSelectedImage] = useState('');
 
+  const handleChange = (event) => {
+    setSelectedImage(event.target.value);
+  };
 
-    return (
-      <>
-      <div >
-        <Shirt_graphic_cus_const />
-        
-      </div>
-      </>
-    );
-}
+  return (
+    <div>
+<select value={selectedImage}>
+  <option value="/image_folder/S_Shirt.png">
+    <img src="/image_folder/S_Shirt.png" alt="S-Shirt" style={{ width: '100px', height: '100px' }} />
+    S-Shirt
+  </option>
+  <option value="/image_folder/S_Shirt.png">
+    <img src="/image_folder/S_Shirt.png" alt="S-Shirt" style={{ width: '100px', height: '100px' }} />
+    S-Shirt
+  </option>
+</select>
 
-export default Student_form
+      {selectedImage && (
+        <div>
+          <h2>Selected Image:</h2>
+          <img src={selectedImage} alt="Selected" style={{ maxWidth: '300px' }} />
+        </div>
+      )}
+    </div>
+  );
+};
 
-/*                    
-            <div className='form_container'>
-                <div className='input_container'>
-<form onSubmit={handle_submit} >
-                        <div className='form_input'>
-                        <p>กรุณากรอกข้อมูล</p>
-                        <br />
-                        <div>
-                        <label htmlFor="">รายละเอียด</label>
-                        <textarea 
-                        name="info_data" 
-                        id="" 
-                        placeholder='สิ่งที่ต้องการปัก...'
-                        value={formdata.info_data}
-                        onChange={handleChange}
-                        ></textarea>
-                        </div>
-
-                        <div>
-                        <label htmlFor="">ชื่อผู้สั่ง</label>
-                        <input type="text" name="parent_name" id="" 
-                        value={formdata.parent_name} onChange={handleChange}/>
-                        </div>
-                        
-                        <div>
-                        <label htmlFor="">เบอร์โทร</label>
-                        <input type="text" name="phone_number" id="" 
-                        value={formdata.phone_number} onChange={handleChange}/>
-                        </div>
-
-                        <div>
-                        </div>
-                        
-                        <div>
-                            <button type="submit">Submit</button>
-                        </div>
-                        </div>
-                    </form>
-                                    </div>
-
-            </div>*/
+export default ImageSelector;

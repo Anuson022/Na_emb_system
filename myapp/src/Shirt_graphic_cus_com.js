@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 
 import "./Shirt_graphic_cus_com.css";
+
 const render_h1 = (text) => {
   return text.split("\n").map((line, index) => <h1 key={index}>{line}</h1>);
 };
@@ -100,6 +101,7 @@ const render_dot_name = (dot_type, dot_amount) => {
 };
 
 function Shirt_graphic_cus_com({
+  SetShirtOptions,
   setcheck_dot,
   checkbox_dot,
   setcheck_logo,
@@ -125,6 +127,48 @@ function Shirt_graphic_cus_com({
   selectedLogo,
   setSelectedLogo,
 }) {
+  const handleRemove = (label) => {
+    SetShirtOptions((prevOptions) =>
+      prevOptions.map((option) =>
+        option.label === label ? { ...option, selected: false } : option
+      )
+    );
+    if (label === "เสื้อนักเรียน") {
+      setformdata((prev) => ({
+        ...prev,
+        Selected: false,
+        SName: {
+          fullname: "",
+          color: "#0000FF",
+          position_n: "ชื่อด้านซ้าย",
+        },
+        SUndername: {
+          under_name: "",
+          color0: "#0000FF",
+        },
+        SSchool: {
+          name: "",
+          color1: "#0000FF",
+          position_s: "ชื่อโรงเรียนด้านขวา",
+        },
+        SUnderschool: {
+          under_school: "",
+          color01: "#0000FF",
+        },
+        SLogo: {
+          school_name: "",
+          image_path: "",
+          position_l: "",
+        },
+        dot: {
+          type: "",
+          position: "",
+          amount_dot: "",
+          color_dot: "",
+        },
+      }));
+    }
+  };
   const handlecheckbox_dot = (event) => {
     setcheck_dot(event.target.checked);
     if (event.target.checked === true) {
@@ -380,6 +424,7 @@ function Shirt_graphic_cus_com({
 
   return (
     <>
+    {formdata.Selected &&
       <div className="container_form">
         <div className="grid_input">
           <form onSubmit={""}>
@@ -674,7 +719,10 @@ function Shirt_graphic_cus_com({
         </div>
 
         <div className="body_shirt">
-          <h2 style={{fontSize:'2rem'}}>รูปแบบกราฟิค</h2>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'20rem'}}>
+            <h2 style={{fontSize:'2rem'}}>รูปแบบกราฟิค</h2>
+            <button onClick={() => handleRemove("เสื้อนักเรียน")}>นำออก</button>
+          </div>
           <div className="shirt_design">
             <img className="shirt_img" src="/image_folder/S_Shirt.png" alt="" />
             <div className="grid_dot">
@@ -759,7 +807,10 @@ function Shirt_graphic_cus_com({
             </div>
           </div>
         </div>
+        <br /><br />
       </div>
+      }
+      
     </>
   );
 }
