@@ -460,7 +460,6 @@ function Shirt_graphic_cus() {
           <h1>โปรดกรอกข้อมูลการปัก</h1>
         </div>
       </header>
-
       <Shirt_graphic_cus_com
         SetShirtOptions={SetShirtOptions}
         setcheck_dot={setcheck_dot}
@@ -556,7 +555,7 @@ function Shirt_graphic_cus() {
             </div>
           </div>
         </div>
-        <div style={{ padding: "15rem" }}>
+        <div style={{ padding: "0rem" }}>
           {showAlert && (
             <SweetAlert
               info
@@ -610,7 +609,7 @@ function Shirt_graphic_cus() {
           )}
         </div>
       </div>
-      <div style={{ padding: "15rem" }}>
+      <div style={{ padding: "0rem" }}>
           {ShowTypeAlert && (
             <SweetAlert
               title="กรุณาเลือกรูปแบบเสื้อ"

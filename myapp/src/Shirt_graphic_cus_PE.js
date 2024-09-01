@@ -322,7 +322,7 @@ function Shirt_graphic_cus_PE({
                   </div>
 
                   <div className="color_container_right">
-                    <h2>สีของด้าย</h2>
+                    <h2>สีด้าย</h2>
                     <input
                       className="color_input_right"
                       type="color"
@@ -355,16 +355,7 @@ function Shirt_graphic_cus_PE({
                       />
                       ด้านซ้าย
                     </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="Name-Position"
-                        checked={PEdata.SName.position_n === "none"}
-                        onChange={HandleName_position}
-                        value="none"
-                      />
-                      ไม่มี
-                    </label>
+
                   </div>
                 </div>
               </div>
@@ -435,7 +426,7 @@ function Shirt_graphic_cus_PE({
                   </div>
 
                   <div className="dot_color" onChange={handledot}>
-                    <h2>สีของจุด</h2>
+                    <h2>สีจุด</h2>
                     <input
                       type="color"
                       name="color_dot"
@@ -455,7 +446,7 @@ function Shirt_graphic_cus_PE({
 
         <div className="body_shirt">
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'20rem'}}>
-            <h2 style={{fontSize:'2rem'}}>รูปแบบกราฟิค</h2>
+          <h2 className="h2_g">รูปแบบกราฟิก</h2>
             <button onClick={() => handleRemove("เสื้อพละ")}>นำออก</button>
           </div>
           <div className="shirt_design">

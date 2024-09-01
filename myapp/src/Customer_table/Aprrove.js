@@ -44,7 +44,7 @@ const OrderApprovePage = () => {
 
   const handleYesDelete = async () => {
     try {
-      const response = await axios.delete(`/delete_cusdata/${popup_delete}`);
+      const response = await axios.delete(`/api/delete_cusdata/${popup_delete}`);
       console.log("Data deleted successfully:", response.data);
       fetchNewOrder(); // Refresh the orders list
     } catch (error) {

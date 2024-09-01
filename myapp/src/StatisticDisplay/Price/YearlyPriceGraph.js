@@ -11,7 +11,8 @@ const YearlyPriceChart = () => {
     useEffect(() => {
         axios.get('/api/yearly-price')
             .then(response => {
-                setData(response.data);
+                setData(response.data);console.log(response.data);
+                
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -19,7 +20,7 @@ const YearlyPriceChart = () => {
     }, []);
 
     const months = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
-
+    
     const chartData = {
         labels: months,
         datasets: [

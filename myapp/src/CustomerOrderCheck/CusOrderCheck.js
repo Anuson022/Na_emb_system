@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./CusOrderCheck.css";
 import axios from "axios";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import ShirtBill from "./ShirtBill";
 import ShirtBill_PE from "./ShirtBill_PE";
 import ShirtBill_scout from "./ShirtBill_scout";
@@ -15,6 +18,9 @@ function CusOrderCheck() {
   const [ParentName, setParentName] = useState([]);
   const [PhoneNumber, setPhoneNumber] = useState([]);
   const [currentQue, setCurrentQue] = useState(null);
+  const [SelectShirt1,SetSelectShirt1] = useState()
+  const [SelectShirt2,SetSelectShirt2] = useState()
+  const [SelectShirt3,SetSelectShirt3] = useState()
   const [ShowByStatus,setShowBystatus] = useState("")
   
   const handleSearchChange = (e) => {
@@ -25,7 +31,7 @@ function CusOrderCheck() {
     try {
       const response = await axios.post("/api/GetCusQue", { SearchData: searchData });
       const quedata = response.data;
-
+      console.log(quedata[0].shirt)
       if (quedata === "notfound") {
         setData("notfound");
         setShowQue(true);
@@ -35,12 +41,19 @@ function CusOrderCheck() {
         const status = quedata.map((item) => item.status);
         const phone_number = quedata.map((item) => item.phone_number);
         const parent_name = quedata.map((item) => item.parent_name);
+        /*const selectedshirt = quedata.map((item) => JSON.parse(item.shirt));
+        const selectedPE = quedata.map((item) => JSON.parse(item.PE));
+        const selectedscout = quedata.map((item) => JSON.parse(item.scout));*/
         setData(quedata);
         setOrderData(orderObj);
         setOrderSum(orderSum);
         setStatus(status);
         setPhoneNumber(phone_number)
         setParentName(parent_name)
+        /*SetSelectShirt1(selectedshirt)
+        SetSelectShirt2(selectedshirt)
+        SetSelectShirt3(selectedshirt)
+        console.log(selectedPE)*/
         const currentque = await axios.post("/api/GetCurrentQue");
         setCurrentQue(currentque.data["MIN(cus_id)"]);
 
@@ -66,29 +79,36 @@ function CusOrderCheck() {
       </>)
       
     }
-
+      const settings = {
+        dots: true,              // Show navigation dots
+        infinite: true,          // Infinite loop
+        speed: 500,              // Transition speed (ms)
+        slidesToShow: 1,         // Number of slides to show
+        slidesToScroll: 1,       // Number of slides to scroll at a time
+        autoplay: true,          // Enable autoplay
+        autoplaySpeed: 5000,     // Autoplay speed (ms)
+      };
     return (
       <>
-    <div>
-      <button onClick={() => handleButtonClick("กำลังดำเนินการ")}>Button 1</button>
-      <button onClick={() => handleButtonClick("การปักเสร็จสิ้น")}>Button 2</button>
-    </div>
+      <br />
+      
       {data.map((cus, index) => (
       <div key={cus.cus_id} className="order-section">
-        <div className="shirt-check-grid">
-        <div style={{}}>
+        <div className="">
+        <Slider {...settings}>
+        <div>
         <ShirtBill cus_id={cus.cus_id} />
         </div>
-        <div style={{}}>
+        <div>
         <ShirtBill_PE cus_id={cus.cus_id}/>
         </div>
-        <div style={{}}>
+        <div>
         <ShirtBill_scout cus_id={cus.cus_id}/>
         </div>
-        
+        </Slider>
         
         </div>
-        <h2>รายการที่สั่งซื้อ</h2>
+        <h2>รายการ</h2>
         <table className="order-table">
           <thead>
             <tr>
@@ -127,10 +147,17 @@ function CusOrderCheck() {
   };
 
   return (
+    <>
+    <header>
+    <div class="container">
+      <h1>ระบบเช็คคิว</h1>
+    </div></header>
     <div className="cus-order-check">
+
+      
       <div className="search-section">
-        <h1>ระบบเช็คคิว</h1>
-        <p>โปรดกรอกเบอร์โทร</p>
+        <h1>โปรดกรอกเบอร์โทร</h1>
+        <div style={{display:'flex',justifyContent:'center',gap:'1rem'}}>
         <input
           type="text"
           value={searchData}
@@ -140,9 +167,13 @@ function CusOrderCheck() {
         <button onClick={handleCheckQue} className="search-button">
           ตรวจสอบ
         </button>
+        </div>
+
       </div>
+      
       {showQue && renderContent()}
     </div>
+    </>
   );
 }
 

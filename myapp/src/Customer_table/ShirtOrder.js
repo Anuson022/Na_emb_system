@@ -116,7 +116,7 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status })
   const Fetch_graphic = async() => 
     {
       try {
-        const response = await axios.get('/get_cusID', {
+        const response = await axios.get('/api/get_cusID', {
           params: {
             id: cus_id
           }
@@ -536,7 +536,7 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status })
                 {render_dot1(formdata.dot.type, formdata.dot.amount_dot)}
               </div>
             </div>
-            <div className="grid_name" style={{bottom:'24rem'}}>
+            <div className="grid_name" style={{bottom:'31rem'}}>
               <div className="on_right">
                 <div
                   className={dot_position_class.onschool}

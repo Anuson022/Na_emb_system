@@ -517,7 +517,7 @@ const Recheck = () => {
     )
       { return SetShowIncomplete(true) }
     try {
-      axios.post("/insert_customdata", {
+      axios.post("/api/insert_customdata", {
         formdata_cus,
         formdata,
         PEdata,

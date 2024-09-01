@@ -17,7 +17,7 @@ function ShirtOrderScout({ cus_id, parent_name, phone_number, status })
   const Fetch_graphic = async() => 
     {
       try {
-        const response = await axios.get('/get_cusID', {
+        const response = await axios.get('/api/get_cusID', {
           params: {
             id: cus_id
           }

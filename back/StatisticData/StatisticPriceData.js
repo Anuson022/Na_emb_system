@@ -58,7 +58,6 @@ fetchRouter.get('/api/monthly-price', (req, res) => {
             monthlyData[row.day_of_month - 1] = 
             { count: row.count, not_paid:row.not_paid, paided:row.paided, total_price: row.total_price };
         });
-        console.log(monthlyData)
         res.json(monthlyData);
     });
 });
@@ -70,7 +69,7 @@ fetchRouter.get('/api/weekly-price', (req, res) => {
       SUM(IF(is_paid = true, price, 0)) AS paided,
       SUM(price) AS total_price
         FROM customer_data
-        WHERE date_time >= CURDATE() - INTERVAL WEEKDAY(CURDATE()) + 6 DAY
+        WHERE date_time >= CURDATE() - INTERVAL WEEKDAY(CURDATE()) + 0 DAY
         GROUP BY DAYOFWEEK(date_time)
         ORDER BY day_of_week;`;
 
@@ -84,8 +83,9 @@ fetchRouter.get('/api/weekly-price', (req, res) => {
             const adjustedDay = row.day_of_week === 1 ? 7 : row.day_of_week - 1;
             weeklyData[adjustedDay - 1] = { count: row.count, not_paid:row.not_paid, paided:row.paided, total_price: row.total_price };
         });
-
+        console.log(weeklyData)
         res.json(weeklyData);
+        
     });
 });
 

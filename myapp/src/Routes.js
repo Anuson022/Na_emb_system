@@ -30,6 +30,7 @@ import Secure_dashboard from "./Login_component/Secure_dashboard";
 import Secure_component from "./Login_component/Secure_component";
 import HomePage from "./CusPage/HomePage";
 import Shirt_graphic_cus from "./Shirt_graphic_cus_const";
+import HomeSuggest from "./CusPage/HomeSuggest";
 
 const Router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const Router = createBrowserRouter([
       {
         path: "Cus-Order-Check",
         element: <CusOrderCheck />,
+      },
+      {
+        path: "Cus-Home",
+        element: <HomeSuggest/>,
       },
     ],
   },

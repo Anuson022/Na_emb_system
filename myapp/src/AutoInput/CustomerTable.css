@@ -1,0 +1,224 @@
+.container_customer_table {
+  overflow-x: auto;
+}
+
+.container_customer_table table {
+
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+  font-size: clamp(1rem, 1vw, 10rem);
+tr:nth-child(even) {
+  background-color: rgba(211, 211, 211, 0.522);
+}
+}
+
+.table_head tr th,
+.table_body tr td {
+  padding: 1.7rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: black solid 1px;
+  color: #000000;
+  vertical-align: center;
+
+  text-align: center;
+
+
+  button {
+    padding: auto;
+    font-size: 1vw;
+  }
+}
+
+
+.table_head tr {
+  th {
+    background-color: #a3ffa1;
+
+  }
+}
+
+
+.info_text {
+
+  div {
+    background-color: whitesmoke;
+    width: 5rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: #000000 solid 1px;
+    border-radius: 3px;
+  }
+
+  div:hover {
+    background-color: grey;
+  }
+
+}
+.view-order
+{
+  background-color: whitesmoke;
+  width: 5rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: #000000 solid 1px;
+  border-radius: 3px;
+}
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.popup-inner {
+  background-color: white;
+  width: 12rem;
+  height: 10rem;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.popup-inner button {
+  margin: 10px;
+}
+
+.popup-shirt {
+  background-color: white;
+  width: 100rem;
+  max-width: 60rem;
+  height: 50rem;
+  border-radius: 5px;
+  padding: 2rem;
+    button
+    {
+      margin: 0rem 65em;
+    }
+
+  .Shirt-data
+  {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    width: 50rem;
+    border: #000000 solid 1px;
+    /*margin-top: 200px;*/
+    font-size: clamp(1.5rem,2vw,2rem);
+    
+  }
+  .Name-data
+  {
+    display: inline-grid;
+    grid-template-columns: 60% 40%;
+    div{display: flex;
+      align-items: center;border: #000000 solid 1px;
+      div{margin: 1rem; width: 2rem; height: 2rem;border-radius: 50%;}
+    }
+  }
+  .School1-data
+  {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    gap: clamp(1rem,1vw,2rem);
+    div{display: flex;
+      align-items: center;
+      border: #000000 solid 1px;
+      div{margin: 1rem; width: 2rem; height: 2rem;border-radius: 50%;}
+    }
+  }
+  .School2-data
+  {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    gap: clamp(1rem,1vw,2rem);
+    div{display: flex;
+      border: #000000 solid 1px;
+      align-items: center;border: #000000 solid 1px;
+      div{margin: 1rem; width: 2rem; height: 2rem;border-radius: 50%;}
+    }
+  }
+
+  .Dot-data
+  {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    gap: clamp(1rem,1vw,2rem);
+    div{display: flex;
+      align-items: center;
+      border: #000000 solid 1px;
+      div{margin: 1rem; width: 2rem; height: 2rem;border-radius: 50%;}
+    }
+  }
+
+}
+
+.popup-bill {
+  display: flex;
+  background-color: white;
+  width: 50rem;
+  min-width: 1rem;
+  max-width: 100rem;
+  height: 50rem;
+  border-radius: 5px;
+  padding: 2rem;
+  
+
+}
+.bill-data
+{
+  display: flex;
+  width: 100%;
+
+  
+}
+.bill-table {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+  overflow-x: auto;
+
+  font-family: Arial, sans-serif;
+  th:nth-child(1) {
+    width: 10%; /* Adjust the width as needed */}
+  th:nth-child(2) {
+    width: 35%; /* Adjust the width as needed */}
+  th:nth-child(3) {
+    width: 10%; /* Adjust the width as needed */}
+  th:nth-child(4) {
+    width: 10%; /* Adjust the width as needed */}
+  th:nth-child(5) {
+    width: 15%; /* Adjust the width as needed */}
+}
+
+.bill-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bill-table th,
+.bill-table td {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  text-align: left;
+
+}
+
+.bill-table th {
+  background-color: lightgreen;
+  text-align: left;
+
+}
+.bill-table td{text-align: left;}
+.sumprice{ td{ border: solid black 0px; background-color: lightgray;}}

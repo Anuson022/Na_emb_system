@@ -35,7 +35,7 @@ const render_dot1 = (dot_type, dot_amount) => {
       {dot_array.map((item, index) => {
         const re_index = dot_array.length - index;
         return (
-          <h1 style={{margin:'-1.5rem'}} key={index} className={"dot" + re_index} >
+          <h1 key={index} className={"dot" + re_index}>
             {item}
           </h1>
         );
@@ -69,11 +69,7 @@ const render_dot_school = (dot_type, dot_amount) => {
   if (dot_amount === "3") {
     dot_array = [dot_star, dot_star, dot_star];
   }
-  return (
-    <h1 className={"dot_school"}>
-      {dot_array}
-    </h1>
-  );
+  return <h1 className={"dot_school"}>{dot_array}</h1>;
 };
 const render_dot_name = (dot_type, dot_amount) => {
   var dot_star = "";
@@ -101,11 +97,7 @@ const render_dot_name = (dot_type, dot_amount) => {
   if (dot_amount === "3") {
     dot_array = [dot_star, dot_star, dot_star];
   }
-  return (
-    <h1 className={"dot_name"}>
-      {dot_array}
-    </h1>
-  );
+  return <h1 className={"dot_name"}>{dot_array}</h1>;
 };
 
 
@@ -133,12 +125,11 @@ function ShirtBill_PE({ cus_id, parent_name, phone_number, status })
   const Fetch_graphic = async() => 
     {
       try {
-        const response = await axios.get('/get_cusID', {
+        const response = await axios.get('/api/get_cusID', {
           params: {
             id: cus_id
           }
         });
-        //console.log(response.data[0])
         const object = JSON.parse(response.data[0].shirt);
         const object_pe = JSON.parse(response.data[0].PE);
         const object_scout = JSON.parse(response.data[0].scout);
@@ -364,7 +355,6 @@ function ShirtBill_PE({ cus_id, parent_name, phone_number, status })
   });
   const fetch_image = async () => {
     const res = await axios.post('/api/files');
-    console.log(res.data)
     Setimage(res.data);
 };
 
@@ -421,7 +411,7 @@ function ShirtBill_PE({ cus_id, parent_name, phone_number, status })
           dot_right: "hidden",
         }));
       }
-      if (PEdata.dot.position === "right_collar") {
+      if (PEdata.dot.position === "บนปกขวา") {
         set_dot_position_PE((data_position) => ({
           ...data_position,
           onschool: "hidden",
@@ -430,7 +420,7 @@ function ShirtBill_PE({ cus_id, parent_name, phone_number, status })
           dot_right: "dot_right",
         }));
       }
-      if (PEdata.dot.position === "left_collar") {
+      if (PEdata.dot.position === "บนปกซ้าย") {
         set_dot_position_PE((data_position) => ({
           ...data_position,
           onschool: "hidden",
@@ -470,7 +460,7 @@ function ShirtBill_PE({ cus_id, parent_name, phone_number, status })
                 {render_dot1(PEdata.dot.type, PEdata.dot.amount_dot)}
               </div>
             </div>
-            <div className="grid_name" style={{bottom:'31rem'}}>
+            <div className="grid_name">
               <div className="on_right">
                 <div
                   className={dot_position_class_PE.onschool}

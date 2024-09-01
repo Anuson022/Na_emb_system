@@ -341,7 +341,7 @@ app1.post("/cus_input", async (req, res) => {
   res.send('Success');
   //customer input
 });
-app1.post("/insert_customdata", async (req, res) => {
+app1.post("/api/insert_customdata", async (req, res) => {
   await console.log();
   const cus_data = req.body.formdata_cus;
   const Shirt_data = req.body.formdata;
@@ -369,7 +369,7 @@ app1.post("/update_customdata", async (req, res) => {
   res.json();
   //storefront input
 });
-app1.delete("/delete_cusdata/:id", async (req, res) => {
+app1.delete("/api/delete_cusdata/:id", async (req, res) => {
   //await console.log(req.body.popupData)
   const { id } = req.params;
   adm_delete(id,res);
@@ -409,7 +409,7 @@ app1.post("/search_cus2", async (req, res) => {
   }
 });
 
-app1.post("/search_cus3", async (req, res) => {
+app1.post("/api/search_cus3", async (req, res) => {
   const searchTerm = req.body.searchTerm;
   console.log(searchTerm);
   
@@ -429,7 +429,7 @@ app1.post("/search_cus3", async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-app1.post("/update_status", async (req, res) => {
+app1.post("/api/update_status", async (req, res) => {
   const ChangeStatus = req.body.change_status;
   const ID = req.body.change_id;
   console.log(ChangeStatus);
@@ -452,7 +452,7 @@ app1.post("/data_table1", async (req, res) => {
     }
   });
 });
-app1.get("/get_cusID", async (req, res) => {
+app1.get("/api/get_cusID", async (req, res) => {
   console.log(req.query);
   const query = `SELECT * FROM customer_data WHERE cus_id = ?`;
   try {

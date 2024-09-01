@@ -42,20 +42,22 @@ const Customer_table = () => {
 
   const [popup_delete, setPopupDelete] = useState(null);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
+  const [showPopupStatus, setShowPopupStatus] = useState(false);
 
   const handleShowPopup_view = async (
     cus_id,
+    info_detail,
     shirtInfo,
     shirt_PE,
     shirt_scout
   ) => {
     await setpopup_view(cus_id);
     await SetShirtData({
+      info: info_detail,
       shirt: shirtInfo,
       PE: shirt_PE,
       scout: shirt_scout,
     });
-    console.log();
     setshowpopup_view(true);
   };
   const handleShowPopup_bill = async (
@@ -78,10 +80,13 @@ const Customer_table = () => {
     setPopupDelete(cus_id);
     setShowPopupDelete(true);
   };
-
+  const handleShowPopupStatus = (cus_id) => {
+    setPopupDelete(cus_id);
+    setShowPopupStatus(true);
+  };
   const handleYesDelete = async () => {
     try {
-      const response = await axios.delete(`/delete_cusdata/${popup_delete}`);
+      const response = await axios.delete(`/api/delete_cusdata/${popup_delete}`);
       console.log("Data deleted successfully:", response.data);
       fetching_data(currentPage); // Refresh the orders list
     } catch (error) {
@@ -94,6 +99,7 @@ const Customer_table = () => {
     setshowpopup_delete(false);
     setshowpopup_view(false);
     setshowpopup_bill(false);
+    setShowPopupStatus(false)
   };
 
   useEffect(() => {
@@ -121,7 +127,7 @@ const Customer_table = () => {
   };
   const fetching_data = async (page) => {
     const response = await axios
-      .post("/search_cus2", { searchTerm })
+      .post("/api/search_cus2", { searchTerm })
       .then((response) => {
         setData(response.data);
         // Extract column headers from the data keys
@@ -137,7 +143,7 @@ const Customer_table = () => {
       const searchTerm = e.target.value;
       setSearchTerm(e.target.value);
       try {
-        const response = await axios.post("/search_cus2", { searchTerm });
+        const response = await axios.post("/api/search_cus2", { searchTerm });
         setData(response.data);
       } catch (error) {
         console.error("Error fetching search results:", error);
@@ -154,11 +160,11 @@ const Customer_table = () => {
   const HandleStatus = async (cus_id, status) => {
     const change_id = cus_id;
     const change_status = status;
-    const update_status = await axios.post("/update_status", {
+    const update_status = await axios.post("/api/update_status", {
       change_id,
       change_status,
     });
-    alert(update_status.data);
+    handleShowPopupStatus(cus_id)
     fetching_data(currentPage);
   };
   const IsPaidReturn = (is_paid) => {
@@ -207,7 +213,8 @@ const Customer_table = () => {
           <tbody className="table_body">
             {data ? (
               currentItems.map((item) => {
-                const shirtDetails = JSON.parse(item.shirt);
+                const shirt_info = item.info
+                const shirt_ = JSON.parse(item.shirt);
                 const shirt_PE = JSON.parse(item.PE);
                 const shirt_scout = JSON.parse(item.scout);
                 const Order_obj = JSON.parse(item.cus_order);
@@ -223,7 +230,8 @@ const Customer_table = () => {
                         onClick={() =>
                           handleShowPopup_view(
                             item.cus_id,
-                            shirtDetails,
+                            shirt_info,
+                            shirt_,
                             shirt_PE,
                             shirt_scout
                           )
@@ -308,12 +316,21 @@ const Customer_table = () => {
                   <span>ปิดหน้าแสดงข้อมูลการปัก</span>
                   {<FontAwesomeIcon icon={faXmark} />}
                 </button>
-                <br></br>
-                <br></br>
+          
               </div>
               <div>
 
               </div>
+              <div className="Shirt-data" style={{}}>
+                  <p style={{wordWrap:'break-word',
+                    whiteSpace:'-moz-pre-wrap',
+                    whiteSpace:'pre-wrap'
+                    }}>
+                    <strong>รายละเอียด : </strong>
+                    <span>{ShirtData.info}</span>
+                  </p>
+              </div>
+              {ShirtData.shirt?.Selected &&
               <div className="Shirt-data">
                 <h6 style={{margin:"0 0rem",textAlign:'center'}}>เสื้อนักเรียน</h6>
                 <div>
@@ -324,16 +341,28 @@ const Customer_table = () => {
                       <span>{ShirtData.shirt?.SName.fullname}</span>
                     </p>
                   )}
-                  {ShirtData.shirt.SSchool.name && (
+                  {ShirtData.shirt?.SUndername.under_name && (
                     <p>
-                      <strong>ตัวย่อโรงเรียน : </strong>
-                      <span>{ShirtData.shirt?.SSchool.name}</span>
+                      <strong>การปักใต้ชื่อ : </strong>
+                      <span>{ShirtData.shirt?.SUndername.under_name}</span>
                     </p>
                   )}
                   {ShirtData.shirt?.SLogo.school_name && (
                     <p>
                       <strong>โลโก้โรงเรียน : </strong>
                       <span>{ShirtData.shirt?.SLogo.school_name}</span>
+                    </p>
+                  )}
+                  {ShirtData.shirt?.SSchool.name && (
+                    <p>
+                      <strong>ตัวย่อโรงเรียน : </strong>
+                      <span>{ShirtData.shirt?.SSchool.name}</span>
+                    </p>
+                  )}
+                  {ShirtData.shirt?.SUnderschool.under_school && (
+                    <p>
+                      <strong>ตัวย่อโรงเรียน : </strong>
+                      <span>{ShirtData.shirt?.SUnderschool.under_school}</span>
                     </p>
                   )}
                   {ShirtData.shirt?.dot.type && (
@@ -346,11 +375,12 @@ const Customer_table = () => {
                   )}
                 </div>
               </div>
+              }
+              {ShirtData.PE?.Selected &&
               <div className="Shirt-data">
               <h6 style={{margin:"0 0rem" ,textAlign:'center'}}>เสื้อพละ</h6>
                 <div>
                   <ShirtOrderPE cus_id={popup_view} />
-
                   {ShirtData.PE?.SName.fullname && (
                     <p>
                       <strong>ชื่อ-นามสกุล : </strong>
@@ -368,7 +398,9 @@ const Customer_table = () => {
                 </div>
               
               </div>
+              }
               
+              {ShirtData.scout?.Selected &&
               <div className="Shirt-data">
               <h6 style={{margin:"0 0rem", textAlign:'center'}}>เสื้อลูกเสือ&เนตรนารี&ยุวกาชาติ</h6>
               <div>
@@ -415,6 +447,7 @@ const Customer_table = () => {
                 )}
               </div>
               </div>
+              }
             </div>
           </div>
         )}
@@ -511,7 +544,23 @@ const Customer_table = () => {
           </button>
         </div>
       )}
-      {showPopupDelete && (
+      {showPopupStatus && (
+          <SweetAlert
+            success
+            title="เปลี่ยนสถานะสำเร็จ"
+            onConfirm={handleNo}
+            onCancel={handleNo}
+            confirmBtnText="ตกลง"
+            confirmBtnCssClass="btn-custom"
+            customClass="custom-sweetalert" // Custom class
+            style={{ display: "flex", minWidth: "15rem", width: "20rem" }}
+          >
+            <div style={{ backgroundColor: "#f0f0f0", padding: "1rem", textAlign: "center" }}>
+    รหัสลูกค้า : {popup_delete}
+  </div>
+          </SweetAlert>
+      )}
+            {showPopupDelete && (
         <SweetAlert
           warning
           title="ลบออเดอร์หรือไม่"

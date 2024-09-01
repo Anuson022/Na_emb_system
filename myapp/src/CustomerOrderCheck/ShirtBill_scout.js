@@ -17,12 +17,11 @@ function ShirtBill_scout({ cus_id, parent_name, phone_number, status })
   const Fetch_graphic = async() => 
     {
       try {
-        const response = await axios.get('/get_cusID', {
+        const response = await axios.get('/api/get_cusID', {
           params: {
             id: cus_id
           }
         });
-        //console.log(response.data[0])
         const object = JSON.parse(response.data[0].shirt);
         const object_pe = JSON.parse(response.data[0].PE);
         const object_scout = JSON.parse(response.data[0].scout);
@@ -246,7 +245,6 @@ function ShirtBill_scout({ cus_id, parent_name, phone_number, status })
   });
   const fetch_image = async () => {
     const res = await axios.post('/api/files');
-    console.log(res.data)
     Setimage(res.data);
 };
 const [SNamePositionClass_Scout, SetSNamePositionClass_Scout] = useState({
@@ -272,7 +270,6 @@ const [SNamePositionClass_Scout, SetSNamePositionClass_Scout] = useState({
     {
       SetScoutImage(Scoutdata.path)
       const colorofscout = `${Scoutdata.SName.color_border}_${Scoutdata.SName.cloth}_${Scoutdata.SName.color}`;
-      console.log(colorofscout)
       SetColorSelect(colorofscout)
     },[Scoutdata.SName])
   
@@ -288,7 +285,7 @@ const [SNamePositionClass_Scout, SetSNamePositionClass_Scout] = useState({
             <img className="shirt_img" src={ScoutImage} alt="" />
             <div className="grid_dot">
             </div>
-            <div className="grid_name" style={{bottom:'29rem'}}>
+            <div className="grid_name">
               <div className="on_right">
                 
                 <div
@@ -296,9 +293,8 @@ const [SNamePositionClass_Scout, SetSNamePositionClass_Scout] = useState({
                   style={{ color: Scoutdata.SName.color ,marginTop:'-0.5rem',marginRight:'-0.5rem',
                     backgroundColor:Scoutdata.SName.cloth}}
                 >
-                  <div style={{borderStyle:'solid',borderWidth:'4px',
-                    borderColor:Scoutdata.SName.color_border,fontSize:'0.7rem',
-                    width:'auto',minWidth:'8rem',maxWidth:'10rem',height:'2.2rem'}}>
+                  <div className="custom-border" 
+                      style={{ borderColor: Scoutdata.SName.color_border }}>
                   {render_h1(Scoutdata.SName.fullname)}
                 </div>
                 </div>

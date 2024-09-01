@@ -105,27 +105,35 @@ function Shirt_graphic_cus_PE({
                   />
                 </div>
                 <br />
-              <div style={{display:'flex',justifyContent:'space-around'}}>
-              <div style={{display:'flex',gap:'1rem',alignItems:'center'}}>
+                <div className="flex-container">
+            <div className="select-container">
                 <h2>เสื้อ :</h2>
-                <select name="" id="" value={Scoutdata.path} onChange={HandleScoutImage} style={{          
-                  height: '3rem',padding: '0rem',fontSize: '1.5rem',fontFamily:'RSU_regular'}}>
-                  <option value="/image_folder/L_Shirt.png">ลูกเสือ</option>
-                  <option value="/image_folder/N_Shirt.png">เนตรนารี</option>
-                  <option value="/image_folder/U_Shirt.png">ยุวกาชาติ</option>
+                <select
+                    name=""
+                    id=""
+                    value={Scoutdata.path}
+                    onChange={HandleScoutImage}
+                    className="select-dropdown"
+                >
+                    <option value="/image_folder/L_Shirt.png">ลูกเสือ</option>
+                    <option value="/image_folder/N_Shirt.png">เนตรนารี</option>
+                    <option value="/image_folder/U_Shirt.png">ยุวกาชาติ</option>
                 </select>
-              </div>
-              <div style={{display:'flex',gap:'1rem',alignItems:'center'}}>
+            </div>
+            <div className="select-container">
                 <h2>รูปแบบสีของการปัก :</h2>
-                <select value={ColorSelect} onChange={HandleColorScout} style={{          
-                  height: '3rem',padding: '0rem',fontSize: '1.5rem',fontFamily:'RSU_regular'}}>
-                  <option value="#FCF5E5_white_blue">กรอบสีขาว ผ้าสีขาว ชื่อสีน้ำเงิน</option>
-                  <option value="#FCF5E5_white_black">กรอบสีขาว ผ้าสีขาว ชื่อสีดำ</option>
-                  <option value="red_lightcoral_yellow">กรอบสีแดง ผ้าสีแดง ชื่อสีเหลือง</option>
-                  <option value="black_#36454F_yellow">กรอบสีดำ ผ้าสีดำ ชื่อสีเหลือง</option>
+                <select
+                    value={ColorSelect}
+                    onChange={HandleColorScout}
+                    className="select-dropdown"
+                >
+                    <option value="#FCF5E5_white_blue">กรอบสีขาว ผ้าสีขาว ชื่อสีน้ำเงิน</option>
+                    <option value="#FCF5E5_white_black">กรอบสีขาว ผ้าสีขาว ชื่อสีดำ</option>
+                    <option value="red_lightcoral_yellow">กรอบสีแดง ผ้าสีแดง ชื่อสีเหลือง</option>
+                    <option value="black_#36454F_yellow">กรอบสีดำ ผ้าสีดำ ชื่อสีเหลือง</option>
                 </select>
-              </div>
-              </div>
+            </div>
+        </div>
 
 
 
@@ -141,7 +149,7 @@ function Shirt_graphic_cus_PE({
 
         <div className="body_shirt">
           <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'20rem'}}>
-            <h2 style={{fontSize:'2rem'}}>รูปแบบกราฟิค</h2>
+            <h2 className="h2_g">รูปแบบกราฟิก</h2>
             <button onClick={() => handleRemove("เสื้อลูกเสือ&เนตรนารี")}>นำออก</button>
           </div>
 
@@ -157,9 +165,8 @@ function Shirt_graphic_cus_PE({
                   style={{ color: Scoutdata.SName.color ,marginTop:'-0.5rem',marginRight:'-0.5rem',
                     backgroundColor:Scoutdata.SName.cloth}}
                 >
-                  <div style={{borderStyle:'solid',borderWidth:'4px',
-                    borderColor:Scoutdata.SName.color_border,fontSize:'0.75rem',
-                    width:'auto',minWidth:'8rem',maxWidth:'10rem',height:'2.2rem'}}>
+                  <div className="custom-border" 
+                      style={{ borderColor: Scoutdata.SName.color_border }}>
                   {render_h1(Scoutdata.SName.fullname)}
                 </div>
                 </div>

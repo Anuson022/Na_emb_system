@@ -114,7 +114,7 @@ function ShirtComponent({cus_id})
   const Fetch_graphic = async() => 
     {
       try {
-        const response = await axios.get('/get_cusID', {
+        const response = await axios.get('/api/get_cusID', {
           params: {
             id: cus_id
           }
