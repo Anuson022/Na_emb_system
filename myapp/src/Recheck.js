@@ -22,7 +22,7 @@ const Recheck = () => {
   const [FetchData, SetFetchData] = useState({});
   const Fetch_graphic = async () => {
     try {
-      const response = await axios.get("/get_cusID", {
+      const response = await axios.get("/api/get_cusID", {
         params: {
           id: formdata_cus.cus_id,
         },
@@ -643,7 +643,7 @@ const Recheck = () => {
     )
       { return SetShowIncomplete(true) }
     try {
-      const response = await axios.post("/update_customdata", {
+      const response = await axios.post("/api/update_customdata", {
         formdata_cus,
         formdata,
         PEdata,

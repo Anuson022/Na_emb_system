@@ -8,7 +8,7 @@ const { json } = require('body-parser');
 const app_router = express.Router();
 
 // Route to upload to profile directory
-app_router.post('/AcountCreate', (req, res) => {
+app_router.post('/api/AcountCreate', (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.send('No files were uploaded. no_data');
   }

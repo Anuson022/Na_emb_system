@@ -7,12 +7,23 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const YearlyPriceChart = () => {
     const [data, setData] = useState([]);
-    
+    const [Data, SetData] = useState();
     useEffect(() => {
         axios.get('/api/yearly-price')
             .then(response => {
                 setData(response.data);console.log(response.data);
-                
+                const data1 = response.data;
+                const totals = data1.reduce(
+                  (acc, curr) => {
+                    acc.count += curr.count;
+                    acc.not_paid += curr.not_paid;
+                    acc.paided += curr.paided;
+                    acc.total_price += curr.total_price;
+                    return acc;
+                  },
+                  { count: 0, not_paid: 0, paided: 0, total_price: 0 }
+                );
+                SetData(totals);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -49,7 +60,8 @@ const YearlyPriceChart = () => {
     };
 
     return (
-        <div style={{minWidth:'20rem', margin: '0 auto' }}>
+    <>
+      <div style={{minWidth:'20rem', margin: '0 auto' }}>
         <Bar
           data={chartData}
           options={{
@@ -91,6 +103,12 @@ const YearlyPriceChart = () => {
           style={{ height: "40rem" }}
         />
       </div>
+      <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <h1>ราคาที่ยังไม่ชำระเงิน {Data?.not_paid || 0} บาท</h1>
+        <h1>ราคาที่ชำระเงินแล้ว {Data?.paided || 0} บาท</h1>
+        <h1>ราคารวมทั้งหมด {Data?.total_price || 0} บาท</h1>
+      </div>
+    </>
     );
 };
 

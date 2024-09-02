@@ -40,7 +40,7 @@ function UserSAED() {
   
   const NavigateUserto = useNavigate();
   const FetchingUser = async () => {
-    const res = await axios.post("/users_account", Search);
+    const res = await axios.post("/api/users_account", Search);
     SetFetchUsers(res.data);
     console.log(res.data);
   };
@@ -50,7 +50,7 @@ function UserSAED() {
 
   const HandleSearch = async (e) => {
     const searching = e.target.value;
-    const res = await axios.post("/users_account", { searching });
+    const res = await axios.post("/api/users_account", { searching });
     SetFetchUsers(res.data);
     console.log(res.data);
   };
@@ -59,7 +59,7 @@ function UserSAED() {
     NavigateUserto("/Admin_dashboard/UserEdit", { state: { UserID } });
   };
   const UserDelete = async () => {
-    await axios.delete(`/user_delete/${EditID}`);
+    await axios.delete(`/api/user_delete/${EditID}`);
     setShowDelete(false)
     FetchingUser();
   };
@@ -100,7 +100,7 @@ function UserSAED() {
                     <td>{item.id}</td>
                     <td><img style={{width:'5rem',height:'5rem'}} src={`/profile/${item.profile.split("/").pop()}`} alt="" srcset="" /></td>
                     <td>{item.username}</td>
-                    <td>{item.password}</td>
+                    <td>{/*item.password*/}password...</td>
                     <td>{item.role}</td>
                     <td>
                       <div style={{display:'flex',gap:'1rem'}}>

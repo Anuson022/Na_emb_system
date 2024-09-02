@@ -5,14 +5,15 @@ import 'chart.js/auto';
 
 const App = () => {
     const [chartData, setChartData] = useState(null);
-
+    const [Data, SetData] = useState(0);
     useEffect(() => {
         axios.get('/api/weekly-data')
             .then(response => {
                 const data = response.data;
-                console.log(data)
                 const daysOfWeek = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
-
+                const data1 = response.data;
+                const sum = data1.reduce((acc, curr) => acc + curr, 0);
+                SetData(sum);
                 setChartData({
                     labels: daysOfWeek,
                     datasets: [
@@ -36,6 +37,7 @@ const App = () => {
     }
 
     return (
+        <>
         <div style={{minWidth:'20rem', margin: '0 auto' }}>
             <Line data={chartData} 
         options={{
@@ -78,6 +80,10 @@ const App = () => {
           style={{ height: "40rem" }}  // Set a specific height to ensure responsiveness
             />
         </div>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <h1>จำนวน {Data} คน</h1>
+        </div>
+        </>
     );
 };
 

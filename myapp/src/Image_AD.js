@@ -29,16 +29,21 @@ function Image_AD() {
 
     const onFileUpload = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('file', FileImage);
-        formData.append('name', FileName);
+        try {
+            const formData = new FormData();
+            formData.append('file', FileImage);
+            formData.append('name', FileName);
+    
+            await axios.post('/api/upload', formData);
+            fetchFiles();
+        } catch (error) {
+            
+        }
 
-        await axios.post('/upload', formData);
-        fetchFiles();
     };
 
     const onDeleteFile = async (id) => {
-        await axios.delete(`/files/${id}`);
+        await axios.delete(`/api/files/${id}`);
         fetchFiles();
     };
 
@@ -58,23 +63,13 @@ function Image_AD() {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
+        <>
+        <div style={{backgroundColor:'#6AB900',color:'white',padding:'0.1rem 1rem'}}><h2>อัพโหลดรูปภาพโลโก้</h2></div>
         <div className='AD_container'>
-            <div className='Image_upload'>
-                <form onSubmit={onFileUpload}>
-                    <h2>อัพโหลดรูปภาพโลโก้</h2>
-                    <input 
-                        type="text" 
-                        placeholder="Enter file name" 
-                        value={FileName} 
-                        onChange={onFileNameChange} 
-                    />
-                    <input type="file" onChange={onFileChange} />
-                    <button type='submit'>Upload!</button>
-                </form>
-            </div>
+
             <div className='Image_show'>
-                <label htmlFor="">Search</label>
-                <input type="text" onChange={handleSearch} />
+                <input type="text" className='search-input' style={{width:'100%'}} onChange={handleSearch} 
+                placeholder="ค้นหา..."/>
                 <div className='Image_grid'>
                     {currentItems.map((file) => (
                         <div className='Image_item' key={file.id}>
@@ -83,7 +78,7 @@ function Image_AD() {
                                 alt={file.name} 
                             />
                             <br />
-                            {file.name}
+                            <label htmlFor="">{file.name}</label>
                             <br />
                             <button onClick={() => onDeleteFile(file.id)}>ลบรูปภาพ</button>
                         </div>
@@ -102,7 +97,26 @@ function Image_AD() {
                     ))}
                 </div>
             </div>
+            <br />
+            <div className='Image_upload'>
+                <form onSubmit={onFileUpload}>
+                    <input className='search-input'
+                        type="text" 
+                        placeholder="โปรดใส่ชื่อไฟล์" 
+                        value={FileName} 
+                        onChange={onFileNameChange} 
+                    />
+                    <button type='submit'>อัพโหลด</button>
+                    <div>
+                        
+                    </div>
+                    <input style={{fontFamily:'RSU_regular',fontSize:'1.5rem'}} type="file" onChange={onFileChange} />
+                    <br />
+                    
+                </form>
+            </div>
         </div>
+        </>
     );
 }
 

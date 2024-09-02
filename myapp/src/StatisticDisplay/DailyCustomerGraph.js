@@ -4,13 +4,15 @@ import axios from 'axios';
 
 const HourlyGraphToday = () => {
     const [chartData, setChartData] = useState(null);
-
+    const [Data, SetData] = useState(0);
     useEffect(() => {
         axios.get('/api/hourly-data-today')
             .then(response => {
                 const data = response.data;
                 const labels = Array.from({ length: 13 }, (_, i) => `${i + 8}:00`);
-                console.log(response.data)
+                const data1 = response.data;
+                const sum = data1.reduce((acc, curr) => acc + curr, 0);
+                SetData(sum);
                 setChartData({
                     labels: labels,
                     datasets: [
@@ -33,6 +35,7 @@ const HourlyGraphToday = () => {
     if (!chartData) return <div>Loading...</div>;
 
     return (
+        <>
         <div style={{minWidth:'20rem', margin: '0 auto' }}>
             <Line data={chartData}
 options={{
@@ -76,6 +79,10 @@ options={{
             style={{ height: "30rem" }}
             />
         </div>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <h1>จำนวน {Data} คน</h1>
+        </div>
+        </>
     );
 };
 

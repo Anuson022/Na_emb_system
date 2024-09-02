@@ -12,7 +12,7 @@ function UserEdit({ID}) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const FetchData = async() =>
     {
-      const response = await axios.post("/account_edit_get",{ID})
+      const response = await axios.post("/api/account_edit_get",{ID})
       console.log(ID)
       console.log(response.data)
       const User_obj = response.data[0]
@@ -41,7 +41,7 @@ function UserEdit({ID}) {
       formData.append("EditID", ID);
 
       console.log(AccountData);
-      const res = await axios.post("/AcountEdit", formData);
+      const res = await axios.post("/api/AcountEdit", formData);
       console.log(res.data);
       setModalIsOpen(false); // Close the modal after submission
     };
@@ -60,10 +60,11 @@ function UserEdit({ID}) {
     };
   return (
     <div>
+        <div style={{backgroundColor:'#FDDA0D',padding:'0.1rem 1rem',borderTopLeftRadius:'10px',borderTopRightRadius:'10px'}}>
+          <h1>แก้ไขบัญชีผู้ใช้งาน</h1></div>
         <form onSubmit={HandleSubmit} className="UserAdd-form">
           <fieldset>
-            <legend>
-              <h1>แก้ไขบัญชีผู้ใช้งาน</h1>
+            <legend >
             </legend>
             <div className="UserAdd-form-main">
               <div className="Form-Profile">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
-
+//not use
 const App = () => {
     const [chartData, setChartData] = useState(null);
 

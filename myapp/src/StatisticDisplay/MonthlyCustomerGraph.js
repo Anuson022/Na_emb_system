@@ -4,13 +4,15 @@ import axios from 'axios';
 
 const MonthlyGraph = () => {
     const [chartData, setChartData] = useState(null);
-
+    const [Data, SetData] = useState(0);
     useEffect(() => {
         axios.get('/api/monthly-data')
             .then(response => {
                 const data = response.data;
                 const labels = Array.from({ length: 31 }, (_, i) => `${i + 1}`);
-                
+                const data1 = response.data;
+                const sum = data1.reduce((acc, curr) => acc + curr, 0);
+                SetData(sum);
                 setChartData({
                     labels: labels,
                     datasets: [
@@ -33,6 +35,7 @@ const MonthlyGraph = () => {
     if (!chartData) return <div>Loading...</div>;
 
     return (
+      <>
         <div style={{minWidth:'20rem', margin: '0 auto' }}>
             <Line data={chartData}
                     options={{
@@ -75,6 +78,10 @@ const MonthlyGraph = () => {
             style={{ height: "30rem" }}
             />
         </div>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <h1>จำนวน {Data} คน</h1>
+        </div>
+      </>
     );
 };
 

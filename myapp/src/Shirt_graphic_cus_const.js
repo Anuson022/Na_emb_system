@@ -426,7 +426,7 @@ function Shirt_graphic_cus() {
       return SetShowIncomplete(true);
     }
     try {
-      const responses = await axios.post("/cus_input", {
+      const responses = await axios.post("/api/cus_input", {
         formdata,
         PEdata,Scoutdata,
         formdata_info,

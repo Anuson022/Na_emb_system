@@ -2,9 +2,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
+    *{font-family: "RSU_regular";}
 }
 
 .Image_upload {
@@ -12,6 +12,40 @@
     text-align: center;
     margin-bottom: 2rem;
 }
+
+.custom-file-input {
+    position: relative;
+    display: inline-block;
+    
+  }
+  
+  .custom-file-input input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+  }
+  
+  .custom-file-input label {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding:0.5rem;
+    background-color: #007bff; /* Customize background color */
+    color: #fff; /* Text color */
+    text-align: center;
+    line-height: 40px; /* Align text vertically */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-file-input label:hover {
+    background-color: #0056b3; /* Darker on hover */
+  }
 
 .Image_upload input[type="text"] {
     padding: 0.5rem;
@@ -26,9 +60,12 @@
 }
 
 .Image_upload button {
-    padding: 0.5rem 1rem;
+    padding: 1rem 2rem;
     background-color: #4CAF50;
+    font-family: 'RSU_regular';
     color: white;
+    font-size: 1.5rem;
+    font-weight: 500;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -39,11 +76,12 @@
 }
 
 .Image_show {
-    width: 100%;
+    width: 60rem;
+    *{font-family: 'RSU_regular';font-size: 1.5rem;}
 }
 
 .Image_show label {
-    font-size: 1.2rem;
+    
     margin-bottom: 0.5rem;
 }
 

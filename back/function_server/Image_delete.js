@@ -6,7 +6,7 @@ const pool = require('../na_db'); // Adjust the path as necessary
 const deleteRouter = express.Router();
 
 // Delete file endpoint
-deleteRouter.delete('/files/:id', (req, res) => {
+deleteRouter.delete('/api/files/:id', (req, res) => {
   let id = req.params.id;
   let sql = "SELECT * FROM files WHERE id = ?";
   pool.query(sql, [id], (err, results) => {

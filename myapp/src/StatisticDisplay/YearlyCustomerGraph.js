@@ -5,12 +5,14 @@ import 'chart.js/auto';
 
 const App = () => {
     const [chartData, setChartData] = useState(null);
-
+    const [Data, SetData] = useState(0);
     useEffect(() => {
         axios.get('/api/yearly-data')  // Change to the new API endpoint
             .then(response => {
                 const data = response.data;
-
+                const data1 = response.data;
+                const sum = data1.reduce((acc, curr) => acc + curr, 0);
+                SetData(sum);
                 const monthsOfYear = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
 
                 setChartData({
@@ -35,6 +37,7 @@ const App = () => {
     }
 
     return (
+      <>
         <div style={{minWidth:'20rem', margin: '0 auto' }}>
             <Line data={chartData}
                     options={{
@@ -77,6 +80,10 @@ const App = () => {
             style={{ height: "30rem" }}
             />
         </div>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <h1>จำนวน {Data} คน</h1>
+        </div>
+      </>
     );
 };
 

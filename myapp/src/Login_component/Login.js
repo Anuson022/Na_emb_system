@@ -20,7 +20,7 @@ function Login() {
         {
             
             try {
-                const login_data = await axios.post("/na_login",{Username,Password})
+                const login_data = await axios.post("/api/na_login",{Username,Password})
                 const Token = login_data.data.token
                 const UserData = login_data.data.user
                 if(Token != null && UserData != null)

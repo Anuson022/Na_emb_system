@@ -7,7 +7,7 @@ const pool = require('../na_db'); // Adjust the path as necessary
 const app_router = express.Router();
 
 // Upload endpoint
-app_router.post('/upload', (req, res) => {
+app_router.post('/api/upload', (req, res) => {
   if (!req.files || !req.body.name) {
     return res.status(400).send('No files or name were uploaded.');
   }

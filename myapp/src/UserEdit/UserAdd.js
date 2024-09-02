@@ -27,7 +27,7 @@ function UserAdd() {
     formData.append("AccountData", JSON.stringify(AccountData));
     
     console.log(AccountData);
-    const res = await axios.post("/AcountCreate", formData);
+    const res = await axios.post("/api/AcountCreate", formData);
     console.log(res.data);
     setModalIsOpen(false);
   };
@@ -47,10 +47,14 @@ function UserAdd() {
 
   return (
     <div>
+        <div style={{backgroundColor:'#2ea44f',color:'white',
+          padding:'0.1rem 1rem',borderTopLeftRadius:'10px',borderTopRightRadius:'10px'}}>
+        <h1>สร้างบัญชีผู้ใช้งาน</h1>
+          </div>
         <form onSubmit={HandleSubmit} className="UserAdd-form">
           <fieldset>
             <legend>
-              <h1>สร้างบัญชีผู้ใช้งาน</h1>
+              
             </legend>
             <div className="UserAdd-form-main">
               <div className="Form-Profile">

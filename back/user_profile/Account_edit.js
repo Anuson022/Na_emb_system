@@ -9,7 +9,7 @@ const fs = require('fs');
 const app_router = express.Router();
 
 // API endpoint to fetch user data
-app_router.post('/account_edit_get', (req, res) => {
+app_router.post('/api/account_edit_get', (req, res) => {
   const userId = req.body.ID; // assuming you're sending the user ID in the request body
   // SQL query to fetch user data by ID
   const query = 'SELECT * FROM users WHERE id = ?';
@@ -25,7 +25,7 @@ app_router.post('/account_edit_get', (req, res) => {
   });
 });
 // Route to upload to profile directory
-app_router.post('/AcountEdit', (req, res) => {
+app_router.post('/api/AcountEdit', (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     const {username,password,role} = JSON.parse(req.body.AccountData)
     const ID = req.body.EditID

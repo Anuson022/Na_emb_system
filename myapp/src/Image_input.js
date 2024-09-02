@@ -9,7 +9,7 @@ const Image_input = () => {
     const [testImage, setTestImage] = useState(null);
 
     const fetchFiles = async () => {
-        const res = await axios.get('/files');
+        const res = await axios.get('/api/files');
         setFiles(res.data);
     };
 
@@ -30,12 +30,12 @@ const Image_input = () => {
         formData.append('file', file);
         formData.append('name', fileName);
 
-        await axios.post('/upload', formData);
+        await axios.post('/api/upload', formData);
         fetchFiles();
     };
 
     const onDeleteFile = async (id) => {
-        await axios.delete(`/files/${id}`);
+        await axios.delete(`/api/files/${id}`);
         fetchFiles();
     };
 

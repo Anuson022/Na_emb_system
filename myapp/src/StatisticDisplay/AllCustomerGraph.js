@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const MonthlyGraph = () => {
-    const [monthlyTotal, setMonthlyTotal] = useState(null);
+    /*const [monthlyTotal, setMonthlyTotal] = useState(null);
 
     useEffect(() => {
         axios.get('http://localhost:3001/api/monthly-data-sum')
@@ -21,7 +21,7 @@ const MonthlyGraph = () => {
         <div>
             <h2>Total Data for This Month: {monthlyTotal}</h2>
         </div>
-    );
+    );*/
 };
 
 export default MonthlyGraph;

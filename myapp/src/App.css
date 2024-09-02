@@ -32,7 +32,7 @@
 .custom-sweetalert
 {
   font-family: 'RSU_Regular';
-  font-size: 2rem;
+  font-size: 1.5rem;
 
 }
 .custom-sweetalert .btn-custom {
@@ -41,7 +41,7 @@
   cursor: pointer;
   min-width: 80px; /* Ensures consistent button width */
   background-color: #007bff;
-  font-size: 3rem;
+  font-size: 2rem;
   text-decoration: none;
 
   
