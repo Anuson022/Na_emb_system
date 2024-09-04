@@ -37,9 +37,14 @@ function Login() {
                 console.log(error)
             }
         }
-
+        useEffect(() => {
+            document.body.classList.add("body_of_login");
+            return () => {
+              document.body.classList.remove("body_of_login");
+            };
+          }, []);
   return (
-    <div className='Login-body'>
+    <div style={{margin:'0'}} className='Login-body'>
         <div className='Login-warper'>
             <h1>Login</h1>
             <div className='Login-container'>

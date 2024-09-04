@@ -1,6 +1,4 @@
 const mysql1 = require('mysql');
-
-
 const { DB_HOST, DB_USER, DB_PASS, DB_NAME } = process.env;
 
 
