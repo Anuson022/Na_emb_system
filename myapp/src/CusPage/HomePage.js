@@ -54,77 +54,29 @@ function HomePage() {
         </ul>
       </div>
       <Outlet />
-      <footer
-        style={{
-          margin: "0 auto",
-          fontFamily: "RSU_regular",
-          minWidth: "70rem",
-          backgroundColor: "#6AB187",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "2rem",
-          }}
-        >
-          <FontAwesomeIcon
-            icon={faLocationDot}
-            style={{ fontSize: "5rem", color: "red", display: "flex" }}
-          />
-          <h1 style={{ textAlign: "center" }}>ร้าน Na การปัก</h1>
-          <h1 style={{ textAlign: "center", marginTop: "-1rem" }}>
-            128 ถนน เจริญสวัสดิ์ ตำบล ท่าไม้ อำเภอกระทุ่มแบน สมุทรสาคร 74110
-          </h1>
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            height: "auto",
-            backgroundColor: "#6AB187",
-            padding: "2rem",
-            gap: "2rem",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FontAwesomeIcon icon={faPhone} style={{ fontSize: "5rem" }} />
-            <h1 style={{ textAlign: "center" }}>เบอร์โทร : 0851914196</h1>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FontAwesomeIcon icon={faFacebook} style={{ fontSize: "5rem" }} />
-            <h1 style={{ textAlign: "center" }}>Facebook : Pit Na</h1>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FontAwesomeIcon icon={faLine} style={{ fontSize: "5rem" }} />
-            <h1 style={{ textAlign: "center" }}>Line : @na_karn_puk</h1>
-          </div>
-        </div>
-      </footer>
+      <footer className="footer">
+  <div className="footer-content">
+    <FontAwesomeIcon icon={faLocationDot} className="footer-icon location-icon" />
+    <h1 className="footer-title">ร้าน Na การปัก</h1>
+    <h1 className="footer-address">
+      128 ถนน เจริญสวัสดิ์ ตำบล ท่าไม้ อำเภอกระทุ่มแบน สมุทรสาคร 74110
+    </h1>
+  </div>
+  <div className="footer-contact">
+    <div className="contact-item">
+      <FontAwesomeIcon icon={faPhone} className="footer-icon" />
+      <h1 className="contact-info">เบอร์โทร : 0851914196</h1>
+    </div>
+    <div className="contact-item">
+      <FontAwesomeIcon icon={faFacebook} className="footer-icon" />
+      <h1 className="contact-info">Facebook : Pit Na</h1>
+    </div>
+    <div className="contact-item">
+      <FontAwesomeIcon icon={faLine} className="footer-icon" />
+      <h1 className="contact-info">Line : @na_karn_puk</h1>
+    </div>
+  </div>
+</footer>
     </div>
   );
 }

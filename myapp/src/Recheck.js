@@ -374,7 +374,7 @@ const Recheck = () => {
           dot_right: "hidden",
         }));
       }
-      if (formdata.dot.position === "right_collar") {
+      if (formdata.dot.position === "บนปกขวา") {
         set_dot_position((data_position) => ({
           ...data_position,
           onschool: "hidden",
@@ -383,7 +383,7 @@ const Recheck = () => {
           dot_right: "dot_right",
         }));
       }
-      if (formdata.dot.position === "left_collar") {
+      if (formdata.dot.position === "บนปกซ้าย") {
         set_dot_position((data_position) => ({
           ...data_position,
           onschool: "hidden",

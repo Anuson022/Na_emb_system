@@ -15,11 +15,11 @@ const render_dot1 = (dot_type, dot_amount) => {
   var font_size = {};
   if (dot_type === "จุด") {
     dot_star = "•";
-    font_size = { fontSize: "1.7rem" };
+    font_size = {/* fontSize: "1.7rem" */};
   }
   if (dot_type === "ดาว") {
     dot_star = "★";
-    font_size = { fontSize: "1.6rem" };
+    font_size = "star_fix"
   }
   if (dot_amount === "1") {
     dot_array = ["\u00A0", "\u00A0", dot_star];
@@ -35,7 +35,7 @@ const render_dot1 = (dot_type, dot_amount) => {
       {dot_array.map((item, index) => {
         const re_index = dot_array.length - index;
         return (
-          <h1 key={index} className={"dot" + re_index}>
+          <h1 key={index} className={font_size + re_index}>
             {item}
           </h1>
         );
@@ -509,7 +509,7 @@ function Shirt_graphic_cus_com({
 
             <br />
             <div className="div-border">
-              <h2>ตัวย่อโรงเรียน</h2>
+              <h2>ตัวย่อโรงเรียน(หากมีโลโก้ไม่ต้องใส่)</h2>
               <div className="textarea_input_right">
                 <textarea
                   value={formdata.SSchool.name}
@@ -634,13 +634,6 @@ function Shirt_graphic_cus_com({
               {checkbox_dot ? (
                 <div>
                   <div className="dot_type">
-                    {/*
-                        <p>
-                          {formdata.dot.type +
-                            formdata.dot.position +
-                            formdata.dot.amount_dot +
-                            formdata.dot.color_dot}
-                        </p>*/}
                     <p>จุดหรือดาว</p>
                     <select
                       name="type"

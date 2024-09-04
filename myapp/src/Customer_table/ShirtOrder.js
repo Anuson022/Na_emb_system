@@ -13,13 +13,14 @@ const render_dot1 = (dot_type, dot_amount) => {
   var dot_star = "";
   let dot_array = [];
   var font_size = {};
+  var margin_dot = {}
   if (dot_type === "จุด") {
     dot_star = "•";
-    font_size = { fontSize: "1.7rem" };
+    margin_dot = {margin:"-1rem"};
   }
   if (dot_type === "ดาว") {
     dot_star = "★";
-    font_size = { fontSize: "1.6rem" };
+    font_size = "star_fix"
   }
   if (dot_amount === "1") {
     dot_array = ["\u00A0", "\u00A0", dot_star];
@@ -35,7 +36,7 @@ const render_dot1 = (dot_type, dot_amount) => {
       {dot_array.map((item, index) => {
         const re_index = dot_array.length - index;
         return (
-          <h1 style={{margin:'-1rem'}} key={index} className={"dot" + re_index} >
+          <h1 style={margin_dot} key={index} className={font_size + re_index}>
             {item}
           </h1>
         );
@@ -69,11 +70,7 @@ const render_dot_school = (dot_type, dot_amount) => {
   if (dot_amount === "3") {
     dot_array = [dot_star, dot_star, dot_star];
   }
-  return (
-    <h1 className={"dot_school"}>
-      {dot_array}
-    </h1>
-  );
+  return <h1 className={"dot_school"}>{dot_array}</h1>;
 };
 const render_dot_name = (dot_type, dot_amount) => {
   var dot_star = "";
@@ -101,11 +98,7 @@ const render_dot_name = (dot_type, dot_amount) => {
   if (dot_amount === "3") {
     dot_array = [dot_star, dot_star, dot_star];
   }
-  return (
-    <h1 className={"dot_name"}>
-      {dot_array}
-    </h1>
-  );
+  return <h1 className={"dot_name"}>{dot_array}</h1>;
 };
 
 

@@ -10,7 +10,7 @@
     padding: 1rem 2rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: auto;
-    font-size: 3rem;
+    font-size: calc(2rem + 1vh);
     font-family: "RSU_regular";
     min-width: 70rem;
     border-bottom: black solid 5px;
@@ -26,7 +26,7 @@
     list-style: none;
     display: flex;
     justify-content: center;
-    a{font-size: 3rem; }
+    a{font-size: calc(2rem + 1vh) }
     width: 100%;
     gap: 5rem;
 }
@@ -167,6 +167,61 @@
   }
 
 
+}
+
+.footer {
+  margin: 0 auto;
+  font-family: 'RSU_regular';
+  min-width: 70rem;
+  background-color: #6AB187;
+
+  h1{font-size: calc(1rem + 1.5vh);}
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.footer-icon {
+  font-size: calc(4rem + 1vh);
+  display: flex;
+}
+
+.location-icon {
+  color: red;
+}
+
+.footer-title {
+  text-align: center;
+}
+
+.footer-address {
+  text-align: center;
+  margin-top: -1rem;
+}
+
+.footer-contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: auto;
+  background-color: #6AB187;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-info {
+  text-align: center;
 }
 
 

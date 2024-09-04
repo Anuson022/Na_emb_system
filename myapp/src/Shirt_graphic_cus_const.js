@@ -505,7 +505,7 @@ function Shirt_graphic_cus() {
         SNamePositionClass_Scout={SNamePositionClass_Scout}
         SetSNamePositionClass_Scout = {SetSNamePositionClass_Scout}
       />
-      <div className='Add-Shirt-Type' onClick={HandleShow}>
+    <div className='Add-Shirt-Type' onClick={HandleShow}>
         <button style={{display:'flex', alignItems:'center',gap:'1rem'}} 
           onClick={HandleShow}>
           <FontAwesomeIcon icon={faShirt} />เพิ่มรูปแบบเสื้อ</button>
@@ -568,7 +568,7 @@ function Shirt_graphic_cus() {
               confirmBtnCssClass="btn-custom"
               cancelBtnCssClass="btn-custom"
               customClass="custom-sweetalert" // Custom class
-              style={{ display: "flex", minWidth: "15rem", width: "20rem" }}
+              style={{ display: "flex", minWidth: "25vh", width: "20rem" }}
             ></SweetAlert>
           )}
           {ShowSuccess && (
@@ -592,7 +592,7 @@ function Shirt_graphic_cus() {
               confirmBtnCssClass="btn-custom"
               cancelBtnCssClass="btn-custom"
               customClass="custom-sweetalert" // Custom class
-              style={{ display: "flex", minWidth: "15rem", width: "22rem" }}
+              style={{ display: "flex",minWidth: "25vh", width: "20rem" }}
             ></SweetAlert>
           )}
           {ShowFail && (
@@ -604,7 +604,7 @@ function Shirt_graphic_cus() {
               confirmBtnCssClass="btn-custom"
               cancelBtnCssClass="btn-custom"
               customClass="custom-sweetalert" // Custom class
-              style={{ display: "flex", minWidth: "15rem", width: "20rem" }}
+              style={{ display: "flex",minWidth: "25vh", width: "20rem" }}
             ></SweetAlert>
           )}
         </div>

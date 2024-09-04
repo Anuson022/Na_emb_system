@@ -233,7 +233,7 @@
 }
 .bill-table {
   width: 100%;
-  margin: 20px 0;
+  margin: -2rem 0;
   border-collapse: collapse;
   overflow-x: auto;
 
@@ -364,4 +364,68 @@
   .view-order:hover, .td_nowarp div:hover {
     color: #007bff;
   }
+}
+
+@media print {
+.popup-bill {
+  background-color: white;
+  width: 100%;
+  height: auto;
+  min-width: 20rem;
+  max-width: 100rem;
+  border-radius: 5px;
+  padding: 2rem;
+  .button-close
+  {
+    visibility: hidden;
+    button{float: right; width: 3rem;}
+  }
+
+}
+.bill-data
+{
+  width: 100%;
+}
+.bill-table {
+  width: 100%;
+  margin: -0.5rem 0;
+  border-collapse: collapse;
+  overflow-x: auto;
+
+  th:nth-child(1) {
+    width: 10%; /* Adjust the width as needed */}
+  th:nth-child(2) {
+    width: 35%; /* Adjust the width as needed */}
+  th:nth-child(3) {
+    width: 10%; /* Adjust the width as needed */}
+  th:nth-child(4) {
+    width: 10%; /* Adjust the width as needed */}
+  th:nth-child(5) {
+    width: 15%; /* Adjust the width as needed */}
+}
+
+.bill-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bill-table th,
+.bill-table td {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  text-align: left;
+  font-size: 1rem;
+
+}
+
+.bill-table th {
+  background-color: lightgreen;
+  text-align: left;
+
+}
+.bill-table td{text-align: left;}
+.sumprice{ td{ border: solid black 0px; background-color: lightgray;}}
+.print-button{visibility: hidden;}
+
+*{font-size: 1rem;}
 }

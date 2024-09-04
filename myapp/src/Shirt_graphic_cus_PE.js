@@ -15,11 +15,11 @@ const render_dot1 = (dot_type, dot_amount) => {
   var font_size = {};
   if (dot_type === "จุด") {
     dot_star = "•";
-    font_size = { fontSize: "1.7rem" };
+    font_size = {/* fontSize: "1.7rem" */};
   }
   if (dot_type === "ดาว") {
     dot_star = "★";
-    font_size = { fontSize: "1.6rem" };
+    font_size = "star_fix"
   }
   if (dot_amount === "1") {
     dot_array = ["\u00A0", "\u00A0", dot_star];
@@ -35,7 +35,7 @@ const render_dot1 = (dot_type, dot_amount) => {
       {dot_array.map((item, index) => {
         const re_index = dot_array.length - index;
         return (
-          <h1 key={index} className={"dot" + re_index}>
+          <h1 key={index} className={font_size + re_index}>
             {item}
           </h1>
         );
@@ -449,6 +449,7 @@ function Shirt_graphic_cus_PE({
           <h2 className="h2_g">รูปแบบกราฟิก</h2>
             <button onClick={() => handleRemove("เสื้อพละ")}>นำออก</button>
           </div>
+          <br />
           <div className="shirt_design">
             <img className="shirt_img" src="/image_folder/PE1_Shirt.png" alt="" />
             <div className="grid_dot">

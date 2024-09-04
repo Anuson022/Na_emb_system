@@ -85,7 +85,9 @@ function Image_AD() {
                     ))}
                 </div>
                 {/* Pagination */}
-                <div className='pagination'>
+
+            </div>
+            <div className='pagination'>
                     {Array.from({ length: totalPages }, (_, index) => (
                         <button
                             key={index + 1}
@@ -96,9 +98,10 @@ function Image_AD() {
                         </button>
                     ))}
                 </div>
-            </div>
             <br />
-            <div className='Image_upload'>
+
+        </div>
+        <div className='Image_upload'>
                 <form onSubmit={onFileUpload}>
                     <input className='search-input'
                         type="text" 
@@ -115,7 +118,6 @@ function Image_AD() {
                     
                 </form>
             </div>
-        </div>
         </>
     );
 }

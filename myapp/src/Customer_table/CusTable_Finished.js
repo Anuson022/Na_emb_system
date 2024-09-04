@@ -71,7 +71,13 @@ const Customer_table = () => {
     const NewDate = new Date(Date_time);
     const formattedDate = NewDate.toLocaleDateString();
     const formattedTime = NewDate.toLocaleTimeString();
-    await SetPricePaid({ Order_sum, Order_paid, formattedDate, formattedTime ,Approve_by});
+    await SetPricePaid({
+      Order_sum,
+      Order_paid,
+      formattedDate,
+      formattedTime,
+      Approve_by,
+    });
     //await console.log(popup_view.shirtInfo.SName.fullname)
     setshowpopup_bill(true);
   };
@@ -86,7 +92,9 @@ const Customer_table = () => {
   };
   const handleYesDelete = async () => {
     try {
-      const response = await axios.delete(`/api/delete_cusdata/${popup_delete}`);
+      const response = await axios.delete(
+        `/api/delete_cusdata/${popup_delete}`
+      );
       console.log("Data deleted successfully:", response.data);
       fetching_data(currentPage); // Refresh the orders list
     } catch (error) {
@@ -99,7 +107,7 @@ const Customer_table = () => {
     setshowpopup_delete(false);
     setshowpopup_view(false);
     setshowpopup_bill(false);
-    setShowPopupStatus(false)
+    setShowPopupStatus(false);
   };
 
   useEffect(() => {
@@ -164,7 +172,7 @@ const Customer_table = () => {
       change_id,
       change_status,
     });
-    handleShowPopupStatus(cus_id)
+    handleShowPopupStatus(cus_id);
     fetching_data(currentPage);
   };
   const IsPaidReturn = (is_paid) => {
@@ -177,6 +185,19 @@ const Customer_table = () => {
       return null;
     }
   };
+  function handlePrint() {
+    const originalContents = document.body.innerHTML;
+    const popupContents = document.querySelector(".popup").innerHTML;
+
+    document.body.innerHTML = popupContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+
+    // Re-attach event listeners, if necessary
+    window.location.reload();
+  }
   return (
     <div style={{ height: "58rem" }}>
       <div
@@ -213,7 +234,7 @@ const Customer_table = () => {
           <tbody className="table_body">
             {data ? (
               currentItems.map((item) => {
-                const shirt_info = item.info
+                const shirt_info = item.info;
                 const shirt_ = JSON.parse(item.shirt);
                 const shirt_PE = JSON.parse(item.PE);
                 const shirt_scout = JSON.parse(item.scout);
@@ -221,7 +242,7 @@ const Customer_table = () => {
                 const Order_sum = item.price;
                 const Order_paid = item.is_paid;
                 const Date_time = item.date_time;
-                const Approve_by = item.approve_by
+                const Approve_by = item.approve_by;
                 return (
                   <tr key={item.cus_id}>
                     <td className="td_nowarp">{item.cus_id}</td>
@@ -316,138 +337,148 @@ const Customer_table = () => {
                   <span>ปิดหน้าแสดงข้อมูลการปัก</span>
                   {<FontAwesomeIcon icon={faXmark} />}
                 </button>
-          
               </div>
-              <div>
-
-              </div>
+              <div></div>
               <div className="Shirt-data" style={{}}>
-                  <p style={{wordWrap:'break-word',
-                    whiteSpace:'-moz-pre-wrap',
-                    whiteSpace:'pre-wrap'
-                    }}>
-                    <strong>รายละเอียด : </strong>
-                    <span>{ShirtData.info}</span>
-                  </p>
+                <p
+                  style={{
+                    wordWrap: "break-word",
+                    whiteSpace: "-moz-pre-wrap",
+                    whiteSpace: "pre-wrap",
+                  }}
+                >
+                  <strong>รายละเอียด : </strong>
+                  <span>{ShirtData.info}</span>
+                </p>
               </div>
-              {ShirtData.shirt?.Selected &&
-              <div className="Shirt-data">
-                <h6 style={{margin:"0 0rem",textAlign:'center'}}>เสื้อนักเรียน</h6>
-                <div>
-                  <ShirtOrder cus_id={popup_view} />
-                  {ShirtData.shirt?.SName.fullname && (
-                    <p>
-                      <strong>ชื่อ-นามสกุล : </strong>
-                      <span>{ShirtData.shirt?.SName.fullname}</span>
-                    </p>
-                  )}
-                  {ShirtData.shirt?.SUndername.under_name && (
-                    <p>
-                      <strong>การปักใต้ชื่อ : </strong>
-                      <span>{ShirtData.shirt?.SUndername.under_name}</span>
-                    </p>
-                  )}
-                  {ShirtData.shirt?.SLogo.school_name && (
-                    <p>
-                      <strong>โลโก้โรงเรียน : </strong>
-                      <span>{ShirtData.shirt?.SLogo.school_name}</span>
-                    </p>
-                  )}
-                  {ShirtData.shirt?.SSchool.name && (
-                    <p>
-                      <strong>ตัวย่อโรงเรียน : </strong>
-                      <span>{ShirtData.shirt?.SSchool.name}</span>
-                    </p>
-                  )}
-                  {ShirtData.shirt?.SUnderschool.under_school && (
-                    <p>
-                      <strong>ตัวย่อโรงเรียน : </strong>
-                      <span>{ShirtData.shirt?.SUnderschool.under_school}</span>
-                    </p>
-                  )}
-                  {ShirtData.shirt?.dot.type && (
-                    <p>
-                      <strong>ปักเพิ่มเติม : </strong>
-                      <span>{ShirtData.shirt?.dot.amount_dot} </span>
-                      <span>{ShirtData.shirt?.dot.type} </span>
-                      <span>{ShirtData.shirt?.dot.position} </span>
-                    </p>
-                  )}
+              {ShirtData.shirt?.Selected && (
+                <div className="Shirt-data">
+                  <h6 style={{ margin: "0 0rem", textAlign: "center" }}>
+                    เสื้อนักเรียน
+                  </h6>
+                  <div>
+                    <ShirtOrder cus_id={popup_view} />
+                    {ShirtData.shirt?.SName.fullname && (
+                      <p>
+                        <strong>ชื่อ-นามสกุล : </strong>
+                        <span>{ShirtData.shirt?.SName.fullname}</span>
+                      </p>
+                    )}
+                    {ShirtData.shirt?.SUndername.under_name && (
+                      <p>
+                        <strong>การปักใต้ชื่อ : </strong>
+                        <span>{ShirtData.shirt?.SUndername.under_name}</span>
+                      </p>
+                    )}
+                    {ShirtData.shirt?.SLogo.school_name && (
+                      <p>
+                        <strong>โลโก้โรงเรียน : </strong>
+                        <span>{ShirtData.shirt?.SLogo.school_name}</span>
+                      </p>
+                    )}
+                    {ShirtData.shirt?.SSchool.name && (
+                      <p>
+                        <strong>ตัวย่อโรงเรียน : </strong>
+                        <span>{ShirtData.shirt?.SSchool.name}</span>
+                      </p>
+                    )}
+                    {ShirtData.shirt?.SUnderschool.under_school && (
+                      <p>
+                        <strong>ตัวย่อโรงเรียน : </strong>
+                        <span>
+                          {ShirtData.shirt?.SUnderschool.under_school}
+                        </span>
+                      </p>
+                    )}
+                    {ShirtData.shirt?.dot.type && (
+                      <p>
+                        <strong>ปักเพิ่มเติม : </strong>
+                        <span>{ShirtData.shirt?.dot.amount_dot} </span>
+                        <span>{ShirtData.shirt?.dot.type} </span>
+                        <span>{ShirtData.shirt?.dot.position} </span>
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-              }
-              {ShirtData.PE?.Selected &&
-              <div className="Shirt-data">
-              <h6 style={{margin:"0 0rem" ,textAlign:'center'}}>เสื้อพละ</h6>
-                <div>
-                  <ShirtOrderPE cus_id={popup_view} />
-                  {ShirtData.PE?.SName.fullname && (
-                    <p>
-                      <strong>ชื่อ-นามสกุล : </strong>
-                      <span>{ShirtData.PE?.SName.fullname}</span>
-                    </p>
-                  )}
-                  {ShirtData.PE?.dot.type && (
-                    <p>
-                      <strong>ปักเพิ่มเติม : </strong>
-                      <span>{ShirtData.PE?.dot.amount_dot} </span>
-                      <span>{ShirtData.PE?.dot.type} </span>
-                      <span>{ShirtData.PE?.dot.position} </span>
-                    </p>
-                  )}
+              )}
+              {ShirtData.PE?.Selected && (
+                <div className="Shirt-data">
+                  <h6 style={{ margin: "0 0rem", textAlign: "center" }}>
+                    เสื้อพละ
+                  </h6>
+                  <div>
+                    <ShirtOrderPE cus_id={popup_view} />
+                    {ShirtData.PE?.SName.fullname && (
+                      <p>
+                        <strong>ชื่อ-นามสกุล : </strong>
+                        <span>{ShirtData.PE?.SName.fullname}</span>
+                      </p>
+                    )}
+                    {ShirtData.PE?.dot.type && (
+                      <p>
+                        <strong>ปักเพิ่มเติม : </strong>
+                        <span>{ShirtData.PE?.dot.amount_dot} </span>
+                        <span>{ShirtData.PE?.dot.type} </span>
+                        <span>{ShirtData.PE?.dot.position} </span>
+                      </p>
+                    )}
+                  </div>
                 </div>
-              
-              </div>
-              }
-              
-              {ShirtData.scout?.Selected &&
-              <div className="Shirt-data">
-              <h6 style={{margin:"0 0rem", textAlign:'center'}}>เสื้อลูกเสือ&เนตรนารี&ยุวกาชาติ</h6>
-              <div>
-                <ShirtOrderScout cus_id={popup_view} />
-                {ShirtData.scout?.SName.fullname && (
-                  <p>
-                    <strong>ชื่อ-นามสกุล : </strong>
-                    <span>{ShirtData.scout?.SName.fullname}</span>
-                  </p>
-                )}
-                {ShirtData.scout?.SName && (
-                  <p>
-                    <strong>รูปแบบการปัก : </strong>
-                    <span>
-                      {(() => {
-                        const [frameColor, clothColor, textColor] = [
-                          ShirtData.scout.SName.color_border,
-                          ShirtData.scout.SName.cloth, 
-                          ShirtData.scout.SName.color, 
-                        ];
-                        const combinedValue = `${frameColor}_${clothColor}_${textColor.toLowerCase()}`;
-                        let translatedText = "";
-                        switch (combinedValue) {
-                          case "#FCF5E5_white_blue":
-                            translatedText = "กรอบสีขาว ผ้าสีขาว ชื่อสีน้ำเงิน";
-                            break;
-                          case "#FCF5E5_white_black":
-                            translatedText = "กรอบสีขาว ผ้าสีขาว ชื่อสีดำ";
-                            break;
-                          case "red_lightcoral_yellow":
-                            translatedText = "กรอบสีแดง ผ้าสีแดง ชื่อสีเหลือง";
-                            break;
-                          case "black_#36454F_yellow":
-                            translatedText = "กรอบสีดำ ผ้าสีดำ ชื่อสีเหลือง";
-                            break;
-                          default:
-                            translatedText = "Unknown combination";
-                        }
+              )}
 
-                        return translatedText;
-                      })()}
-                    </span>
-                  </p>
-                )}
-              </div>
-              </div>
-              }
+              {ShirtData.scout?.Selected && (
+                <div className="Shirt-data">
+                  <h6 style={{ margin: "0 0rem", textAlign: "center" }}>
+                    เสื้อลูกเสือ&เนตรนารี&ยุวกาชาติ
+                  </h6>
+                  <div>
+                    <ShirtOrderScout cus_id={popup_view} />
+                    {ShirtData.scout?.SName.fullname && (
+                      <p>
+                        <strong>ชื่อ-นามสกุล : </strong>
+                        <span>{ShirtData.scout?.SName.fullname}</span>
+                      </p>
+                    )}
+                    {ShirtData.scout?.SName && (
+                      <p>
+                        <strong>รูปแบบการปัก : </strong>
+                        <span>
+                          {(() => {
+                            const [frameColor, clothColor, textColor] = [
+                              ShirtData.scout.SName.color_border,
+                              ShirtData.scout.SName.cloth,
+                              ShirtData.scout.SName.color,
+                            ];
+                            const combinedValue = `${frameColor}_${clothColor}_${textColor.toLowerCase()}`;
+                            let translatedText = "";
+                            switch (combinedValue) {
+                              case "#FCF5E5_white_blue":
+                                translatedText =
+                                  "กรอบสีขาว ผ้าสีขาว ชื่อสีน้ำเงิน";
+                                break;
+                              case "#FCF5E5_white_black":
+                                translatedText = "กรอบสีขาว ผ้าสีขาว ชื่อสีดำ";
+                                break;
+                              case "red_lightcoral_yellow":
+                                translatedText =
+                                  "กรอบสีแดง ผ้าสีแดง ชื่อสีเหลือง";
+                                break;
+                              case "black_#36454F_yellow":
+                                translatedText =
+                                  "กรอบสีดำ ผ้าสีดำ ชื่อสีเหลือง";
+                                break;
+                              default:
+                                translatedText = "Unknown combination";
+                            }
+
+                            return translatedText;
+                          })()}
+                        </span>
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -464,7 +495,7 @@ const Customer_table = () => {
                   <h2>วัน/เดือน/ปี : {PricePaid.formattedDate}</h2>
                   <h2>เวลา : {PricePaid.formattedTime}</h2>
                 </div>
-                <div className="bill-table" style={{ marginTop: "-2rem" }}>
+                <div className="bill-table">
                   <table>
                     <thead>
                       <tr>
@@ -477,15 +508,13 @@ const Customer_table = () => {
                     </thead>
                     <tbody>
                       {popup_bill.map((item) => (
-                        <>
-                          <tr key={item.id}>
-                            <td>{item.id}</td>
-                            <td>{item.value1}</td>
-                            <td>{item.value2}</td>
-                            <td>{item.value3}</td>
-                            <td>{item.value4}</td>
-                          </tr>
-                        </>
+                        <tr key={item.id}>
+                          <td>{item.id}</td>
+                          <td>{item.value1}</td>
+                          <td>{item.value2}</td>
+                          <td>{item.value3}</td>
+                          <td>{item.value4}</td>
+                        </tr>
                       ))}
                     </tbody>
                     <tr className="sumprice">
@@ -495,11 +524,20 @@ const Customer_table = () => {
                       <td>{PricePaid.Order_sum}</td>
                     </tr>
                   </table>
-                  <div style={{display:'flex',justifyContent:"space-evenly"}}>
-                  {IsPaidReturn(PricePaid.Order_paid)}
-                  <span><h1>ผู้อนุมัติ : {PricePaid.Approve_by}</h1></span>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-evenly" }}
+                  >
+                    {IsPaidReturn(PricePaid.Order_paid)}
+                    <span>
+                      <h1>ผู้อนุมัติ : {PricePaid.Approve_by}</h1>
+                    </span>
                   </div>
-                  
+                </div>
+                <div
+                  className="print-button"
+                  style={{ textAlign: "center", marginTop: "1rem" }}
+                >
+                  <button onClick={handlePrint}>พิมพ์</button>
                 </div>
               </div>
             </div>
@@ -545,22 +583,28 @@ const Customer_table = () => {
         </div>
       )}
       {showPopupStatus && (
-          <SweetAlert
-            success
-            title="เปลี่ยนสถานะสำเร็จ"
-            onConfirm={handleNo}
-            onCancel={handleNo}
-            confirmBtnText="ตกลง"
-            confirmBtnCssClass="btn-custom"
-            customClass="custom-sweetalert" // Custom class
-            style={{ display: "flex", minWidth: "15rem", width: "20rem" }}
+        <SweetAlert
+          success
+          title="เปลี่ยนสถานะสำเร็จ"
+          onConfirm={handleNo}
+          onCancel={handleNo}
+          confirmBtnText="ตกลง"
+          confirmBtnCssClass="btn-custom"
+          customClass="custom-sweetalert" // Custom class
+          style={{ display: "flex", minWidth: "15rem", width: "20rem" }}
+        >
+          <div
+            style={{
+              backgroundColor: "#f0f0f0",
+              padding: "1rem",
+              textAlign: "center",
+            }}
           >
-            <div style={{ backgroundColor: "#f0f0f0", padding: "1rem", textAlign: "center" }}>
-    รหัสลูกค้า : {popup_delete}
-  </div>
-          </SweetAlert>
+            รหัสลูกค้า : {popup_delete}
+          </div>
+        </SweetAlert>
       )}
-            {showPopupDelete && (
+      {showPopupDelete && (
         <SweetAlert
           warning
           title="ลบออเดอร์หรือไม่"

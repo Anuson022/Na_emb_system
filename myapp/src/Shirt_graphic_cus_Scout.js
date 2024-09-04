@@ -152,7 +152,7 @@ function Shirt_graphic_cus_PE({
             <h2 className="h2_g">รูปแบบกราฟิก</h2>
             <button onClick={() => handleRemove("เสื้อลูกเสือ&เนตรนารี")}>นำออก</button>
           </div>
-
+          <br />
           <div className="shirt_design">
             <img className="shirt_img" src={ScoutImage} alt="" />
             <div className="grid_dot">

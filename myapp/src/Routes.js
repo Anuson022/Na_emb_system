@@ -43,6 +43,10 @@ const Router = createBrowserRouter([
     element: <HomePage />,
     children: [
       {
+        path: "",
+        element: <HomeSuggest />,
+      },
+      {
         path: "Cus-Order-Add",
         element: <Shirt_graphic_cus />,
       },
