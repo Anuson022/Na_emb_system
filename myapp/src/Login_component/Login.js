@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Login.css'
 import axios from 'axios'
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom'
 function Login() {
     const [Username,SetUsername] = useState('')
@@ -18,25 +19,41 @@ function Login() {
         },[navigate_dash])
     const HandleSubmit = async() =>
         {
-            
             try {
                 const login_data = await axios.post("/api/na_login",{Username,Password})
                 const Token = login_data.data.token
                 const UserData = login_data.data.user
+                Swal.fire({
+                    title: 'เข้าสู่ระบบสำเร็จ',
+                    icon: "success",
+                    confirmButtonText: 'OK'
+                  });
                 if(Token != null && UserData != null)
                     {
                         localStorage.setItem('token',Token)
                         localStorage.setItem('UserData',JSON.stringify(UserData))
                         navigate_dash('/Admin_Dashboard',{state:{Token,UserData}})
                     }
+
                 else
                 {
-                    alert("Wrong password")
+                    Swal.fire({
+                        title: 'เข้าสู่ระบบไม่สำเร็จ',
+                        text: 'รหัสผ่านไม่ถูกต้องหรือชื่อผู้ใช้งานไม่ถูกต้อง',
+                        icon: "error",
+                        confirmButtonText: 'OK'
+                      });
                 }
             } catch (error) {
-                console.log(error)
+                Swal.fire({
+                    title: 'เข้าสู่ระบบไม่สำเร็จ',
+                    text: 'โปรดกรอกข้อมูลให้ครบถ้วน',
+                    icon: "error",
+                    confirmButtonText: 'OK'
+                  });
             }
         }
+        
         useEffect(() => {
             document.body.classList.add("body_of_login");
             return () => {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Image_AD.css';
+import Swal from 'sweetalert2';
 
 function Image_AD() {
     const [FileImage, SetFileImage] = useState(null);
@@ -29,22 +30,72 @@ function Image_AD() {
 
     const onFileUpload = async (e) => {
         e.preventDefault();
+    
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (FileImage && !allowedTypes.includes(FileImage.type)) {
+            Swal.fire({
+                title: 'เกิดข้อผิดพลาด',
+                text: 'โปรดเลือกไฟล์รูปภาพในรูปแบบ JPEG, PNG',
+                icon: "error",
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
         try {
             const formData = new FormData();
             formData.append('file', FileImage);
             formData.append('name', FileName);
-    
             await axios.post('/api/upload', formData);
+            Swal.fire({
+                title: 'อัพโหลดสำเร็จ',
+                icon: "success",
+                confirmButtonText: 'OK'
+              });
             fetchFiles();
         } catch (error) {
-            
+            Swal.fire({
+                title: 'เกิดข้อผิดพลาด',
+                text: 'ไม่สามารถอัปโหลดไฟล์ได้ กรุณาลองอีกครั้ง',
+                icon: "error",
+                confirmButtonText: 'OK'
+            });
         }
-
     };
 
-    const onDeleteFile = async (id) => {
-        await axios.delete(`/api/files/${id}`);
-        fetchFiles();
+    const onDeleteFile = async (id,name) => {
+        try {
+            Swal.fire({
+                title: "ต้องการลบไฟล์หรือไม่?",
+                text: name,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                cancelButtonText:'ไม่ลบ',
+                confirmButtonText: "ลบ",
+                reverseButtons: true 
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(`/api/files/${id}`);
+                    fetchFiles();
+                    Swal.fire({
+                    title: "ลบสำเร็จ",
+                    text: "ลบ" + name,
+                    icon: "success"
+                  });
+                }
+              });
+              fetchFiles();
+        } catch (error) {
+            Swal.fire({
+                title: 'เกิดข้อผิดพลาด',
+                text: 'ไม่สามารถลบได้ กรุณาลองอีกครั้ง',
+                icon: "error",
+                confirmButtonText: 'OK'
+            });
+        }
+
+
     };
 
     const handleSearch = async (e) => {
@@ -80,7 +131,7 @@ function Image_AD() {
                             <br />
                             <label htmlFor="">{file.name}</label>
                             <br />
-                            <button onClick={() => onDeleteFile(file.id)}>ลบรูปภาพ</button>
+                            <button onClick={() => onDeleteFile(file.id,file.name)}>ลบรูปภาพ</button>
                         </div>
                     ))}
                 </div>
