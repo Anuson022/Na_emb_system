@@ -196,7 +196,7 @@ function Admin_dashboard() {
                   </div>
                 </Link>
 
-                <Link to="/Admin_dashboard/Statistic-data">
+                <Link to="/Admin_dashboard/Statistic_data">
                   <div className="div-awesome">
                     <FontAwesomeIcon
                       icon={faChartPie}

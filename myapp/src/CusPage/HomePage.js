@@ -37,17 +37,17 @@ function HomePage() {
       <div className="Cus-navbar">
         <ul className="navbar-menu">
           <li className="navbar-item">
-            <Link to="/Na-Karn-puk/Cus-Home" className="navbar-link">
+            <Link to="/Na_Karn_puk/Cus_Home" className="navbar-link">
               หน้าแรก
             </Link>
           </li>
           <li className="navbar-item">
-            <Link to="/Na-Karn-puk/Cus-Order-Add" className="navbar-link">
+            <Link to="/Na_Karn_puk/Cus_Order_Add" className="navbar-link">
               ส่งข้อมูลการปัก
             </Link>
           </li>
           <li className="navbar-item">
-            <Link to="/Na-Karn-puk/Cus-Order-Check" className="navbar-link">
+            <Link to="/Na_Karn_puk/Cus_Order_Check" className="navbar-link">
               เช็คลำดับคิว
             </Link>
           </li>

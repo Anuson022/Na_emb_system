@@ -109,7 +109,7 @@ const Router = createBrowserRouter([
         element: <Test />,
       },
       {
-        path: "Statistic-data",
+        path: "Statistic_data",
         element: <MainStatistic />,
       },
     ],
@@ -125,16 +125,12 @@ const Router = createBrowserRouter([
     element: <DynamicForm />,
   },
   {
-    path: "test-com",
+    path: "test_com",
     element: <Recheck />,
   },
   {
     path: "FullOrderAdd",
     element: <Secure_component Page={<NewOrderSubmit />} />,
-  },
-  {
-    path: "test-image",
-    element: <Image_input />,
   },
 ]);
 

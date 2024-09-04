@@ -163,7 +163,7 @@ const Customer_table = () => {
 
   const handleClick = (cus_id, info, parent_name, phone_number, status) => {
     const cus_data = { cus_id, info, parent_name, phone_number, status };
-    navigate("/test-com", { state: { cus_data } });
+    navigate("/test_com", { state: { cus_data } });
   };
   const HandleStatus = async (cus_id, status) => {
     const change_id = cus_id;
