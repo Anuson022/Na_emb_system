@@ -39,7 +39,7 @@ const Router = createBrowserRouter([
     children: [],
   },
   {
-    path: "/Na-Karn-puk",
+    path: "/Na_Karn_puk",
     element: <HomePage />,
     children: [
       {
@@ -47,15 +47,15 @@ const Router = createBrowserRouter([
         element: <HomeSuggest />,
       },
       {
-        path: "Cus-Order-Add",
+        path: "Cus_Order_Add",
         element: <Shirt_graphic_cus />,
       },
       {
-        path: "Cus-Order-Check",
+        path: "Cus_Order_Check",
         element: <CusOrderCheck />,
       },
       {
-        path: "Cus-Home",
+        path: "Cus_Home",
         element: <HomeSuggest/>,
       },
     ],
