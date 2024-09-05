@@ -113,7 +113,7 @@ const Customer_table = () => {
   useEffect(() => {
     fetching_data(currentPage);
     handleSearch();
-    setCurrentPage(1);
+    
   }, [currentPage]);
   useEffect(() => {
     if (searchTerm.length === 0) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, StrictMode } from "react";
 import Select from "react-select";
 
 import "./Shirt_graphic_cus_com.css";
@@ -423,7 +423,7 @@ function Shirt_graphic_cus_com({
   };
 
   return (
-    <>
+    <StrictMode>
     {formdata.Selected &&
       <div className="container_form">
         <div className="grid_input">
@@ -736,7 +736,7 @@ function Shirt_graphic_cus_com({
                 </div>
                 <div
                   className={SSchoolPositionClass.right}
-                  style={{ color: formdata.SSchool.color1 }}
+                  style={{ color: formdata.SSchool.color1}}
                 >
                   {render_school(formdata.SSchool.name)}
                   {render_h1(formdata.SUnderschool.under_school)}
@@ -787,7 +787,7 @@ function Shirt_graphic_cus_com({
       </div>
       }
       
-    </>
+    </StrictMode>
   );
 }
 

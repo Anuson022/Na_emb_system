@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, StrictMode } from "react";
 import Select from "react-select";
 
 import "./Shirt_graphic_cus_com.css";
@@ -297,7 +297,9 @@ function Shirt_graphic_cus_PE({
 
 
   return (
-    <>{PEdata.Selected &&
+    
+    <StrictMode>
+{PEdata.Selected &&
       <div className="container_form" style={{alignItems:'center'}}>
         <div className="grid_input">
           <form onSubmit={""}>
@@ -510,7 +512,7 @@ function Shirt_graphic_cus_PE({
         <br /><br />
       </div>
       }
-    </>
+    </StrictMode>
   );
 }
 

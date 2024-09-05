@@ -4,6 +4,7 @@ import "./Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faLine } from "@fortawesome/free-brands-svg-icons";
+import ShirtPreview from "../ShirtPreview/ShirtPreview";
 
 function HomePage() {
   useEffect(() => {
@@ -77,6 +78,7 @@ function HomePage() {
     </div>
   </div>
 </footer>
+
     </div>
   );
 }

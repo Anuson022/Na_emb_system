@@ -6,6 +6,10 @@ import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShirt } from "@fortawesome/free-solid-svg-icons";
+import ShirtPreview from "./ShirtPreview/ShirtPreview";
+import { useNavigate } from "react-router-dom";
+
+
 function Shirt_graphic_cus() {
   const [formdata, setformdata] = useState({
     Selected: false,
@@ -433,12 +437,20 @@ function Shirt_graphic_cus() {
       });
       console.log(responses.data);
       SetShowSuccess(true);
+      
     } catch (error) {
       alert(error);
       SetShowFail(true);
     }
     setShowAlert(false);
   };
+  const navigation = useNavigate();
+  const BackHome = async () =>
+    {
+      navigation("/Na_Karn_puk")
+      // this changes the scrolling behavior to "smooth"
+window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   const HandleCancel = async () => {
     setShowAlert(false);
     SetShowSuccess(false);
@@ -575,7 +587,7 @@ function Shirt_graphic_cus() {
             <SweetAlert
               success
               title="ส่งข้อมูลสำเร็จ"
-              onConfirm={HandleCancel}
+              onConfirm={BackHome}
               confirmBtnText="ตกลง"
               confirmBtnCssClass="btn-custom"
               customClass="custom-sweetalert" // Custom class

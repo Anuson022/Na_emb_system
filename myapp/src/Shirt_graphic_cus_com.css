@@ -221,13 +221,7 @@ header h1 {
 }
 
 .shirt_design {
-    .shirt_img {
-        margin: 0 auto;
-        width: 40vh;
-        min-width: 50vh;
-        
-        height: 40vh;
-    }
+
 }
 
 .hidden {
@@ -664,7 +658,13 @@ header h1 {
     max-width: 10vh;
     height: 2.2vh;
 }
-
+.shirt_img {
+    margin: 0 auto;
+    width: 40vh;
+    min-width: 50vh;
+    
+    height: 40vh;
+}
 /*Extra Small Devices (phones):*/
 @media (min-width: 1380px) {
     .container_form {
@@ -835,15 +835,9 @@ header h1 {
         }
         
         .shirt_design {
-            .shirt_img {
-                margin: 0 auto;
-                width: 40rem;
-                min-width: 50rem;
-        
-                height: 40rem;
-            }
+
         }
-        
+
         .hidden {
             display: none;
         }
@@ -1047,6 +1041,7 @@ header h1 {
             font-size: 1rem;
             margin-top: -0.8rem;
             /*font-size: 0.8rem;*/
+            transform: scale(0.8);
         }
         
         .dot_school,.dot_name {
@@ -1275,6 +1270,13 @@ header h1 {
             min-width: 8rem;
             max-width: 10rem;
             height: 2.2rem;
+        }
+        .shirt_img {
+            margin: 0 auto;
+            width: 40rem;
+            min-width: 50rem;
+    
+            height: 40rem;
         }
     }
 

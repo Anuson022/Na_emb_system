@@ -10,14 +10,14 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(()=>
-    {
-      navigate('/Na-Karn-puk');
-    })
+  {
+    navigate('/Na_Karn_puk');
+  });
   
   
   return (
     <Student_form/>
-  )
+  );
 }
 
 export default App

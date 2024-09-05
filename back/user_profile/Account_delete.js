@@ -11,6 +11,7 @@ deleteRouter.delete('/api/user_delete/:id', (req, res) => {
   let sql = "SELECT * FROM users WHERE id = ?";
   pool.query(sql, [id], (err, results) => {
     if (err) throw err;
+    console.log(err)
     if (results.length > 0) {
       let filePath = './user_profile'+(results[0].profile).slice(1);
       let deleteSql = "DELETE FROM users WHERE id = ?";

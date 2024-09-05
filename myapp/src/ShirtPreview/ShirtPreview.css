@@ -1,0 +1,14 @@
+
+
+
+
+
+.myText
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: large;
+    color: red;
+    visibility: visible;
+}
