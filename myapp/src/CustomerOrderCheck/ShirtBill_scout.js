@@ -275,13 +275,13 @@ const [SNamePositionClass_Scout, SetSNamePositionClass_Scout] = useState({
   
   return (
     <>{Scoutdata.Selected &&
-      <div className="container_form" style={{alignItems:'center'}}>
+      <div className="container_form1" style={{alignItems:'center'}}>
 
 
         <div className="body_shirt">
 
 
-          <div className="shirt_design">
+          <div className="shirt_design1">
             <img className="shirt_img" src={ScoutImage} alt="" />
             <div className="grid_dot">
             </div>
@@ -304,7 +304,6 @@ const [SNamePositionClass_Scout, SetSNamePositionClass_Scout] = useState({
             </div>
           </div>
         </div>
-        <br /><br />
       </div>
       }
       

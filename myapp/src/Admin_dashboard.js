@@ -7,6 +7,7 @@ import {
   faChartPie,
   faCheckToSlot,
   faFileImage,
+  faShirt,
   faFilePen,
   faHouse,
   faUserGear,
@@ -152,7 +153,7 @@ function Admin_dashboard() {
       <nav className={sideFullOpen ? "main_dash" : "maindash-full"}>
         <div className={sideFullOpen ? "sidebar_button" : "hidden"}>
           <div className="profile">
-            <img src={`/profile/${UserData.profile.split("/").pop()}`} alt="" />
+            <img src={`/api/profile/${UserData.profile.split("/").pop()}`} alt="" />
             <p>{UserData.username}</p>
             <button className="logout-button" onClick={HandleLogout}>
               Logout
@@ -214,6 +215,16 @@ function Admin_dashboard() {
                       style={{ marginLeft: "1rem",}}
                     />
                     <h3>อัพโหลดรูปภาพโลโก้</h3>
+                  </div>
+                </Link>
+
+                <Link to="/Admin_dashboard/Auto_input">
+                <div className="div-awesome">
+                    <FontAwesomeIcon
+                      icon={faShirt}
+                      style={{ marginLeft: "1rem",}}
+                    />
+                    <h3>อัพโหลดข้อมูลการปัก</h3>
                   </div>
                 </Link>
               </>

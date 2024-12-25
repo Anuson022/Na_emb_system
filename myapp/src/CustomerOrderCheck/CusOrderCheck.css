@@ -1,31 +1,29 @@
 .cus-order-check {
-  margin: auto;
-  padding: 20px;
+  padding:1rem;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  min-width: 70rem;
+  min-width: 20rem;
   font-family: 'RSU_regular';
 }
 
 .search-section {
   text-align: center;
-  font-size: 1.5vh;
-  p{font-size: 2vh;}
+  font-size: var(--text-content-m);
 }
-
+.cus-search-container{display: flex; justify-content: center; align-items: center; gap: 1rem;}
 .search-input {
-  width: 50%;
-  padding: 10px;
-  font-size: 2vh;
-  margin-right: 10px;
-  border-radius: 4px;
+  width: 80%;
+  height: auto;
+  padding: 0.5vh 2vh;
+  font-size: var(--text-content-b);
+  border-radius: 0.5rem;
   border: 1px solid #000000;
 }
 
 .search-button {
   padding: 1vh 2vh;
-  font-size: 2vh;
+  font-size: var(--text-content-b);
   color: #fff;
   background-color: #007bff;
   border: none;
@@ -39,15 +37,22 @@
 .search-button:hover {
   background-color: #0056b3;
 }
-
+.notfound-temporary
+{
+  text-align: center;
+  font-size: var(--text-content-b);
+}
 .order-section {
-  padding: 1vh;
+  padding: 1rem;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+.slick-slide{}
+.Slider-Shirt{transform: scale(0.9);}
 
 .order-table {
+  
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
@@ -55,14 +60,14 @@
 
 .order-table th,
 .order-table td {
-  padding: 1vh;
+  padding: 1rem;
   border: 1px solid #666666;
   text-align: left;
-  font-size: 2vh;
+  font-size: var(--text-content-m);
 }
 
 .order-summary {
-  font-size: 2vh;
+  font-size: var(--text-content-m);
   font-weight: bold;
   margin-top: 10px;
 }
@@ -71,7 +76,7 @@
 .queue-info {
 
   margin-top: 10px;
-  font-size: 2vh;
+  font-size: var(--text-content-m);
 }
 
 .queue-info span {
@@ -83,93 +88,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
-  row-gap: 2vh;
+  row-gap: var(--text-content-m);
 }
-
-@media (min-width: 1380px) {
-  .cus-order-check {
-    margin: auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    min-width: 70rem;
-    font-family: 'RSU_regular';
-  }
-  
-  .search-section {
-    text-align: center;
-    font-size: 1.5rem;
-    p{font-size: 2rem;}
-  }
-  
-  .search-input {
-    width: 80%;
-    padding: 10px;
-    font-size: 2rem;
-    margin-right: 10px;
-    border-radius: 4px;
-    border: 1px solid #000000;
-  }
-  
-  .search-button {
-    padding: 1rem 2rem;
-    font-size: 1.5rem;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .search-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .order-section {
-    padding: 1rem;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .order-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
-  .order-table th,
-  .order-table td {
-    padding: 1rem;
-    border: 1px solid #666666;
-    text-align: left;
-    font-size: 2rem;
-  }
-  
-  .order-summary {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  .status-info,
-  .queue-info {
-  
-    margin-top: 10px;
-    font-size: 2rem;
-  }
-  
-  .queue-info span {
-    display: block;
-  }
-  
-  .shirt-check-grid
-  {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
-    row-gap: 2rem;
-  }
+@media (max-width: 1000px)
+{
+  .cus-search-container
+  {display: flex; flex-direction: column;}
 }

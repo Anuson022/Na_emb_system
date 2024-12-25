@@ -5,7 +5,7 @@ const pool = require('../na_db'); // Adjust the path as necessary
 const fetchRouter = express.Router();
 
 // Fetch files endpoint
-fetchRouter.post('/api/files', (req, res) => {
+fetchRouter.post('/files', (req, res) => {
   const searchTerm = req.body.search_name;
 
   let query;

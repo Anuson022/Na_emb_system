@@ -4,7 +4,7 @@ const pool = require('../na_db'); // Adjust the path as necessary
 
 const fetchRouter = express.Router();
 
-fetchRouter.post('/api/GetCusQue', (req, res) => {
+fetchRouter.post('/GetCusQue', (req, res) => {
     const data = req.body.SearchData;
     console.log(data);
 
@@ -31,7 +31,7 @@ fetchRouter.post('/api/GetCusQue', (req, res) => {
     }
 });
 
-fetchRouter.post('/api/GetCusQue_Finished',(req,res)=>
+fetchRouter.post('/GetCusQue_Finished',(req,res)=>
     {
         const data = req.body.SearchData
         console.log(data)

@@ -11,63 +11,36 @@
 }
 
 .hidden {
-    display: none;
+    display:none;
 }
 
 .visible {
     display: block;
 }
 
-header {
-    background: #333;
-    color: #fff;
-    padding: 1rem;
-    width: 100%;
-    min-width: 70rem;
-    margin: 0 auto;
-    font-family: 'RSU_Regular';
-}
-
-.container {
-    width: 100%;
-    margin: auto;
-    overflow: hidden;
-}
-
-header h1 {
-    float: left;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 3vh;
-}
-
-
-
-
 .container_form {
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
     /*grid-template-columns: repeat(auto-fit,minmax(75rem,1fr)); /* Two equal-width columns */
     grid-gap: 1rem;
     /* Optional: space between items */
     max-width: 100%;
-    min-width: 70rem;
+    min-width: 20rem;
     font-family: 'RSU_regular';
     background-color: #FAF9F6;
-    border-radius: 8px;
+    border-radius: 1rem;
     align-items: baseline;
     gap: 1px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
     h2 {
-        font-size: 2.5vh;
+        font-size: var(--text-content-b)
     }
 }
 
 .container_form .grid_input {
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1rem;
     width: 100%;
     background-color: #f4f4f4;
 }
@@ -75,18 +48,23 @@ header h1 {
 { 
   padding: 1rem;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 1rem;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  h2
+  {
+    line-height: 0.5;
+  }
+  margin-bottom: 1rem;
 }
 .textarea_input_right textarea {
     width: 100%;
-    padding: 15px;
-    font-size: 3vh;
+    padding: 1rem;
+    font-size: var(--text-content-b);
     font-family: 'RSU_regular';    
     color: #333;
     
     border: 2px solid #ccc;
-    border-radius: 10px;
+    border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     resize: vertical;
     outline: none;
@@ -105,8 +83,8 @@ header h1 {
 }
 
 .color_input_right {
-    width: 3vh;
-    height: 3vh;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
@@ -132,19 +110,17 @@ header h1 {
 .radio-position {
     display: flex;
     align-items: center;
-    border-radius: 10px;
-    padding: 1rem;
-    border-radius: 10px;
+    border-radius: 1rem;
+    padding: 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: -1rem;
     input[type='radio'] {
-        transform: scale(3);
     }
 
     label {
         display: flex;
         align-items: center;
-        font-size: 3vh;
+        font-size: var(--text-content-b);
     }
 
     label input[type="radio"] {
@@ -168,7 +144,7 @@ header h1 {
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
-    padding: 1.6vh;
+    padding: 1.6rem;
     width: 100%;
     text-align: center;
     box-sizing: border-box;
@@ -176,17 +152,17 @@ header h1 {
     {
         background: #FF4742;
         border: 1px solid #FF4742;
-        border-radius: 6px;
+        border-radius: 0.5rem;
         box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
         box-sizing: border-box;
         color: #FFFFFF;
         cursor: pointer;
         display: inline-block;
         font-family: "RSU_regular";
-        font-size: 2.5vh;
+        font-size: var(--text-content-b);
         font-weight: 800;
         outline: 0;
-        padding: 0.52vh 1.5vh;
+        padding: 0.52rem 1.5rem;
         text-align: center;
         text-rendering: geometricprecision;
         text-transform: none;
@@ -209,21 +185,26 @@ header h1 {
 .shirt_design {
 
     background-color: rgb(255, 250, 240);
-    border-radius: 5px;
+    border-radius: 0.5rem;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    top: 1vh;
-    /* Distance from the top of the viewport */
-    display: inline-block;
-    height: 50vh;
-    max-height: 40vh;
-    align-items: center;
+    position: relative;
+    width: 50rem;
+    min-width: 20rem;
 }
+.shirt_img {
 
-.shirt_design {
+    margin: 0 auto;
+    width:50rem;
+    height:40rem;
+    min-width: 20rem;
+
 
 }
-
+@media (max-width: 1000px) {
+    html {
+        font-size: 2vw;
+    }
+}
 .hidden {
     display: none;
 }
@@ -233,7 +214,7 @@ header h1 {
 }
 
 .dot_checkbox {
-    font-size: 2.5vh;
+    font-size: var(--text-content-b);
     
     [type=checkbox] {
         -ms-transform: scale(3.5);
@@ -245,7 +226,7 @@ header h1 {
         -o-transform: scale(3.5);
         /* Opera */
         transform: scale(3.5);
-        margin: 2vh;
+        margin: 2rem;
     }
 
     .dot_type {
@@ -254,9 +235,9 @@ header h1 {
         grid-template-columns: 40% 60%;
         align-items: center;
         select {
-            margin: 1vh;
-            font-size: 2.5vh;
-            min-width: 6vh;
+            margin: 1rem;
+            font-size: var(--text-content-b);
+            min-width: 6rem;
             font-family: 'RSU_regular';   
         }
     }
@@ -268,44 +249,45 @@ header h1 {
 
         select {
             font-family: 'RSU_regular';   
-            margin: 1vh;
-            font-size: 2.5vh;
-            min-width: 6vh;
+            margin: 1rem;
+            font-size: var(--text-content-b);
+            min-width: 6rem;
         }
     }
     .amount-color
     {
         display: grid;
-        grid-template-columns: 79% 20%;
-        justify-content: space-between;
-
-        select {
-            font-family: 'RSU_regular';   
-            margin: 1vh;
-            font-size: 2.5vh;
-            min-width: 6vh;
+        grid-template-columns: 40% 30% 30%;
+        .dot_color
+        {
+            select {
+                font-family: 'RSU_regular';   
+                margin: 1rem;
+                font-size: var(--text-content-b);
+                width: clamp(6rem, 2.95rem + 15.25vw, 21.25rem); 
+            }
         }
+
     }
     .dot_amount {
         display: grid;
         grid-template-columns: auto auto;
         align-items: center;
         select {
-            margin: 1vh;
-            font-size: 2.5vh;
-            min-width: 6vh;
+            font-family: 'RSU_regular';
+            margin: 1rem;
+            font-size: var(--text-content-b);
         }
     }
 
     .dot_color {
-        font-size: 2vh;
+        font-size: var(--text-content-b);
         display: flex;
         justify-content: right;
         align-items: center;
         input {
-            margin: 1vh;
-            width: 3vh;
-            height: 3vh;
+            margin: 1rem;
+
         }
         
     }
@@ -314,64 +296,52 @@ header h1 {
 
 .grid_dot {
     display: grid;
-    grid-template-columns: 6.25vh 6.25vh;
+    grid-template-columns: 6.25rem 6.25rem;
     /* Static width for each column */
-    gap: 0vh;
+    gap: 0rem;
 }
 
 .grid_dot div {
     text-align: center;
     color: blue;
-
 }
 
 .dot_right {
     font-family: "Noto Serif Thai", serif;
     position: relative;
-    bottom: 33vh;
-    left: 18.1vh;
-    font-size: 0.7vh;
+    bottom: 33rem;
+    left: 18.1rem;
+    font-size: 0.7rem;
     rotate: -20deg;
 }
 
 .dot_right h1 {
-    margin: -1.5vh;
+    margin: -1.5rem;
 }
-
-.dot_right .dot3 {}
-
-.dot_right .dot2 {}
-
-.dot_right .dot1 {}
 
 .dot_left {
     font-family: "Noto Serif Thai", serif;
     position: relative;
-    bottom: 33vh;
-    left: 25.5vh;
-    font-size: 0.7vh;
+    bottom: 33rem;
+    left: 25.5rem;
+    font-size: 0.7rem;
     rotate: 20deg;
+    
 }
 
 .dot_left h1 {
-    margin: -1.5vh;
+    margin: -1.5rem;
 }
-
-.dot_left .dot3 {}
-
-.dot_left .dot2 {}
-
-.dot_left .dot1 {}
 
 .star_fix1,.star_fix2,.star_fix3
 {
-    padding: 0.2vh;
-    font-size: 1.2vh;
+    padding: 0.2rem;
+    font-size: 1.2rem;
 }
 
 .grid_name {
     display: grid;
-    grid-template-columns: 6.25vh 6.25vh;
+    grid-template-columns: 6.25rem 6.25rem;
     /* Static width for each column */
     align-items: center;
     text-align: center;
@@ -379,9 +349,9 @@ header h1 {
     justify-content: center;
     text-wrap: nowrap;
     position: relative;
-    bottom: 29vh;
+    bottom: 29rem;
     font-family: 'JS_Chanok';
-    gap: 5.5vh;
+    gap: 5.5rem;
 }
 
 .grid_name {
@@ -389,11 +359,11 @@ header h1 {
     .on_right,
     .on_left {
         .nameright {
-            font-size: 0.8vh;
+            font-size: 0.8rem;
         }
 
         .nameleft {
-            font-size: 0.8vh;
+            font-size: 0.8rem;
         }
     }
 }
@@ -401,64 +371,32 @@ header h1 {
 .School-left,
 .School-right {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1vh;
-    margin-top: -0.8vh;
-    /*font-size: 0.8vh;*/
+    font-size: 1rem;
+    margin-top: -0.8rem;
+    /*font-size: 0.8rem;*/
 }
 
 .dot_school,.dot_name {
-    font-size: 1.5vh;
+    font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: #333 solid 0vh;
-    padding-bottom: 0.3vh;
-}
-
-.on_right {
-
+    border: #333 solid 0rem;
+    padding-bottom: 0.3rem;
 }
 
 .on_right h1 {
-    margin: 0vh;
-}
-
-.on_left {
-
+    margin: 0rem;
 }
 
 .on_left h1 {
-    margin: 0vh;
-}
-
-.Select-logo {}
-
-.Select-logo__control {
-    font-size: 3vh;
-    padding: 1vh;
-}
-
-
-
-.custom-option-logo {
-    display: flex;
-    align-items: center;
-    p {
-        margin-left: 10px;
-        display: flex;
-        align-items: center;
-        font-size: 2.5vh;
-        vertical-align: middle;
-        line-height: 0.1; /* Adjust this value to decrease or increase the gap between lines */
-    }
-    img {
-    }
+    margin: 0rem;
 }
 
 .logo-right,
 .logo-left {
-    margin-top: -3vh;
-    width: 6.25vh;
+    margin-top: -3rem;
+    width: 6.25rem;
     height: 70px;
 
     img {
@@ -467,22 +405,41 @@ header h1 {
         margin-top: 0em;
     }
 }
+.Select-logo__control {
+    font-size: var(--text-content-b);
+    padding: 1rem;
+}
+.custom-option-logo {
+    display: flex;
+    align-items: center;
+    p {
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        font-size: var(--text-content-b);
+        vertical-align: middle;
+        line-height: 0.1; /* Adjust this value to decrease or increase the gap between lines */
+    }
+    img{width: calc(5rem + var(--text-head)) }
+
+}
 .Add-Shirt-Type
 {
     display: flex; justify-content: center; align-items: center; 
     padding: 2rem;
-    min-width: 70rem;
+    min-width: 20rem;
+    
     button
     {
         background-color: #FCF5E5;
-        border-radius: 4px;
+        border-radius: 0.5rem;
         border: 0;
         box-shadow: rgba(1,60,136,.5) 0 -1px 3px 0 inset,rgba(0,44,97,.1) 0 3px 6px 0;
         box-sizing: border-box;
         cursor: pointer;
         display: inherit;
         font-family: "RSU_regular";
-        font-size: 2vh;
+        font-size: var(--text-content-b);
         font-weight: 700;
         padding: 1rem 2rem;
         position: relative;
@@ -505,9 +462,9 @@ header h1 {
     *{font-family: 'RSU_regular';}
   }
   
-  .Shirt-Select::after {
+.Shirt-Select::after {
     content: '▼'; /* Custom arrow symbol */
-    font-size: calc(1vh+1rem) ; /* Increase arrow size */
+    font-size: calc(1rem+1rem) ; /* Increase arrow size */
     color: #333; /* Arrow color */
     position: absolute;
    
@@ -517,15 +474,32 @@ header h1 {
     pointer-events: none; /* Ensure the arrow doesn't block interaction */
   }
   
-  .Shirt-Select select {
-    padding: 2rem; width: calc(5vh + 25rem);
-    font-size: 2vh;
+.Shirt-Select select {
+    padding: 2rem; width: calc(5rem + 25rem);
+    font-size: 2rem;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     padding-right: 2rem; /* Adjust padding to avoid text overlap */
   }
-  
+
+.Native-Shirt-Select
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(1,60,136,.5) 0 -1px 3px 0 inset,rgba(0,44,97,.1) 0 3px 6px 0;
+    width: 100%;
+    min-width: 20rem;
+    max-width: fit-content;
+    select
+    {
+        font-family: 'RSU_regular';
+        padding: 2rem;
+    }
+    
+}
+
 .info_container {
     margin: 0 auto;
     display: grid;
@@ -533,10 +507,10 @@ header h1 {
     grid-gap: 1rem;
     /* Optional: space between items */
     max-width: 100%;
-    min-width:70rem;
+    min-width:20rem;
 
     h2 {
-        font-size: calc(2.5rem + 1vh);
+        font-size: var(--text-content-b);
     }
 }
 
@@ -544,7 +518,7 @@ header h1 {
     font-family: 'RSU_regular';
     margin: 0 auto;
     background-color: #f4f4f4;
-    border-radius: 8px;    
+    border-radius: 0.5rem;    
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     div {
@@ -553,20 +527,20 @@ header h1 {
             padding: 2rem;
             margin-top: -2rem;
             label {
-                font-size: calc(2rem + 1vh);
+                font-size: var(--text-content-b);
             }
 
             textarea {
                 margin-top: -2rem;
                 margin-bottom: -2rem;
                 width: 100%;
-                padding: 15px;
-                font-size: calc(2rem + 1vh);
+                padding: 1rem;
+                font-size: var(--text-content-b);
                 font-family: 'RSU_regular';    
                 color: #333;
                 
                 border: 2px solid #ccc;
-                border-radius: 10px;
+                border-radius: 1rem;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 resize: vertical;
                 outline: none;
@@ -579,10 +553,10 @@ header h1 {
                 font-family: 'RSU_regular';   
                 padding: 1rem;
                 width: 100%;
-                height: 4vh;
-                font-size: calc(2.5rem + 1vh);
+                height: 6rem;
+                font-size: var(--text-content-b);
                 border: 2px solid #ccc;
-                border-radius: 10px;
+                border-radius: 1rem;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
         }
@@ -594,20 +568,20 @@ header h1 {
     justify-content: center;
 
     max-width: 100%;
-    min-width: 70rem;
+    min-width: 20rem;
 
     button {
         appearance: button;
         backface-visibility: hidden;
         background-color: #405cf5;
-        border-radius: 6px;
+        border-radius: 0.5rem;
         border-width: 0;
         box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .1) 0 2px 5px 0, rgba(0, 0, 0, .07) 0 1px 1px 0;
         box-sizing: border-box;
         color: #fff;
         cursor: pointer;
         font-family:'RSU_Regular';
-        font-size: 2vh;
+        font-size: var(--text-content-b);
         line-height: 1.15;
         margin: 1rem 0 0;
         outline: none;
@@ -646,638 +620,104 @@ header h1 {
 }
 
 .select-dropdown {
-    font-size: 2vh;
+    font-size: var(--text-content-b);
     font-family: 'RSU_regular', sans-serif;
 }
 .custom-border {
     border-style: solid;
     border-width: 4px;
-    font-size: 0.75vh;
+    font-size: 0.75rem;
     width: auto;
-    min-width: 8vh;
-    max-width: 10vh;
-    height: 2.2vh;
+    min-width: 8rem;
+    max-width: 10rem;
+    height: 2.2rem;
 }
-.shirt_img {
-    margin: 0 auto;
-    width: 40vh;
-    min-width: 50vh;
+
+
+@media (min-width: 1280px) and (max-width: 1920px) {
+
+}
+
+@media (max-width: 1580px) 
+{
+    /*.shirt_img {
+
+        margin: 0 auto;
+        width:70rem;
+        height:60rem;
+        min-width: 20rem;
     
-    height: 40vh;
-}
-/*Extra Small Devices (phones):*/
-@media (min-width: 1380px) {
-    .container_form {
-        margin: 0 auto;
-        padding: 2rem;
-        width: 100%;
-        background-color: #f4f4f4;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: row;
-        /*grid-template-columns: repeat(auto-fit,minmax(75rem,1fr)); /* Two equal-width columns */
-        grid-gap: 1rem;
-        /* Optional: space between items */
-        max-width: 100%;
-        min-width: 30rem;
+    }*/
+    .container_form
+    {
+        flex-direction: column;
+        /*h2{font-size: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);}*/
     }
-        .div-border
-        { 
-          padding: 1rem;
-          border: 1px solid #ddd;
-          border-radius: 8px;
-          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .textarea_input_right textarea {
-            width: 100%;
-            padding: 15px;
-            font-size: 2rem;
-            font-family: 'RSU_regular';    
-            color: #333;
-            
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            resize: vertical;
-            outline: none;
-        
-        }
-        
-        .checkbox-color {
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .color_container_right {
-            display: flex;
-            gap: 1em;
-            align-items: center;
-        }
-        
-        .color_input_right {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            overflow: hidden;
-            cursor: pointer;
-            padding: 0;
-            -webkit-appearance: none;
-        }
-        
-        .color_input_right::-webkit-color-swatch-wrapper {
-            padding: 0;
-            /* Removes default padding */
-        }
-        
-        .color_input_right::-webkit-color-swatch {
-            border: none;
-            border-radius: 50%;
-        }
-        
-        .color_input_right:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            /* Optional: adds a subtle shadow on hover */
-        }
-        
-        .radio-position {
-            display: flex;
-            align-items: center;
-            border-radius: 10px;
-            
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 30rem;
-            height: 3rem;
-            margin-top: -1rem;
-            input[type='radio'] {
-                transform: scale(1.5);
-            }
-        
-            label {
-                display: flex;
-                align-items: center;
-                font-size: 1.5rem;
-            }
-        
-            label input[type="radio"] {
-                margin-right: 10px;
-                /* Space between radio button and text */
-            }
-        }
-        
-        .radio-position h2 {
-            color: #333;
-        }
-        
-        .radio-position label {
-            margin-left: 2em;
-        
-        
-        }
-        
-        .body_shirt {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0 auto;
-            padding: 1.6vh;
-            width: 100%;
-            text-align: center;
-            box-sizing: border-box;
-            button
-            {
-                background: #FF4742;
-                border: 1px solid #FF4742;
-                border-radius: 6px;
-                box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
-                box-sizing: border-box;
-                color: #FFFFFF;
-                cursor: pointer;
-                display: inline-block;
-                font-family: "RSU_regular";
-                font-size: 1.5rem;
-                font-weight: 800;
-                line-height: 16px;
-                min-height: 40px;
-                outline: 0;
-                padding: 1rem 2rem;
-                text-align: center;
-                text-rendering: geometricprecision;
-                text-transform: none;
-                user-select: none;
-                -webkit-user-select: none;
-                touch-action: manipulation;
-                vertical-align: middle;
-            }
-            button:hover,
-            button:active {
-              background-color: initial;
-              background-position: 0 0;
-              color: #FF4742;
-            }
-            button:active {
-              opacity: .5;
-            }
-        }
-        
-        .shirt_design {
-        
-            background-color: rgb(255, 250, 240);
-            border-radius: 5px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            display: flex;
-            top: 1vh;
-            /* Distance from the top of the viewport */
-            display: inline-block;
-            height: 50rem;
-            max-height: 40rem;
-            align-items: center;
-        }
-        
-        .shirt_design {
-
-        }
-
-        .hidden {
-            display: none;
-        }
-        
-        .visible {
-            display: block;
-        }
-        
-        .dot_checkbox {
-            [type=checkbox] {
-                -ms-transform: scale(2);
-                /* IE */
-                -moz-transform: scale(2);
-                /* FF */
-                -webkit-transform: scale(2);
-                /* Safari and Chrome */
-                -o-transform: scale(2);
-                /* Opera */
-                transform: scale(2);
-                margin: 1rem;
-            }
-        
-            .dot_type {
-                font-size: 2rem;
-                
-                display: grid;
-                grid-template-columns: 25% 75%;
-                align-items: center;
-                
-                select {
-                    margin: 1rem;
-                    font-size: 1.5rem;
-                    min-width: 6rem;
-                    height: 3rem;
-                    font-family: 'RSU_regular';   
-                }
-                .dot_type::after {
-                    content: '▼'; /* Custom arrow symbol */
-                    font-size: calc(1vh+1rem) ; /* Increase arrow size */
-                    color: #333; /* Arrow color */
-                    position: absolute;
-                   
-                    right: 1rem;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    pointer-events: none; /* Ensure the arrow doesn't block interaction */
-                  }
-                  
-                  .Shirt-Select select {
-                    padding: 2rem; width: calc(5vh + 25rem);
-                    font-size: 2vh;
-                    appearance: none;
-                    -webkit-appearance: none;
-                    -moz-appearance: none;
-                    padding-right: 2rem; /* Adjust padding to avoid text overlap */
-                  }
-            }
-        
-            .dot_position {
-                font-size: 2rem;
-                display: grid;
-                grid-template-columns: 25% 75%;
-                align-items: center;
-        
-                select {
-                    font-family: 'RSU_regular';   
-                    margin: 1rem;
-                    font-size: 1.5rem;
-                    min-width: 6rem;
-                    height: 3rem;
-                }
-            }
-            .amount-color
-            {
-                font-size: 2rem;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                justify-content: space-between;
-        
-                select {
-                    font-family: 'RSU_regular';   
-                    margin: 1rem;
-                    font-size: 1.5rem;
-                    min-width: 6rem;
-                }
-            }
-            .dot_amount {
-                font-size: 2rem;
-                display: grid;
-                grid-template-columns: 50% 50%;
-                align-items: center;
-                select {
-                    margin: 1rem;
-                    font-size: 1.5rem;
-                    min-width: 6rem;
-                }
-            }
-        
-            .dot_color {
-                font-size: 2rem;
-                display: flex;
-                justify-content: right;
-                input {
-                    margin: 1rem;
-                    font-size: 2rem;
-                    width: 3rem;
-                    height: 3rem;
-                }
-                
-            }
-        }
-        
-        
-        .grid_dot {
-            display: grid;
-            grid-template-columns: 6.25rem 6.25rem;
-            /* Static width for each column */
-            gap: 0rem;
-        }
-        
-        .grid_dot div {
-            text-align: center;
-            color: blue;
-        
-        }
-        
-        .dot_right {
-            font-family: "Noto Serif Thai", serif;
-            position: relative;
-            bottom: 33rem;
-            left: 18.1rem;
-            font-size: 0.7rem;
-            rotate: -20deg;
-        }
-        
-        .dot_right h1 {
-            margin: -1.5rem;
-        }
-        
-        .dot_right .dot3 {}
-        
-        .dot_right .dot2 {}
-        
-        .dot_right .dot1 {}
-        
-        .dot_left {
-            font-family: "Noto Serif Thai", serif;
-            position: relative;
-            bottom: 33rem;
-            left: 25.5rem;
-            font-size: 0.7rem;
-            rotate: 20deg;
-        }
-        
-        .dot_left h1 {
-            margin: -1.5rem;
-        }
-        
-        .dot_left .dot3 {}
-        
-        .dot_left .dot2 {}
-        
-        .dot_left .dot1 {}
-        .star_fix1,.star_fix2,.star_fix3
-        {
-            padding: 0.15rem;
-            font-size: 1.25rem;
-        }
-        .grid_name {
-            display: grid;
-            grid-template-columns: 6.25rem 6.25rem;
-            /* Static width for each column */
-            align-items: center;
-            text-align: center;
-            place-items: center;
-            justify-content: center;
-            text-wrap: nowrap;
-            position: relative;
-            bottom: 29rem;
-            font-family: 'JS_Chanok';
-            gap: 5.5rem;
-        }
-        
-        .grid_name {
-        
-            .on_right,
-            .on_left {
-                .nameright {
-                    font-size: 0.8rem;
-                }
-        
-                .nameleft {
-                    font-size: 0.8rem;
-                }
-            }
-        }
-        
-        .School-left,
-        .School-right {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 1rem;
-            margin-top: -0.8rem;
-            /*font-size: 0.8rem;*/
-            transform: scale(0.8);
-        }
-        
-        .dot_school,.dot_name {
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: #333 solid 0rem;
-            padding-bottom: 0.3rem;
-        }
-        
-        .on_right {
-        
-        }
-        
-        .on_right h1 {
-            margin: 0rem;
-        }
-        
-        .on_left {
-        
-        }
-        
-        .on_left h1 {
-            margin: 0rem;
-        }
-        
-        .Select-logo {}
-        
-        .Select-logo__control {
-            height: 2.5rem;
-            font-size: 2rem;
-            padding: 1rem;
-        }
-        
-        
-        
-        .custom-option-logo {
-            display: flex;
-            align-items: center;
-            p {
-                margin-left: 10px;
-                display: flex;
-                align-items: center;
-                font-size: 2rem;
-                vertical-align: middle;
-            }
-            img {
-            }
-        }
-        
-        .logo-right,
-        .logo-left {
-            margin-top: -3rem;
-            width: 6.25rem;
-            height: 70px;
-        
-            img {
-                max-width: 100%;
-                height: auto;
-                margin-top: 0em;
-            }
-        }
-        .Add-Shirt-Type
-        {
-            display: flex; justify-content: center; align-items: center; 
-            padding: 2rem;
-            min-width: 70rem;
-            button
-            {
-                background-color: #FCF5E5;
-                border-radius: 4px;
-                border: 0;
-                box-shadow: rgba(1,60,136,.5) 0 -1px 3px 0 inset,rgba(0,44,97,.1) 0 3px 6px 0;
-                box-sizing: border-box;
-                cursor: pointer;
-                display: inherit;
-                font-family: "RSU_regular";
-                font-size: 2rem;
-                font-weight: 700;
-                padding: 1rem 2rem;
-                position: relative;
-                text-align: center;
-                user-select: none;
-                -webkit-user-select: none;
-                touch-action: manipulation;
-                vertical-align: baseline;
-                transition: all .2s cubic-bezier(.22, .61, .36, 1);
-            }
-            button:hover {
-                background-color: rgb(255, 226, 137);
-                transform: translateY(-2px);
-              }
-        }
-
-        .info_container {
-            margin: 0 auto;
-            display: grid;
-            /*grid-template-columns: repeat(auto-fit,minmax(75rem,1fr)); /* Two equal-width columns */
-            grid-gap: 1rem;
-            /* Optional: space between items */
-            max-width: 100%;
-            min-width:70rem;
-        
-            h2 {
-                font-size: 2rem;
-            }
-        }
-        
-        .info-form {
-            font-family: 'RSU_regular';
-            margin: 0 auto;
-            background-color: #f4f4f4;
-            border-radius: 8px;    
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
+    /*.textarea_input_right textarea
+    {font-size: clamp(1rem, 0.3333rem + 3.3333vw, 3rem);}
+    .color_input_right
+    {
+        width: clamp(1rem, 0.4rem + 3vw, 4rem);
+        height: clamp(1rem, 0.4rem + 3vw, 4rem);
+    }
+    .Add-Shirt-Type
+    {button{font-size: clamp(1rem, 0.6667rem + 1.6667vw, 2rem);}}
+    .info_container {h2 {font-size: clamp(1rem, 0.1667rem + 4.1667vw, 3.5rem);}}
+    
+    .info-form {
+        div {
             div {
-                div {
-                    align-items: center;
-                    padding: 2rem;
-                    margin-top: -2rem;
-        
-                    label {
-                        font-size: 1rem;
-                    }
-        
-                    textarea {
-                        margin-top: -2rem;
-                        margin-bottom: -2rem;
-                        width: 100%;
-                        padding: 15px;
-                        font-size: 2rem;
-                        font-family: 'RSU_regular';    
-                        color: #333;
-                        
-                        border: 2px solid #ccc;
-                        border-radius: 10px;
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                        resize: vertical;
-                        outline: none;
-                    }
-        
-                    input {
-                        margin-top: -2rem;
-                        margin-bottom: -2rem;
-                        font-family: 'RSU_regular';   
-                        padding: 1rem;
-                        width: 100%;
-                        height: 4rem;
-                        font-size: 2rem;
-                        border: 2px solid #ccc;
-                        border-radius: 10px;
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    }
+                align-items: center;
+                padding: clamp(1rem, 0.6667rem + 1.6667vw, 2rem);
+                margin-top: clamp(-1rem, -0.6667rem + -1.6667vw, -2rem);
+                label {
+                    font-size: clamp(1rem, 0.3333rem + 3.3333vw, 3rem);
+                }
+                textarea {
+                    margin-top: clamp(-1rem, -0.6667rem + -1.6667vw, -2rem);
+                    margin-bottom: clamp(-1rem, -0.6667rem + -1.6667vw, -2rem);
+                    padding: 1rem;
+                    font-size: clamp(1rem, 0.3333rem + 3.3333vw, 3rem);
+                    height: clamp(6rem, 3rem + 15vw, 15rem);
+                }
+    
+                input {
+                    margin-top: clamp(-1rem, -0.6667rem + -1.6667vw, -2rem);
+                    margin-bottom: clamp(-1rem, -0.6667rem + -1.6667vw, -2rem);
+                    padding: 1rem;
+                    width: 100%;
+                    height: clamp(3rem, 2.3333rem + 3.3333vw, 5rem);
+                    font-size: clamp(1rem, 0.3333rem + 3.3333vw, 3rem);
+                    border: 2px solid #ccc;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 }
             }
         }
-        
-        .Cus-submit {
-            display: flex;
-            justify-content: center;
-        
-            max-width: 100%;
-            min-width: 65rem;
-        
-            button {
-                appearance: button;
-                backface-visibility: hidden;
-                background-color: #405cf5;
-                border-radius: 6px;
-                border-width: 0;
-                box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .1) 0 2px 5px 0, rgba(0, 0, 0, .07) 0 1px 1px 0;
-                box-sizing: border-box;
-                color: #fff;
-                cursor: pointer;
-                font-family:'RSU_Regular';
-                font-size: 2rem;
-                height: 5rem;
-                line-height: 1.15;
-                margin: 1rem 0 0;
-                outline: none;
-                overflow: hidden;
-                padding: 1rem;
-                position: relative;
-                text-align: center;
-                text-transform: none;
-                transform: translateZ(0);
-                transition: all .2s, box-shadow .08s ease-in;
-                user-select: none;
-                -webkit-user-select: none;
-                touch-action: manipulation;
-                width: 15rem;
-            }
-            button:hover
-            {
-                background-color: #3e6535;
-            }
-        }
-        .flex-container {
-            display: flex;
-            justify-content: space-around;
-            flex-direction: row;
-        }
-        
-        .select-container {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        
-        .select-container h2 {
-            font-family: 'RSU_regular', sans-serif;
-        }
-        
-        .select-dropdown {
-            height: 3rem;
-            padding: 0rem;
-            font-size: 1.5rem;
-            font-family: 'RSU_regular', sans-serif;
-        }
-        .custom-border {
-            border-style: solid;
-            border-width: 4px;
-            font-size: 0.75rem;
-            width: auto;
-            min-width: 8rem;
-            max-width: 10rem;
-            height: 2.2rem;
-        }
-        .shirt_img {
-            margin: 0 auto;
-            width: 40rem;
-            min-width: 50rem;
+    }
     
-            height: 40rem;
+    .Cus-submit {
+        display: flex;
+        justify-content: center;
+        max-width: 100%;
+        min-width: 20rem;
+        button {
+            font-size: clamp(1.5rem, 1rem + 2.5vw, 3rem);
         }
     }
 
-
+    .shirt_img {
+        width: clamp(20rem, 80vw, 50rem);
+        height: clamp(17rem, 70vw, 40rem);
+    }
+    .grid_name
+    {
+        position: relative;
+        top: clamp(-13rem, 100vw, -13rem);
+        grid-template-columns: 5rem 5rem;
+        gap: 0;
+        *{font-size: clamp(0.7rem, 1vw, 1rem);}
+        
+        
+    }*/
+}

@@ -484,102 +484,93 @@ function ShirtOrder({ cus_id, parent_name, phone_number, status }) {
   return (
     <>
       {formdata.Selected && (
-        <div className="container_form">
-          <div className="body_shirt">
-            <br />
-            <div className="shirt_design">
-              <img
-                className="shirt_img"
-                src="/image_folder/S_Shirt.png"
-                alt=""
-              />
-              <div className="grid_dot">
+        <div className="container_form1">
+    <div className="body_shirt">
+          <div className="shirt_design1">
+            <img className="shirt_img" src="/image_folder/S_Shirt.png" alt="" />
+            <div className="grid_dot">
+              <div
+                className={dot_position_class.dot_left}
+                style={{ color: formdata.dot.color_dot }}
+              >
+                {render_dot1(formdata.dot.type, formdata.dot.amount_dot)}
+              </div>
+              <div
+                className={dot_position_class.dot_right}
+                style={{ color: formdata.dot.color_dot }}
+              >
+                {render_dot1(formdata.dot.type, formdata.dot.amount_dot)}
+              </div>
+            </div>
+            <div className="grid_name">
+              <div className="on_right">
                 <div
-                  className={dot_position_class.dot_left}
+                  className={dot_position_class.onschool}
                   style={{ color: formdata.dot.color_dot }}
                 >
-                  {render_dot1(formdata.dot.type, formdata.dot.amount_dot)}
+                  {render_dot_school(
+                    formdata.dot.type,
+                    formdata.dot.amount_dot
+                  )}
+                </div>
+                <div className={SLogoPositionClass.right}>
+                  {formdata.SLogo.image_path && (
+                    <img
+                      src={formdata.SLogo.image_path}
+                      alt={formdata.SLogo.school_name}
+                    />
+                  )}
                 </div>
                 <div
-                  className={dot_position_class.dot_right}
-                  style={{ color: formdata.dot.color_dot }}
+                  className={SSchoolPositionClass.right}
+                  style={{ color: formdata.SSchool.color1}}
                 >
-                  {render_dot1(formdata.dot.type, formdata.dot.amount_dot)}
+                  {render_school(formdata.SSchool.name)}
+                  {render_h1(formdata.SUnderschool.under_school)}
+                </div>
+                <div
+                  className={SNamePositionClass.fullname_right}
+                  style={{ color: formdata.SName.color }}
+                >
+                  {render_h1(formdata.SName.fullname)}
+                  {render_h1(formdata.SUndername.under_name)}
                 </div>
               </div>
-              <div className="grid_name">
-                <div className="on_right">
-                  <div
-                    className={dot_position_class.onschool}
-                    style={{ color: formdata.dot.color_dot }}
-                  >
-                    {render_dot_school(
-                      formdata.dot.type,
-                      formdata.dot.amount_dot
-                    )}
-                  </div>
-                  <div className={SLogoPositionClass.right}>
-                    {formdata.SLogo.image_path && (
-                      <img
-                        src={formdata.SLogo.image_path}
-                        alt={formdata.SLogo.school_name}
-                      />
-                    )}
-                  </div>
-                  <div
-                    className={SSchoolPositionClass.right}
-                    style={{ color: formdata.SSchool.color1 }}
-                  >
-                    {render_school(formdata.SSchool.name)}
-                    {render_h1(formdata.SUnderschool.under_school)}
-                  </div>
-                  <div
-                    className={SNamePositionClass.fullname_right}
-                    style={{ color: formdata.SName.color }}
-                  >
-                    {render_h1(formdata.SName.fullname)}
-                    {render_h1(formdata.SUndername.under_name)}
-                  </div>
-                </div>
 
-                <div className="on_left">
-                  <div
-                    className={dot_position_class.onname}
-                    style={{ color: formdata.dot.color_dot }}
-                  >
-                    {render_dot_name(
-                      formdata.dot.type,
-                      formdata.dot.amount_dot
-                    )}
-                  </div>
-                  <div className={SLogoPositionClass.left}>
-                    {formdata.SLogo.image_path && (
-                      <img
-                        src={formdata.SLogo.image_path}
-                        alt={formdata.SLogo.school_name}
-                      />
-                    )}
-                  </div>
-                  <div
-                    className={SSchoolPositionClass.left}
-                    style={{ color: formdata.SSchool.color1 }}
-                  >
-                    {render_school(formdata.SSchool.name)}
-                    {render_h1(formdata.SUnderschool.under_school)}
-                  </div>
-                  <div
-                    className={SNamePositionClass.fullname_left}
-                    style={{ color: formdata.SName.color }}
-                  >
-                    {render_h1(formdata.SName.fullname)}
-                    {render_h1(formdata.SUndername.under_name)}
-                  </div>
+              <div className="on_left">
+                <div
+                  className={dot_position_class.onname}
+                  style={{ color: formdata.dot.color_dot }}
+                >
+                  {render_dot_name(formdata.dot.type, formdata.dot.amount_dot)}
+                </div>
+                <div className={SLogoPositionClass.left}>
+                  {formdata.SLogo.image_path && (
+                    <img
+                      src={formdata.SLogo.image_path}
+                      alt={formdata.SLogo.school_name}
+                    />
+                  )}
+                </div>
+                <div
+                  className={SSchoolPositionClass.left}
+                  style={{ color: formdata.SSchool.color1 }}
+                >
+                  {render_school(formdata.SSchool.name)}
+                  {render_h1(formdata.SUnderschool.under_school)}
+                </div>
+                <div
+                  className={SNamePositionClass.fullname_left}
+                  style={{ color: formdata.SName.color }}
+                >
+                  {render_h1(formdata.SName.fullname)}
+                  {render_h1(formdata.SUndername.under_name)}
                 </div>
               </div>
             </div>
           </div>
-          <br />
-          <br />
+        </div>
+
         </div>
       )}
     </>

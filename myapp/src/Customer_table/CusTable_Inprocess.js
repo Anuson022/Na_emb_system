@@ -296,10 +296,6 @@ const Customer_table = () => {
                         onClick={() =>
                           handleClick(
                             item.cus_id,
-                            item.info,
-                            item.parent_name,
-                            item.phone_number,
-                            item.status
                           )
                         }
                         style={{ backgroundColor: "#007bff" }}

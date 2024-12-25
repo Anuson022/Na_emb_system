@@ -1,6 +1,7 @@
 import React, { useEffect, useState, StrictMode } from "react";
 import Select from "react-select";
-
+import { Checkbox } from "@mui/material";
+import Radio from '@mui/material/Radio';
 import "./Shirt_graphic_cus_com.css";
 
 const render_h1 = (text) => {
@@ -338,9 +339,12 @@ function Shirt_graphic_cus_PE({
                   <h2>ตำแหน่งของชื่อ</h2>
                   <div className="radio-position">
                     <label>
-                      <input
-                        type="radio"
+                      <Radio
                         name="Name-Position"
+                        sx={{
+                          "& .MuiSvgIcon-root": {
+                            fontSize: "clamp(1rem, 0.6rem + 2vw, 3rem)",
+                          },}}
                         checked={PEdata.SName.position_n === "ชื่อด้านขวา"}
                         onChange={HandleName_position}
                         value="ชื่อด้านขวา"
@@ -348,8 +352,12 @@ function Shirt_graphic_cus_PE({
                       ด้านขวา
                     </label>
                     <label>
-                      <input
-                        type="radio"
+                      <Radio
+                        sx={{
+                          "& .MuiSvgIcon-root": {
+                            fontSize: "clamp(1rem, 0.6rem + 2vw, 3rem)",
+                          },
+                        }}
                         name="Name-Position"
                         checked={PEdata.SName.position_n === "ชื่อด้านซ้าย"}
                         onChange={HandleName_position}
@@ -367,18 +375,21 @@ function Shirt_graphic_cus_PE({
 
             <br />
             <div className="div-border">
-            <div className="dot_checkbox">
+            
               <div style={{ display: "flex" }}>
                 <h2>มีจุดหรือไม่</h2>
-                <input
-                  style={{}}
-                  type="checkbox"
+                <Checkbox
+                  sx={{
+                    "& .MuiSvgIcon-root": {
+                      fontSize: "clamp(1.5rem, 1rem + 2.5vw, 4rem)",
+                    },
+                  }}
                   checked={checkbox_dot_PE}
                   onChange={handlecheckbox_dot_PE}
                 />
               </div>
               {checkbox_dot_PE ? (
-                <div>
+                <div className="dot_checkbox">
                   <div className="dot_type">
                     {/*
                         <p>
@@ -414,8 +425,9 @@ function Shirt_graphic_cus_PE({
                     </select>
                   </div>
                   <div className="amount-color">
+                  <p>จำนวนจุด</p>
                   <div className="dot_amount">
-                    <p>จำนวนจุด</p>
+                    
                     <select
                       name="amount_dot"
                       value={PEdata.dot.amount_dot}
@@ -441,13 +453,13 @@ function Shirt_graphic_cus_PE({
               ) : (
                 ""
               )}
-            </div>
+            
             </div>
           </form>
         </div>
 
         <div className="body_shirt">
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'20rem'}}>
+        <div style={{}}>
           <h2 className="h2_g">รูปแบบกราฟิก</h2>
             <button onClick={() => handleRemove("เสื้อพละ")}>นำออก</button>
           </div>

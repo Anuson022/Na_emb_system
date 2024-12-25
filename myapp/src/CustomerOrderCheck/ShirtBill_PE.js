@@ -437,12 +437,12 @@ function ShirtBill_PE({ cus_id, parent_name, phone_number, status })
   
   return (
     <>{PEdata.Selected &&
-      <div className="container_form" style={{alignItems:'center'}}>
+      <div className="container_form1" style={{alignItems:'center'}}>
 
 
         <div className="body_shirt">
 
-          <div className="shirt_design">
+          <div className="shirt_design1">
             <img className="shirt_img" src="/image_folder/PE1_Shirt.png" alt="" />
             <div className="grid_dot">
               <div
@@ -499,7 +499,6 @@ function ShirtBill_PE({ cus_id, parent_name, phone_number, status })
             </div>
           </div>
         </div>
-        <br /><br />
       </div>
       }
     </>

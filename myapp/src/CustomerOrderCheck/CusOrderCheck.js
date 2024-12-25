@@ -74,12 +74,15 @@ function CusOrderCheck() {
   const renderContent = () => {
     if (data === "notfound") {
       return (<>
+      <div className="notfound-temporary">
       <p>ไม่พบข้อมูลข้อมูลในสถานะนี้</p>
       <p>กรุณาเช็คเบอร์โทร</p>
+      </div>
       </>)
       
     }
       const settings = {
+        className: "center",
         dots: true,              // Show navigation dots
         infinite: true,          // Infinite loop
         speed: 500,              // Transition speed (ms)
@@ -87,6 +90,25 @@ function CusOrderCheck() {
         slidesToScroll: 1,       // Number of slides to scroll at a time
         autoplay: true,          // Enable autoplay
         autoplaySpeed: 5000,     // Autoplay speed (ms)
+        responsive: [
+          {
+            breakpoint: 1980,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: true
+            }
+          },
+          {
+            breakpoint: 1450,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              initialSlide: 1
+            }
+          },
+        ]
       };
     return (
       <>
@@ -94,7 +116,8 @@ function CusOrderCheck() {
       
       {data.map((cus, index) => (
       <div key={cus.cus_id} className="order-section">
-        <div className="">
+        <div className="Slider-Shirt"
+        style={{backgroundColor:'whitesmoke',alignItems:'center',justifyContent:'center'}}>
         <Slider {...settings}>
         <div>
         <ShirtBill cus_id={cus.cus_id} />
@@ -109,6 +132,7 @@ function CusOrderCheck() {
         
         </div>
         <h2>รายการ</h2>
+        <div style={{overflowX:'auto'}}>
         <table className="order-table">
           <thead>
             <tr>
@@ -131,6 +155,8 @@ function CusOrderCheck() {
             ))}
           </tbody>
         </table>
+        </div>
+
         <div className="order-summary">ราคารวม: {orderSum[index]}</div>
         <div className="status-info"><span>สถานะ: {status[index]}</span> 
         </div>
@@ -157,7 +183,7 @@ function CusOrderCheck() {
       
       <div className="search-section">
         <h1>โปรดกรอกเบอร์โทร</h1>
-        <div style={{display:'flex',justifyContent:'center',gap:'1rem'}}>
+        <div className="cus-search-container">
         <input
           type="text"
           value={searchData}

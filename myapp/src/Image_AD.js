@@ -125,7 +125,7 @@ function Image_AD() {
                     {currentItems.map((file) => (
                         <div className='Image_item' key={file.id}>
                             <img 
-                                src={`/uploads/${file.path.split('/').pop()}`} 
+                                src={`/api/uploads/${file.path.split('/').pop()}`} 
                                 alt={file.name} 
                             />
                             <br />

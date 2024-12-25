@@ -23,7 +23,7 @@ function UserEdit({ID}) {
         password: User_obj.password,
         role: User_obj.role
       }));
-      SetShowProfile(`/profile/${User_obj.profile.split("/").pop()}`)
+      SetShowProfile(`/api/profile/${User_obj.profile.split("/").pop()}`)
     }
    useEffect(()=>
     {

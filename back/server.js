@@ -27,6 +27,9 @@ const router_CusCurrentQue = require("./CusGetQue/CurrentQue")
 
 const router_StatisticData = require("./StatisticData/StatisticCustomerData")
 const router_StatisticPrice = require("./StatisticData/StatisticPriceData")
+const router_SchoolFetcher = require('./AutoForm/AutoFormFetch')
+
+const google_news = require( "./google_api/google_news")
 
 const app1 = express();
 
@@ -56,10 +59,12 @@ app1.use(router_AccountDeleter) //account delete
 
 app1.use(router_StatisticData) //Stat
 app1.use(router_StatisticPrice) //stat price
+app1.use(router_autoFetcher)
 
 app1.use(router_CusGetQue)
 app1.use(router_CusCurrentQue)
 
+app1.use(google_news)
 
 // Ensure new directories exist
 const directories = ['user_profile/profile', 'function_server/uploads'];
@@ -75,7 +80,7 @@ app1.use('/uploads', express.static(path.join(__dirname, 'function_server/upload
 
 const JWT_SECRET = "JWTMAYBE"
 
-app1.post("/api/na_login",(req,res)=>
+app1.post("/na_login",(req,res)=>
   {
     const username = req.body.Username
     const password = req.body.Password
@@ -330,7 +335,7 @@ app1.get("/", (req, res) => {
   res.write("<h1 style='background-color: white'>Hello</h1>");
   res.end();
 });
-app1.post("/api/cus_input", async (req, res) => {
+app1.post("/cus_input", async (req, res) => {
   const Shirt_data = req.body.formdata;
   const PE_data = req.body.PEdata;
   const Scout_data = req.body.Scoutdata;
@@ -341,7 +346,7 @@ app1.post("/api/cus_input", async (req, res) => {
   res.send('Success');
   //customer input
 });
-app1.post("/api/insert_customdata", async (req, res) => {
+app1.post("/insert_customdata", async (req, res) => {
   await console.log();
   const cus_data = req.body.formdata_cus;
   const Shirt_data = req.body.formdata;
@@ -355,7 +360,7 @@ app1.post("/api/insert_customdata", async (req, res) => {
   res.json();
   //storefront input
 });
-app1.post("/api/update_customdata", async (req, res) => {
+app1.post("/update_customdata", async (req, res) => {
   await console.log();
   const cus_data = req.body.formdata_cus;
   const Shirt_data = req.body.formdata;
@@ -369,7 +374,7 @@ app1.post("/api/update_customdata", async (req, res) => {
   res.json();
   //storefront input
 });
-app1.delete("/api/delete_cusdata/:id", async (req, res) => {
+app1.delete("/delete_cusdata/:id", async (req, res) => {
   //await console.log(req.body.popupData)
   const { id } = req.params;
   adm_delete(id,res);
@@ -377,7 +382,7 @@ app1.delete("/api/delete_cusdata/:id", async (req, res) => {
   //res.json();
   //storefront delete
 });
-app1.post("/api/search_cus1", async (req, res) => {
+app1.post("/search_cus1", async (req, res) => {
   const searchTerm = req.body.search_value;
   console.log(searchTerm);
   const query = `SELECT * FROM customer_data WHERE cus_id LIKE ? AND status = "ยังไม่ตรวจสอบ"`;
@@ -388,7 +393,7 @@ app1.post("/api/search_cus1", async (req, res) => {
     });
   } catch (error) {}
 });
-app1.post("/api/search_cus2", async (req, res) => {
+app1.post("/search_cus2", async (req, res) => {
   const searchTerm = req.body.searchTerm;
   console.log(searchTerm);
   
@@ -409,7 +414,7 @@ app1.post("/api/search_cus2", async (req, res) => {
   }
 });
 
-app1.post("/api/search_cus3", async (req, res) => {
+app1.post("/search_cus3", async (req, res) => {
   const searchTerm = req.body.searchTerm;
   console.log(searchTerm);
   
@@ -429,7 +434,7 @@ app1.post("/api/search_cus3", async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-app1.post("/api/update_status", async (req, res) => {
+app1.post("/update_status", async (req, res) => {
   const ChangeStatus = req.body.change_status;
   const ID = req.body.change_id;
   console.log(ChangeStatus);
@@ -452,7 +457,7 @@ app1.post("/data_table1", async (req, res) => {
     }
   });
 });
-app1.get("/api/get_cusID", async (req, res) => {
+app1.get("/get_cusID", async (req, res) => {
   console.log(req.query);
   const query = `SELECT * FROM customer_data WHERE cus_id = ?`;
   try {

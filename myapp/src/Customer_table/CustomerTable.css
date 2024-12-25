@@ -273,6 +273,7 @@
 
 
 .container_customer_table {
+  
   table {
     width: 100%;
     border-collapse: collapse;
@@ -285,7 +286,7 @@
     background-color: #f2f2f2;
     font-weight: bold;
   }
-  
+  .styled-table{font-family: "RSU_regular";}
   tbody.table_body tr:nth-child(even) {
     background-color: #f9f9f9;
   }

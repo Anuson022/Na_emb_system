@@ -4,7 +4,7 @@ const pool = require('../na_db'); // Adjust the path as necessary
 
 const fetchRouter = express.Router();
 
-fetchRouter.post('/api/GetCurrentQue',(req,res)=>
+fetchRouter.post('/GetCurrentQue',(req,res)=>
     {
          const SearchQue = "SELECT MIN(cus_id) FROM customer_data WHERE status = 'กำลังดำเนินการ'"
          try {
@@ -26,7 +26,7 @@ fetchRouter.post('/api/GetCurrentQue',(req,res)=>
         }
     })
 
-fetchRouter.post('/api/GetMaxID',(req,res)=>
+fetchRouter.post('/GetMaxID',(req,res)=>
     {
          const SearchQue = "SELECT MAX(cus_id) FROM customer_data"
          try {

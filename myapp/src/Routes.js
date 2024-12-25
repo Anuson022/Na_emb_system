@@ -31,6 +31,8 @@ import Secure_component from "./Login_component/Secure_component";
 import HomePage from "./CusPage/HomePage";
 import Shirt_graphic_cus from "./Shirt_graphic_cus_const";
 import HomeSuggest from "./CusPage/HomeSuggest";
+import Justest from "./Justest";
+import AutoFormAdd from "./AutoInput/AutoFormAdd";
 
 const Router = createBrowserRouter([
   {
@@ -105,12 +107,12 @@ const Router = createBrowserRouter([
         element: <AutoInput />,
       },
       {
-        path: "Test1",
-        element: <Test />,
-      },
-      {
         path: "Statistic_data",
         element: <MainStatistic />,
+      },
+      {
+        path: "Auto_input",
+        element: <AutoInput />,
       },
     ],
   },
@@ -125,12 +127,20 @@ const Router = createBrowserRouter([
     element: <DynamicForm />,
   },
   {
+    path: "idk2",
+    element: <Justest/>,
+  },
+  {
     path: "test_com",
     element: <Recheck />,
   },
   {
     path: "FullOrderAdd",
     element: <Secure_component Page={<NewOrderSubmit />} />,
+  },
+  {
+    path: "AutoFormAdd",
+    element: <Secure_component Page={<AutoFormAdd />} />,
   },
 ]);
 

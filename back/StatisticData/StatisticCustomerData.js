@@ -4,7 +4,7 @@ const pool = require('../na_db'); // Adjust the path as necessary
 
 const fetchRouter = express.Router();
 
-fetchRouter.get('/api/yearly-data', (req, res) => {
+fetchRouter.get('/yearly-data', (req, res) => {
     const year = new Date().getFullYear();
     pool.query(
         `SELECT MONTH(date_time) as month, COUNT(*) as count FROM customer_data WHERE YEAR(date_time) = ? GROUP BY MONTH(date_time)`,
@@ -24,7 +24,7 @@ fetchRouter.get('/api/yearly-data', (req, res) => {
     );
 });
 // API to get the sum of data for the current year
-fetchRouter.get('/api/yearly-sum', (req, res) => {
+fetchRouter.get('/yearly-sum', (req, res) => {
     const year = new Date().getFullYear();
 
     pool.query(
@@ -43,7 +43,7 @@ fetchRouter.get('/api/yearly-sum', (req, res) => {
 });
 
 // Route to fetch daily data for the current month
-fetchRouter.get('/api/monthly-data', (req, res) => {
+fetchRouter.get('/monthly-data', (req, res) => {
     const query = `
         SELECT DAY(date_time) AS day_of_month, COUNT(*) AS count
         FROM customer_data
@@ -69,7 +69,7 @@ fetchRouter.get('/api/monthly-data', (req, res) => {
     });
 });
 // Route to fetch hourly data for today
-fetchRouter.get('/api/monthly-data-sum', (req, res) => {
+fetchRouter.get('/monthly-data-sum', (req, res) => {
     const query = `
         SELECT SUM(count) AS monthly_total
         FROM (
@@ -92,7 +92,7 @@ fetchRouter.get('/api/monthly-data-sum', (req, res) => {
     });
 });
 
-fetchRouter.get('/api/weekly-data', (req, res) => {
+fetchRouter.get('/weekly-data', (req, res) => {
     const query = `
         SELECT DAYOFWEEK(date_time) AS day_of_week, COUNT(*) AS count
         FROM customer_data
@@ -118,7 +118,7 @@ fetchRouter.get('/api/weekly-data', (req, res) => {
     });
 });
 // Route to fetch the sum of daily data for the current week
-fetchRouter.get('/api/weekly-data-sum', (req, res) => {
+fetchRouter.get('/weekly-data-sum', (req, res) => {
     const query = `
         SELECT SUM(count) AS weekly_total
         FROM (
@@ -142,7 +142,7 @@ fetchRouter.get('/api/weekly-data-sum', (req, res) => {
 });
 
 // Route to fetch hourly data for today
-fetchRouter.get('/api/hourly-data-today', (req, res) => {
+fetchRouter.get('/hourly-data-today', (req, res) => {
     const query = `
         SELECT HOUR(date_time) AS hour, COUNT(*) AS count
         FROM customer_data
@@ -168,7 +168,7 @@ fetchRouter.get('/api/hourly-data-today', (req, res) => {
     });
 });
 // Route to fetch the sum of data for today
-fetchRouter.get('/api/today-data-sum', (req, res) => {
+fetchRouter.get('/today-data-sum', (req, res) => {
     const query = `
         SELECT COUNT(*) AS today_total
         FROM customer_data

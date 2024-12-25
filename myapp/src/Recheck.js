@@ -11,7 +11,7 @@ import { faShirt } from "@fortawesome/free-solid-svg-icons";
 
 const Recheck = () => {
   const location = useLocation();
-  const { cus_data } = location.state;
+  const { cus_data } = location.state ;
   const [formdata_cus, setformdata_cus] = useState({
     cus_id: cus_data.cus_id,
     info: cus_data.info,
@@ -54,6 +54,9 @@ const Recheck = () => {
   useEffect(() => {
     Fetch_graphic();
   }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   useEffect(() => {
     if (FetchData.shirt?.SName) {
       setformdata((prevFormData) => ({

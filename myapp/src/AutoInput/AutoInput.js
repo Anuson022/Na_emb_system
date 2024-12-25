@@ -3,284 +3,353 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import yes_no_Popup from "./yes_no_Popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactDOM from "react-dom/client";
+import Swal from "sweetalert2";
+import * as React from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import {
   faMagnifyingGlass,
   faFileInvoice,
+  faFileContract,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import AutoShirt from "./AutoShirt";
 
-const ITEMS_PER_PAGE = 5;
 const AutoInput = () => {
-  const [data, setData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
-  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-  const [Status,SetStatus] = useState()
-
-  const [popup_delete, setpopup_delete] = useState(null);
+  const Navigate = useNavigate("");
+  const [FetchUsers, SetFetchUsers] = useState([]);
+  const [Search, SetSearch] = useState("");
   const [popup_view, setpopup_view] = useState({});
-  const [popup_bill, setpopup_bil] = useState([]);
-
-  const [showpopup_delete, setshowpopup_delete] = useState(false);
   const [showpopup_view, setshowpopup_view] = useState(false);
-  const [showpopup_bill, setshowpopup_bill] = useState(false);
-
-  const handleShowPopup_delete = (cus_id) => {
-    setpopup_delete(cus_id);
-    setshowpopup_delete(true);
-  };
-  const handleShowPopup_view = async (shirtInfo) => {
-    await setpopup_view({ shirtInfo });
-    //await console.log(popup_view.shirtInfo.SName.fullname)
-    setshowpopup_view(true);
-  };
-  const handleShowPopup_bill = async (BillInfo) => {
-    await setpopup_bil(BillInfo);
-    //await console.log(popup_view.shirtInfo.SName.fullname)
-    setshowpopup_bill(true);
-  };
-  const handleYes_delete = async () => {
-    try {
-      const response = await axios.post("/delete_cusdata", { popup_delete });
-      setpopup_delete(response.data);
-      fetching_data();
-      //alert(popup_delete)
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    }
-    setshowpopup_delete(false);
-  };
-  const handleNo = () => {
-    setshowpopup_delete(false);
-    setshowpopup_view(false);
-  };
-
-  const Check_verify = (verify) => {
-    return verify ? "ยืนยันแล้ว" : "ยังไม่ยืนยัน";
+  const [ShirtData, SetShirtData] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 5; // Number of orders to show per page
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const UserLimit = FetchUsers.slice(indexOfFirstOrder, indexOfLastOrder);
+  const totalPages = Math.ceil(FetchUsers.length / ordersPerPage);
+  const fetchData = async () => {
+    const response = await axios.get("/api/autoform");
+    SetFetchUsers(response.data);
   };
   useEffect(() => {
-    fetching_data(currentPage);
-  }, [currentPage]);
+    fetchData();
+  }, []);
+  const renderReactComponent = (Component, props) => {
+    return new Promise((resolve) => {
+      const container = document.createElement("div");
 
-  const fetching_data = async (page) => {
-    const search_value = "";
-    const response = await axios
-      .post("/search_cus2", { search_value })
-      .then((response) => {
-        setData(response.data);
-        // Extract column headers from the data keys
-        /*if (response.data.length > 0) {
-          setColumns(Object.keys(response.data[0]));
-        }*/
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the data!", error);
-      }).finally;
-    {
-    }
+      // Create a root and render the component
+      const root = ReactDOM.createRoot(container);
+      root.render(
+        <Component
+          {...props}
+          onRenderComplete={() => {
+            resolve(container); // Resolve when the component signals it's ready
+          }}
+        />
+      );
+    });
   };
-  const handleSearch = async (e) => {
-    setSearchTerm(e.target.value);
-    const search_value = e.target.value;
+  const handleShowPopup_view = async (cus_id, school_name, shirtInfo) => {
+    await setpopup_view(cus_id);
+    await SetShirtData({
+      shirt: shirtInfo,
+    });
+    const container = await renderReactComponent(AutoShirt, {
+      cus_id: cus_id,
+      type: "auto",
+      onRenderComplete: () => console.log("Rendered AutoShirt!"),
+    });
+
+    // After the container is ready, show the SweetAlert2
+    Swal.fire({
+      title: "React in SweetAlert2",
+      html: container,
+      width: "50rem",
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+    });
+  };
+
+  const handleNo = () => {
+    setshowpopup_view(false);
+  };
+  const handleClick = (school_ID, school_name) => {
+    Navigate("/AutoFormAdd", { state: { school_ID, school_name } });
+  };
+  const handleAdd = () => {
+    const school_ID = null;
+    const school_name = null;
+    Navigate("/AutoFormAdd", { state: { school_ID, school_name } });
+  };
+  const onDeleteFile = async (id, name) => {
     try {
-      const response = await axios.post("/search_cus2", { search_value });
-      setData(response.data);
+      Swal.fire({
+        title: "ต้องการลบไฟล์หรือไม่?",
+        text: name,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "ไม่ลบ",
+        confirmButtonText: "ลบ",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(`/api/autoform_delete/${id}`);
+          fetchData();
+          Swal.fire({
+            title: "ลบสำเร็จ",
+            text: "ลบ" + name,
+            icon: "success",
+          });
+        }
+      });
+      fetchData();
     } catch (error) {
-      console.error("Error fetching search results:", error);
+      Swal.fire({
+        title: "เกิดข้อผิดพลาด",
+        text: "ไม่สามารถลบได้ กรุณาลองอีกครั้ง",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  };
+  const HandleSearch = async (e) => {
+    const searching = e.target.value;
+    const res = await axios.get("/api/autoform", {params: {search_school: searching}});
+    SetFetchUsers(res.data);
+    console.log(res.data);
+    
+  };
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
     }
   };
 
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-  const navigate = useNavigate();
-
-  const handleClick = (cus_id, info, parent_name, phone_number, status) => {
-    const cus_data = { cus_id, info, parent_name, phone_number, status };
-    navigate("/test-com", { state: { cus_data } });
-  };
-
   return (
-    <div class="container_customer_table">
-      <div>
-        <input type="text" name="" id="" onChange={handleSearch}/>
-      </div>
-      <table>
-        <thead className="table_head">
-          <tr>
-            <th>ลำดับที่</th>
-            <th>รูปแบบการปัก</th>
-            <th>ชื่อโรงเรียน</th>
-            <th>Actions</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody className="table_body">
-          {currentItems.map((item) => {
-            const shirtDetails = JSON.parse(item.shirt);
-            const Order_obj = JSON.parse(item.cus_order);
-            const Order_sum = item.price;
-            const Order_paid = item.is_paid;
-            return (
-              <tr key={item.cus_id}>
-                <td className="td_nowarp">{item.cus_id}</td>
-                <td className="td_nowarp">{item.parent_name}</td>
-                <td className="td_nowarp">{item.phone_number}</td>
-                {/*<td className="td_nowarp"><button class="fa fa-info" aria-hidden="true" 
-             onClick={() => handleShowPopup_view(item.cus_id,item.info,item.parent_name,item.phone_number,item.status)}></button></td>*/}
-                <td className="td_nowarp">
-                  <button
-                    onClick={() =>
-                      handleClick(
-                        item.cus_id,
-                        item.info,
-                        item.parent_name,
-                        item.phone_number,
-                        item.status
-                      )
-                    }
-                  >
-                    Edit
-                  </button>
-                </td>
-                <td className="td_nowarp">
-                  <button onClick={() => handleShowPopup_delete(item.cus_id)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <button onClick={handlePrevPage} disabled={currentPage === 1}>
-        Previous
-      </button>
-      <button
-        onClick={handleNextPage}
-        disabled={indexOfLastItem >= data.length}
+    <div>
+      <div
+        style={{
+          backgroundColor: "#D32D41",
+          color: "white",
+          padding: "0.1rem 1rem",
+        }}
       >
-        Next
-      </button>
-      {showpopup_delete && (
-        <div className="popup">
-          <div className="popup-inner">
-            <p>Do you want to proceed? {popup_delete}</p>
-            <button onClick={handleYes_delete}>Yes</button>
-            <button onClick={handleNo}>No</button>
-          </div>
+        <h2>ข้อมูลการปัก</h2>
+      </div>
+      <div style={{ padding: "1rem" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <input
+            onChange={HandleSearch}
+            className="search-input"
+            style={{ width: "80%", fontSize: "1.5rem", padding: "1rem" }}
+            type="text"
+            placeholder="ค้นหา..."
+          />
         </div>
-      )}
-      {showpopup_view && (
-        <div className="popup">
-          <div className="popup-shirt">
-            <div className="button-close">
-              <button onClick={handleNo}>No</button>
-            </div>
-            <div className="Shirt-data">
-              <div className="Name-data">
-                <div>
-                  ชื่อ - นามสกุล : {popup_view.shirtInfo.SName.fullname}
-                </div>
-                <div>ตำแหน่ง : {popup_view.shirtInfo.SName.position_n}</div>
-                <div>
-                  ปักใต้ชื่อ : {popup_view.shirtInfo.SUndername.under_name}
-                </div>
-                <div style={{ display: "flex" }}>
-                  สี :
-                  <div
-                    style={{
-                      backgroundColor: popup_view.shirtInfo.SName.color,
-                    }}
-                  ></div>
-                </div>
-              </div>
-              <br />
-              <div className="School1-data">
-                <div>ชื่อย่อโรงเรียน : {popup_view.shirtInfo.SSchool.name}</div>
-                <div>
-                  ตำแหน่งโรงเรียน : {popup_view.shirtInfo.SSchool.position_s}
-                </div>
-                <div style={{ display: "flex" }}>
-                  สี :
-                  <div
-                    style={{
-                      backgroundColor: popup_view.shirtInfo.SSchool.color1,
-                    }}
-                  ></div>
-                </div>
-              </div>
-              <br />
-              <div className="School2-data">
-                <div>ชื่อโลโก้ : {popup_view.shirtInfo.SLogo.school_name}</div>
-                <div>
-                  ตำแหน่งโลโก้ : {popup_view.shirtInfo.SLogo.position_l}
-                </div>
-              </div>
-              <br />
-              <div className="Dot-data">
-                <div>ประเภทจุด : {popup_view.shirtInfo.dot.type}</div>
-                <div>ตำแหน่งจุด : {popup_view.shirtInfo.dot.position}</div>
-                <div>จำนวนจุด : {popup_view.shirtInfo.dot.amount_dot}</div>
-                <div style={{ display: "flex" }}>
-                  สี :
-                  <div
-                    style={{
-                      backgroundColor: popup_view.shirtInfo.dot.color_dot,
-                    }}
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {showpopup_bill && (
-        <div className="popup">
-          <div className="popup-bill">
-            <div className="button-close">
-              {/*<button onClick={handleNo}>No</button>*/}
-            </div>
-            <div className="bill-data">
-              <div className="bill-table">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ลำดับที่</th>
-                      <th>รายการ</th>
-                      <th>จำนวน</th>
-                      <th>ราคา/หน่วย</th>
-                      <th>ราคา</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                {popup_bill.map((item) => (
+        <div className="User-grid" style={{ overflowX: "auto" }}>
+          <table className="styled-table">
+            <thead>
+              <tr>
+                <th>รหัสโรงเรียน</th>
+                <th>ชื่อโรงเรียน</th>
+                <th>ข้อมูลการปักของโรงเรียน</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {UserLimit.map((item) => {
+                const shirt_ = JSON.parse(item.school_form);
+                return (
                   <>
-                      <tr key={item.id}>
-                        <td>{item.id}</td>
-                        <td>{item.value1}</td>
-                        <td>{item.value2}</td>
-                        <td>{item.value3}</td>
-                        <td>{item.value4}</td>
-                      </tr>
+                    <div key={item.id}></div>
+                    <tr>
+                      <td>{item.SC_ID}</td>
+                      <td>{item.school_name}</td>
+                      <td className="info_text">
+                        <div
+                          onClick={() =>
+                            handleShowPopup_view(
+                              item.SC_ID,
+                              item.school_name,
+                              JSON.parse(item.school_form)
+                            )
+                          }
+                        >
+                          <FontAwesomeIcon icon={faFileContract} />
+                        </div>
+                      </td>
+                      <td>
+                        <div style={{ display: "flex", gap: "1rem" }}>
+                          <button
+                            onClick={() =>
+                              handleClick(item.SC_ID, item.school_name)
+                            }
+                            className="UserEditbtn"
+                          >
+                            แก้ไข
+                          </button>
+                          <button
+                            onClick={onDeleteFile.bind(
+                              this,
+                              item.SC_ID,
+                              item.school_name
+                            )}
+                            className="UserEditbtn"
+                            style={{ backgroundColor: "red", color: "white" }}
+                          >
+                            ลบ
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
                   </>
-                ))}
-                </tbody>
-                <tr className="sumprice">
-                  <td colSpan={4} style={{textAlign:'center'}}>ราคารวม</td>
-                  <td>500 บาท</td>
-                </tr>
-
-                </table>
+                );
+              })}
+            </tbody>
+          </table>
+          {showpopup_view && (
+            <div className="popup">
+              <div className="popup-shirt">
+                <div className="button-close">
+                  <button onClick={handleNo}>
+                    {<FontAwesomeIcon icon={faXmark} />}
+                    <span>ปิดหน้าแสดงข้อมูลการปัก</span>
+                    {<FontAwesomeIcon icon={faXmark} />}
+                  </button>
+                </div>
+                <div></div>
+                <div className="Shirt-data" style={{}}>
+                  <p
+                    style={{
+                      wordWrap: "break-word",
+                      whiteSpace: "-moz-pre-wrap",
+                      whiteSpace: "pre-wrap",
+                    }}
+                  >
+                    <strong>โรงเรียน : </strong>
+                    <span>{ShirtData.school_name}</span>
+                  </p>
+                </div>
+                {
+                  <div className="Shirt-data">
+                    <h6 style={{ margin: "0 0rem", textAlign: "center" }}>
+                      เสื้อนักเรียน
+                    </h6>
+                    <div>
+                      <AutoShirt cus_id={popup_view} type={"auto"} />
+                      {ShirtData.shirt?.SName.fullname && (
+                        <p>
+                          <strong>ชื่อ-นามสกุล : </strong>
+                          <span>{ShirtData.shirt?.SName.fullname}</span>
+                        </p>
+                      )}
+                      {ShirtData.shirt?.SUndername.under_name && (
+                        <p>
+                          <strong>การปักใต้ชื่อ : </strong>
+                          <span>{ShirtData.shirt?.SUndername.under_name}</span>
+                        </p>
+                      )}
+                      {ShirtData.shirt?.SLogo.school_name && (
+                        <p>
+                          <strong>โลโก้โรงเรียน : </strong>
+                          <span>{ShirtData.shirt?.SLogo.school_name}</span>
+                        </p>
+                      )}
+                      {ShirtData.shirt?.SSchool.name && (
+                        <p>
+                          <strong>ตัวย่อโรงเรียน : </strong>
+                          <span>{ShirtData.shirt?.SSchool.name}</span>
+                        </p>
+                      )}
+                      {ShirtData.shirt?.SUnderschool.under_school && (
+                        <p>
+                          <strong>ตัวย่อโรงเรียน : </strong>
+                          <span>
+                            {ShirtData.shirt?.SUnderschool.under_school}
+                          </span>
+                        </p>
+                      )}
+                      {ShirtData.shirt?.dot.type && (
+                        <p>
+                          <strong>ปักเพิ่มเติม : </strong>
+                          <span>{ShirtData.shirt?.dot.amount_dot} </span>
+                          <span>{ShirtData.shirt?.dot.type} </span>
+                          <span>{ShirtData.shirt?.dot.position} </span>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                }
               </div>
+            </div>
+          )}
+          <div>
+            <div style={{ marginTop: "20px", textAlign: "center" }}>
+              <button
+                onClick={prevPage}
+                disabled={currentPage === 1}
+                style={{
+                  padding: "10px 20px",
+                  borderRadius: "5px",
+                  border: "none",
+                  cursor: "pointer",
+                  marginRight: "10px",
+                  fontSize: "16px",
+                  backgroundColor: currentPage === 1 ? "#ccc" : "#405cf5",
+                  color: "#fff",
+                }}
+              >
+                Previous
+              </button>
+              <span style={{ fontSize: "16px", margin: "0 10px" }}>
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={nextPage}
+                disabled={currentPage === totalPages}
+                style={{
+                  padding: "10px 20px",
+                  borderRadius: "5px",
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: "16px",
+                  backgroundColor:
+                    currentPage === totalPages ? "#ccc" : "#405cf5",
+                  color: "#fff",
+                }}
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
-      )}
+        <div className="User-add">
+          <button onClick={handleAdd}>เพิ่มข้อมูล</button>
+        </div>
+      </div>
     </div>
   );
 };

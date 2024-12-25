@@ -35,7 +35,7 @@
   color: #ffffff;
   border-start-start-radius: 10px;border-start-end-radius: 10px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-  img{border-radius: 50%; width: 8rem; height: 8rem; margin-top: 1rem;}
+  img{border-radius: 50%; width: 8rem; height: 8rem; margin-top: 1rem;object-fit: cover;}
   .logout-button {
     background-color: #ff4b5c; /* Red color */
     color: white;

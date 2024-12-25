@@ -8,7 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShirt } from "@fortawesome/free-solid-svg-icons";
 import ShirtPreview from "./ShirtPreview/ShirtPreview";
 import { useNavigate } from "react-router-dom";
-
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import NativeSelect from "@mui/material/NativeSelect";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 function Shirt_graphic_cus() {
   const [formdata, setformdata] = useState({
@@ -63,13 +67,13 @@ function Shirt_graphic_cus() {
   });
   const [Scoutdata, setScoutdata] = useState({
     Selected: false,
-    path:"/image_folder/L_Shirt.png",
+    path: "/image_folder/L_Shirt.png",
     SName: {
       fullname: "",
       position_n: "ชื่อด้านขวา",
       color: "Blue",
       color_border: "#FCF5E5",
-      cloth: "White"
+      cloth: "White",
     },
   });
   const [Bibdata, setBibdata] = useState({
@@ -127,7 +131,8 @@ function Shirt_graphic_cus() {
         Selected: true,
       }));
     }
-    setSelectedItem("")
+    setSelectedItem("");
+    console.log(ShirtOptions);
     HandleCancel();
   };
 
@@ -153,8 +158,12 @@ function Shirt_graphic_cus() {
     right: "hidden",
     left: "hidden",
   });
+  
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [Image, Setimage] = useState([]);
+  const [SelectedSchool,setSelectedSchool] = useState(null);
+  const [SchoolData,SetSchoolData] = useState([]);
+
   const [formdata_info, setformdata_info] = useState({
     info_data: "",
     parent_name: "",
@@ -186,6 +195,11 @@ function Shirt_graphic_cus() {
 
   const [ShowFail, SetShowFail] = useState(false);
 
+  const FetchSchoolData = async() =>
+    {
+      const res = await axios.get("/api/autoform")
+      SetSchoolData(res.data)
+    }
   const fetch_image = async () => {
     const res = await axios.post("/api/files");
     Setimage(res.data);
@@ -242,6 +256,7 @@ function Shirt_graphic_cus() {
 
   useEffect(() => {
     fetch_image();
+    FetchSchoolData();
   }, []);
 
   //name position
@@ -432,12 +447,12 @@ function Shirt_graphic_cus() {
     try {
       const responses = await axios.post("/api/cus_input", {
         formdata,
-        PEdata,Scoutdata,
+        PEdata,
+        Scoutdata,
         formdata_info,
       });
       console.log(responses.data);
       SetShowSuccess(true);
-      
     } catch (error) {
       alert(error);
       SetShowFail(true);
@@ -445,12 +460,11 @@ function Shirt_graphic_cus() {
     setShowAlert(false);
   };
   const navigation = useNavigate();
-  const BackHome = async () =>
-    {
-      navigation("/Na_Karn_puk")
-      // this changes the scrolling behavior to "smooth"
-window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  const BackHome = async () => {
+    navigation("/Na_Karn_puk");
+    // this changes the scrolling behavior to "smooth"
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const HandleCancel = async () => {
     setShowAlert(false);
     SetShowSuccess(false);
@@ -472,8 +486,13 @@ window.scrollTo({ top: 0, behavior: 'smooth' });
           <h1>โปรดกรอกข้อมูลการปัก</h1>
         </div>
       </header>
+      {formdata.Selected &&       
       <Shirt_graphic_cus_com
         SetShirtOptions={SetShirtOptions}
+        SelectedSchool = {SelectedSchool}
+        setSelectedSchool = {setSelectedSchool}
+        SchoolData = {SchoolData}
+        SetSchoolData = {SetSchoolData}
         setcheck_dot={setcheck_dot}
         checkbox_dot={checkbox_dot}
         setcheck_logo={setcheck_logo}
@@ -496,7 +515,8 @@ window.scrollTo({ top: 0, behavior: 'smooth' });
         SetSSchoolPositionClass={SetSSchoolPositionClass}
         SLogoPositionClass={SLogoPositionClass}
         SetSLogoPositionClass={SetSLogoPositionClass}
-      />
+      />}
+
       <Shirt_graphic_cus_PE
         SetShirtOptions={SetShirtOptions}
         setcheck_dot_PE={setcheck_dot_PE}
@@ -515,12 +535,16 @@ window.scrollTo({ top: 0, behavior: 'smooth' });
         Scoutdata={Scoutdata}
         setScoutdata={setScoutdata}
         SNamePositionClass_Scout={SNamePositionClass_Scout}
-        SetSNamePositionClass_Scout = {SetSNamePositionClass_Scout}
+        SetSNamePositionClass_Scout={SetSNamePositionClass_Scout}
       />
-    <div className='Add-Shirt-Type' onClick={HandleShow}>
-        <button style={{display:'flex', alignItems:'center',gap:'1rem'}} 
-          onClick={HandleShow}>
-          <FontAwesomeIcon icon={faShirt} />เพิ่มรูปแบบเสื้อ</button>
+      <div className="Add-Shirt-Type" onClick={HandleShow}>
+        <button
+          style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+          onClick={HandleShow}
+        >
+          <FontAwesomeIcon icon={faShirt} />
+          เพิ่มรูปแบบเสื้อ
+        </button>
       </div>
       <div className="info_container">
         <div className="info-form">
@@ -604,7 +628,7 @@ window.scrollTo({ top: 0, behavior: 'smooth' });
               confirmBtnCssClass="btn-custom"
               cancelBtnCssClass="btn-custom"
               customClass="custom-sweetalert" // Custom class
-              style={{ display: "flex",minWidth: "25vh", width: "20rem" }}
+              style={{ display: "flex", minWidth: "25vh", width: "20rem" }}
             ></SweetAlert>
           )}
           {ShowFail && (
@@ -616,28 +640,39 @@ window.scrollTo({ top: 0, behavior: 'smooth' });
               confirmBtnCssClass="btn-custom"
               cancelBtnCssClass="btn-custom"
               customClass="custom-sweetalert" // Custom class
-              style={{ display: "flex",minWidth: "25vh", width: "20rem" }}
+              style={{ display: "flex", minWidth: "25vh", width: "20rem" }}
             ></SweetAlert>
           )}
         </div>
       </div>
-      <div style={{ padding: "0rem" }}>
-          {ShowTypeAlert && (
-            <SweetAlert
-              title="กรุณาเลือกรูปแบบเสื้อ"
-              onConfirm={handleSelectChange}
-              onCancel={HandleCancel}
-              showCancel
-              confirmBtnText="เพิ่ม"
-              cancelBtnText="ยกเลิก"
-              confirmBtnCssClass="btn-custom"
-              cancelBtnCssClass="btn-custom"
-              customClass="custom-sweetalert" // Custom class
-              
-            >
-              <div className="Shirt-Select">
-                <select value={selectedItem} onChange={handleSelect}>
-                  <option value="" disabled>เลือกรูปแบบเสิ้อ</option>
+      <div style={{ padding: "0rem",width:'1rem' }}>
+        {ShowTypeAlert && (
+          <SweetAlert
+            title="กรุณาเลือกรูปแบบเสื้อ"
+            onConfirm={handleSelectChange}
+            onCancel={HandleCancel}
+            showCancel
+            confirmBtnText="เพิ่ม"
+            cancelBtnText="ยกเลิก"
+            confirmBtnCssClass="btn-custom"
+            cancelBtnCssClass="btn-custom"
+            customClass="custom-sweetalert" // Custom class
+          >
+            <Box>
+              <FormControl fullWidth className="Native-Shirt-Select">
+                <NativeSelect
+                  style={{fontSize:'clamp(2rem, 1.8rem + 1vw, 3rem)'}}
+                  onChange={handleSelect}
+                  value={selectedItem}
+                  IconComponent={(props) => (
+                    <ArrowDropDownIcon {...props}
+                    style={{fontSize:'clamp(2rem, 1.8rem + 1vw, 3rem)'}}
+                    />
+                  )}
+                >
+                  <option value="" disabled>
+                    เลือกรูปแบบเสื้อ
+                  </option>
                   {ShirtOptions.filter((option) => !option.selected).map(
                     (option) => (
                       <option key={option.id} value={option.label}>
@@ -645,11 +680,26 @@ window.scrollTo({ top: 0, behavior: 'smooth' });
                       </option>
                     )
                   )}
-                </select>
-              </div>
-            </SweetAlert>
-          )}
-        </div>
+                </NativeSelect>
+              </FormControl>
+            </Box>
+            {/*<div className="Shirt-Select">
+              <select value={selectedItem} onChange={handleSelect}>
+                <option value="" disabled>
+                  เลือกรูปแบบเสิ้อ
+                </option>
+                {ShirtOptions.filter((option) => !option.selected).map(
+                  (option) => (
+                    <option key={option.id} value={option.label}>
+                      {option.label}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>*/}
+          </SweetAlert>
+        )}
+      </div>
     </>
   );
 }

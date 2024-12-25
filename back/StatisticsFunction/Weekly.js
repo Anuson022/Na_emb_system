@@ -4,7 +4,7 @@ const pool = require('../na_db'); // Adjust the path as necessary
 
 const fetchRouter = express.Router();
 
-fetchRouter.get('/api/weekly-data', (req, res) => {
+fetchRouter.get('/weekly-data', (req, res) => {
     const query = `
         SELECT DAYOFWEEK(date_time) AS day_of_week, COUNT(*) AS count
         FROM customer_data

@@ -17,3 +17,117 @@
 @media (max-width: 576px) {
     *{background-color: rgb(47, 0, 255);}
 }
+
+.grid_dot {
+    display: grid;
+    grid-template-columns: 6.25rem 6.25rem;
+    /* Static width for each column */
+    gap: 0rem;
+}
+
+.grid_dot div {
+    text-align: center;
+    color: blue;
+}
+
+.dot_right {
+    font-family: "Noto Serif Thai", serif;
+    position: relative;
+    bottom: 33rem;
+    left: 18.1rem;
+    font-size: 0.7rem;
+    rotate: -20deg;
+}
+
+.dot_right h1 {
+    margin: -1.5rem;
+}
+
+.dot_left {
+    font-family: "Noto Serif Thai", serif;
+    position: relative;
+    bottom: 33rem;
+    left: 25.5rem;
+    font-size: 0.7rem;
+    rotate: 20deg;
+    
+}
+
+.dot_left h1 {
+    margin: -1.5rem;
+}
+
+.star_fix1,.star_fix2,.star_fix3
+{
+    padding: 0.2rem;
+    font-size: 1.2rem;
+}
+
+.grid_name {
+    display: grid;
+    grid-template-columns: 6.25rem 6.25rem;
+    /* Static width for each column */
+    align-items: center;
+    text-align: center;
+    place-items: center;
+    justify-content: center;
+    text-wrap: nowrap;
+    position: relative;
+    bottom: 29rem;
+    font-family: 'JS_Chanok';
+    gap: 5.5rem;
+}
+
+.grid_name {
+
+    .on_right,
+    .on_left {
+        .nameright {
+            font-size: 0.8rem;
+        }
+
+        .nameleft {
+            font-size: 0.8rem;
+        }
+    }
+}
+
+.School-left,
+.School-right {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    margin-top: -0.8rem;
+    /*font-size: 0.8rem;*/
+}
+
+.dot_school,.dot_name {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: #333 solid 0rem;
+    padding-bottom: 0.3rem;
+}
+
+.on_right h1 {
+    margin: 0rem;
+}
+
+.on_left h1 {
+    margin: 0rem;
+}
+
+
+
+.logo-right,
+.logo-left {
+    margin-top: -3rem;
+    width: 6.25rem;
+    height: 70px;
+
+    img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 0em;
+    }
+}

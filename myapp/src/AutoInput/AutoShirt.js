@@ -103,7 +103,7 @@ const render_dot_name = (dot_type, dot_amount) => {
 
 
 
-function ShirtOrder({ cus_id, type }) 
+function AutoShirt({ cus_id, type , onRenderComplete }) 
 {
   const [FetchData,SetFetchData] = useState({})
   const Fetch_graphic = async(api) => 
@@ -114,37 +114,25 @@ function ShirtOrder({ cus_id, type })
             id: cus_id
           }
         });
-        //console.log(response.data[0])
-        const object = JSON.parse(response.data[0].shirt);
-        const object_pe = JSON.parse(response.data[0].PE);
-        const object_scout = JSON.parse(response.data[0].scout);
+        
+        const object = JSON.parse(response.data[0].school_form);
+        console.log(object)
+
         await SetFetchData({
           shirt: object,
-          PE: object_pe,
-          scout: object_scout,
         });
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
     useEffect(() => {
-      const api_auto = "/api/autoform_add"
-      const api_shirt = "/api/get_cusID"
-      console.log('tta')
-      if(type === "auto")
-        {
-          Fetch_graphic(api_auto)
-        }
-      else 
-      {
-        Fetch_graphic(api_shirt);
-      }
+      const api_auto = "/api/get_formID"
+        Fetch_graphic(api_auto)
       }, []);
     useEffect(() => {
       if (FetchData.shirt?.SName) {
         setformdata((prevFormData) => ({
           ...prevFormData,
-          Selected:FetchData.shirt.Selected,
           SName: {
             ...prevFormData.SName,
             fullname: FetchData.shirt.SName.fullname || "",
@@ -194,51 +182,7 @@ function ShirtOrder({ cus_id, type })
       }
 
     }, [FetchData.shirt]);
-    useEffect(() => {
-      if (FetchData.PE?.SName) {
-        setPEdata((prevFormData) => ({
-          ...prevFormData,
-          Selected:FetchData.PE.Selected,
-          SName: {
-            ...prevFormData.SName,
-            fullname: FetchData.PE.SName.fullname || "",
-            color: FetchData.PE.SName.color || "",
-            position_n: FetchData.PE.SName.position_n || "",
-          },
-          SUndername: {
-            ...prevFormData.SUndername,
-            under_name: FetchData.PE.SUndername.under_name || "",
-            color0: FetchData.PE.SUndername.color0 || "",
-          },
-          dot: {
-            ...prevFormData.dot,
-            type: FetchData.PE.dot.type || "",
-            position: FetchData.PE.dot?.position || "",
-            amount_dot: FetchData.PE.dot?.amount_dot || "",
-            color_dot: FetchData.PE.dot?.color_dot || "",
-          },
-        }));
-      }
 
-    }, [FetchData.PE]);
-  
-    useEffect(() => {
-      if (FetchData.scout?.SName) {
-        setScoutdata((prevFormData) => ({
-          ...prevFormData,
-          Selected:FetchData.scout.Selected,
-          path:FetchData.scout.path,
-          SName: {
-            ...prevFormData.SName,
-            fullname: FetchData.scout.SName.fullname || "",
-            position_n: FetchData.scout.SName.position_n || "",
-            color: FetchData.scout.SName.color || "",
-            color_border: FetchData.scout.SName.color_border || "",
-            cloth: FetchData.scout.SName.cloth || "",
-          },
-        }));
-      }
-    }, [FetchData.scout]);
 
 
 
@@ -274,46 +218,7 @@ function ShirtOrder({ cus_id, type })
         color_dot: "",
       },
     });
-    const [PEdata, setPEdata] = useState({
-      Selected: false,
-      SName: {
-        fullname: "",
-        color: "#0000FF",
-        position_n: "ชื่อด้านขวา",
-      },
-      SUndername: {
-        under_name: "",
-        color0: "#0000FF",
-      },
-      dot: {
-        type: "",
-        position: "",
-        amount_dot: "",
-        color_dot: "",
-      },
-    });
-    const [Scoutdata, setScoutdata] = useState({
-      Selected: false,
-      path:"/image_folder/L_Shirt.png",
-      SName: {
-        fullname: "",
-        position_n: "ชื่อด้านขวา",
-        color: "Blue",
-        color_border: "#FCF5E5",
-        cloth: "White"
-      },
-    });
-    const [Bibdata, setBibdata] = useState({
-      Selected: false,
-      SName: {
-        fullname: "",
-        color: "#0000FF",
-      },
-      SUndername: {
-        under_name: "",
-        color0: "#0000FF",
-      },
-    });
+
 
   const [checkbox_dot,setcheck_dot] = useState(false)
   const [checkbox_logo,setcheck_logo] = useState(false)
@@ -516,10 +421,13 @@ function ShirtOrder({ cus_id, type })
     fetch_image();
   }, []);
 
-  
+  useEffect(() => {
+    // Signal that rendering is complete
+    if (onRenderComplete) onRenderComplete();
+  }, [onRenderComplete]);
   return (
     <>
-    {formdata.Selected &&
+    {
       <div className="container_form" style={{overflow:'auto'}}>
 
         <div className="body_shirt">
@@ -615,4 +523,4 @@ function ShirtOrder({ cus_id, type })
   );
 }
 
-export default ShirtOrder;
+export default AutoShirt;

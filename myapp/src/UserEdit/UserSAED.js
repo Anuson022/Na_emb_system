@@ -98,7 +98,8 @@ function UserSAED() {
                   <div key={item.id}></div>
                   <tr>
                     <td>{item.id}</td>
-                    <td><img style={{width:'5rem',height:'5rem'}} src={`/profile/${item.profile.split("/").pop()}`} alt="" srcset="" /></td>
+                    <td><img style={{height:'5rem'}} 
+                      src={`/api/profile/${item.profile.split("/").pop()}`} alt="" srcset="" /></td>
                     <td>{item.username}</td>
                     <td>{/*item.password*/}password...</td>
                     <td>{item.role}</td>

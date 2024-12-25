@@ -36,7 +36,9 @@ const Recheck = () => {
     {
       Fetch_graphic();
     },[])
-
+    useEffect(() => {
+      window.scrollTo(0, 0)
+    }, [])
     const [formdata, setformdata] = useState({
       Selected: false,
       SName: {

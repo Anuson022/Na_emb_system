@@ -4,7 +4,7 @@ const pool = require('../na_db'); // Adjust the path as necessary
 
 const fetchRouter = express.Router();
 
-fetchRouter.get('/api/yearly-price', (req, res) => {
+fetchRouter.get('/yearly-price', (req, res) => {
     const query = `
         SELECT MONTH(date_time) AS month, COUNT(*) AS count,       
         SUM(IF(is_paid = false, price, 0)) AS not_paid,
@@ -30,7 +30,7 @@ fetchRouter.get('/api/yearly-price', (req, res) => {
     });
 });
 // Route to fetch daily data and total price for the current month
-fetchRouter.get('/api/monthly-price', (req, res) => {
+fetchRouter.get('/monthly-price', (req, res) => {
   const query = `
   SELECT 
       DAY(date_time) AS day_of_month, 
@@ -62,7 +62,7 @@ fetchRouter.get('/api/monthly-price', (req, res) => {
     });
 });
 
-fetchRouter.get('/api/weekly-price', (req, res) => {
+fetchRouter.get('/weekly-price', (req, res) => {
     const query = `
         SELECT DAYOFWEEK(date_time) AS day_of_week, COUNT(*) AS count, 
       SUM(IF(is_paid = false, price, 0)) AS not_paid,
@@ -90,7 +90,7 @@ fetchRouter.get('/api/weekly-price', (req, res) => {
 });
 
 // Route to fetch hourly data and total price for today
-fetchRouter.get('/api/hourly-price', (req, res) => {
+fetchRouter.get('/hourly-price', (req, res) => {
     const query = `
         SELECT HOUR(date_time) AS hour, COUNT(*) AS count,
               SUM(IF(is_paid = false, price, 0)) AS not_paid,
@@ -149,7 +149,7 @@ const getTimeRangeStart = (unit) => {
 };
 
 // Route to get sum of price for current hour
-fetchRouter.get('/api/sum/hourly', (req, res) => {
+fetchRouter.get('/sum/hourly', (req, res) => {
   const startOfHour = getTimeRangeStart('hour');
   pool.query('SELECT SUM(price) AS total FROM customer_data WHERE date_time >= ?', [startOfHour], (err, results) => {
     if (err) throw err;
@@ -158,7 +158,7 @@ fetchRouter.get('/api/sum/hourly', (req, res) => {
 });
 
 // Route to get sum of price for current week
-fetchRouter.get('/api/sum/weekly', (req, res) => {
+fetchRouter.get('/sum/weekly', (req, res) => {
   const startOfWeek = getTimeRangeStart('week');
   pool.query('SELECT SUM(price) AS total FROM customer_data WHERE date_time >= ?', [startOfWeek], (err, results) => {
     if (err) throw err;
@@ -167,7 +167,7 @@ fetchRouter.get('/api/sum/weekly', (req, res) => {
 });
 
 // Route to get sum of price for current month
-fetchRouter.get('/api/sum/monthly', (req, res) => {
+fetchRouter.get('/sum/monthly', (req, res) => {
   const startOfMonth = getTimeRangeStart('month');
   pool.query('SELECT SUM(price) AS total FROM customer_data WHERE date_time >= ?', [startOfMonth], (err, results) => {
     if (err) throw err;
@@ -176,7 +176,7 @@ fetchRouter.get('/api/sum/monthly', (req, res) => {
 });
 
 // Route to get sum of price for current year
-fetchRouter.get('/api/sum/yearly', (req, res) => {
+fetchRouter.get('/sum/yearly', (req, res) => {
   const startOfYear = getTimeRangeStart('year');
   pool.query('SELECT SUM(price) AS total FROM customer_data WHERE date_time >= ?', [startOfYear], (err, results) => {
     if (err) throw err;

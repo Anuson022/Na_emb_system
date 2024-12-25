@@ -7,7 +7,7 @@ import { faFacebook, faLine } from "@fortawesome/free-brands-svg-icons";
 import ShirtPreview from "../ShirtPreview/ShirtPreview";
 
 function HomePage() {
-  useEffect(() => {
+  /*useEffect(() => {
     const adjustViewport = () => {
       //alert(window.innerWidth)
       const viewport = document.querySelector('meta[name="viewport"]');
@@ -19,14 +19,15 @@ function HomePage() {
     };
 
     adjustViewport();
-  }, [window.innerWidth]);
+  }, [window.innerWidth]);*/
 
   return (
     <div style={{ margin: "0 auto" }}>
+      <div>
+      </div>
       <nav className="navbar">
         <img
           style={{
-            width: "13rem",
             backgroundColor: "white",
             borderRadius: "50%",
           }}
@@ -36,7 +37,7 @@ function HomePage() {
         <h3>บริการรับปักผ้าด้วยจักรปักคอมพิวเตอร์</h3>
       </nav>
       <div className="Cus-navbar">
-        <ul className="navbar-menu">
+        <div className="navbar-menu">
           <li className="navbar-item">
             <Link to="/Na_Karn_puk/Cus_Home" className="navbar-link">
               หน้าแรก
@@ -52,7 +53,7 @@ function HomePage() {
               เช็คลำดับคิว
             </Link>
           </li>
-        </ul>
+        </div>
       </div>
       <Outlet />
       <footer className="footer">

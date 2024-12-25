@@ -4,7 +4,7 @@ const pool = require('../na_db'); // Adjust the path as necessary
 
 const fetchRouter = express.Router();
 
-fetchRouter.post('/api/NewOrder',(req,res)=>
+fetchRouter.post('/NewOrder',(req,res)=>
     {
     const SearchOrder = "SELECT * FROM customer_data WHERE status = 'ยังไม่ตรวจสอบ'"    
         try {
@@ -25,7 +25,7 @@ fetchRouter.post('/api/NewOrder',(req,res)=>
             console.log("not found")
         }
     })
-fetchRouter.get('/api/customer-status', (req, res) => {
+fetchRouter.get('/customer-status', (req, res) => {
   const query = 'SELECT status, COUNT(*) as count FROM customer_data GROUP BY status';
   pool.query(query, (err, results) => {
     if (err) throw err;
@@ -33,7 +33,7 @@ fetchRouter.get('/api/customer-status', (req, res) => {
   });
 });
 
-fetchRouter.get('/api/customerTimeStamp', (req, res) => {
+fetchRouter.get('/customerTimeStamp', (req, res) => {
     const query = 'SELECT cus_id,parent_name,phone_number,status,date_time from customer_data ORDER BY cus_id DESC';
     pool.query(query, (err, results) => {
       if (err) throw err;
